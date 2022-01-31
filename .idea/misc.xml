@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/AndroidStudioProjects/Math/app/src/main/res/drawable/back_for_item.xml" value="0.1345" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Math/app/src/main/res/drawable/background.xml" value="0.1345" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Math/app/src/main/res/drawable/rounded_corner.xml" value="0.1345" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Math/app/src/main/res/drawable/rounded_corner_speak_finik.xml" value="0.1345" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Math/app/src/main/res/layout/activity_login.xml" value="0.35648148148148145" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Math/app/src/main/res/layout/activity_splash_screen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Math/app/src/main/res/layout/finik_first_speach_dialog_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Math/app/src/main/res/layout/main_screen_fragment.xml" value="0.35648148148148145" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Math/app/src/main/res/layout/msf_item.xml" value="0.35648148148148145" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MathWithFinik/app/src/main/res/drawable/back_for_button.xml" value="0.25277777777777777" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MathWithFinik/app/src/main/res/drawable/back_for_item.xml" value="0.16" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MathWithFinik/app/src/main/res/drawable/background.xml" value="0.25277777777777777" />
