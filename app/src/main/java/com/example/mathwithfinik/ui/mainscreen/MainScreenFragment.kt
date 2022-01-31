@@ -1,5 +1,9 @@
 package com.example.mathwithfinik.ui.mainscreen
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,7 +39,7 @@ class MainScreenFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        FinikFirstSpeachDialog.showDialog(context)
         binding.mspRv.apply {
             items.add(
                 MenuItem(resources.getDrawable(R.drawable.icon_plus_minus), "Додавання і віднімання"))
