@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainScreenAdapter(private val menuItems: ArrayList<MenuItem>) :
     RecyclerView.Adapter<MainScreenAdapter.MainScreenViewHolder>() {
-
+    var onItemClick: ((MenuItem) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainScreenViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.msf_item, parent, false)
@@ -31,12 +31,13 @@ class MainScreenAdapter(private val menuItems: ArrayList<MenuItem>) :
 
     }
 
-    class MainScreenViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    inner class MainScreenViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val msfItemImage: ImageView = v.findViewById(R.id.msf_item_image)
         val msfNameTv: TextView = v.findViewById(R.id.msf_tv)
-        val itemLayout: ConstraintLayout = v.findViewById(R.id.item_layout)
-        fun isLocked() {
-   //         msfItemImage.setImageDrawable(R.drawable.icon_lock)
+        init {
+            v.setOnClickListener {
+                onItemClick?.invoke(menuItems[adapterPosition])
+            }
         }
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/mainScreenFragment">
+
+    <fragment
+        android:id="@+id/mainScreenFragment"
+        android:name="com.example.mathwithfinik.ui.mainscreen.MainScreenFragment"
+        android:label="main_screen_fragment"
+        tools:layout="@layout/main_screen_fragment" >
+        <action
+            android:id="@+id/action_mainScreenFragment_to_multiplyFragment"
+            app:destination="@id/multiplyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/multiplyFragment"
+        android:name="com.example.mathwithfinik.multiply.MultiplyFragment"
+        android:label="multiply_fragment"
+        tools:layout="@layout/multiply_fragment" />
+</navigation>
