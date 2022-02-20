@@ -20,7 +20,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.R
-import com.example.mathwithfinik.databinding.MultiplyFragmentBinding
+import com.example.mathwithfinik.databinding.ExerciseBinding
+import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 class MultiplyFragment : Fragment() {
 
     private lateinit var sharedPref: SharedPreferences
-    lateinit var binding: MultiplyFragmentBinding
+    lateinit var binding: ExerciseFragmentBinding
     private var viewModel = MultiplyViewModel()
     private var progress = 40
     val job = Job()
@@ -48,7 +49,7 @@ class MultiplyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = MultiplyFragmentBinding.inflate(inflater, container, false)
+        binding = ExerciseFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 

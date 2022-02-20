@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
-import com.example.mathwithfinik.databinding.MultiplyFragmentBinding
+import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlin.random.Random
 
 class MultiplyViewModel() : ViewModel() {
@@ -27,7 +27,7 @@ class MultiplyViewModel() : ViewModel() {
     }
 
     @SuppressLint("SetTextI18n")
-    fun generateNewExercise(binding: MultiplyFragmentBinding) {
+    fun generateNewExercise(binding: ExerciseFragmentBinding) {
         val mathProblem = makeMathProblemModel()
         val indexOfTrueAnswer: Int = Random.nextInt(0, 3)
         val arrayOfButtons = ArrayList<Button>()
