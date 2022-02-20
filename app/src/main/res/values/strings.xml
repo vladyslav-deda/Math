@@ -2,8 +2,10 @@
     <string name="app_name">MathWithFinik</string>
     <string name="shared_pref">MyPref</string>
     <string name="shared_pref_user_name">user_name</string>
-    <string name="divide">Множення</string>
+    <string name="multiply">Множення</string>
+    <string name="divide">Ділення</string>
     <string name="plus_minus">Додавання і віднімання</string>
     <string name="left_time">Залишилось: %d</string>
     <string name="result">Твій результат: %d\nБажаю  успіхів!</string>
+    <string name="score">Твій рахунок: %d</string>
 </resources>

@@ -11,9 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mathwithfinik.Constants
@@ -62,8 +60,11 @@ class MainScreenFragment : Fragment() {
 
         adapterMenu.onItemClick = { item ->
             when (item.name) {
-                context?.getString(R.string.divide) -> {
+                context?.getString(R.string.multiply) -> {
                     binding.root.findNavController().navigate(R.id.action_mainScreenFragment_to_multiplyFragment)
+                }
+                context?.getString(R.string.divide) -> {
+                    binding.root.findNavController().navigate(R.id.action_mainScreenFragment_to_divideFragment)
                 }
                 else -> {
                     Toast.makeText(
@@ -88,10 +89,10 @@ class MainScreenFragment : Fragment() {
             )
         )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_divide), "Ділення")
+            MenuItem(resources.getDrawable(R.drawable.icon_divide), getString(R.string.divide))
         )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_multiply), getString(R.string.divide))
+            MenuItem(resources.getDrawable(R.drawable.icon_multiply), getString(R.string.multiply))
         )
         items.add(
             MenuItem(resources.getDrawable(R.drawable.icon_zadachi), "Задачі")
