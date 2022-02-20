@@ -20,7 +20,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private val sharedPref: SharedPreferences by lazy {
-        applicationContext.getSharedPreferences(getString(R.string.shared_pref), MODE_PRIVATE)
+        applicationContext.getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +47,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 } else {
                     Intent(this, LoginActivity::class.java)
                 }
+            intent.putExtra(Constants.FIRST_TIME, true)
             val options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
                 binding.ssImageFinik,

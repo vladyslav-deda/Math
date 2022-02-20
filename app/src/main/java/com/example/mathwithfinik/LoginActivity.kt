@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private val sharedPref: SharedPreferences.Editor by lazy {
-        applicationContext.getSharedPreferences(getString(R.string.shared_pref), MODE_PRIVATE)
+        applicationContext.getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE)
             .edit()
     }
 
@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        findViewById<EditText>(R.id.la_et_name).doOnTextChanged { text, start, before, count ->
+        findViewById<EditText>(R.id.la_et_name).doOnTextChanged { _, _, _, _ ->
             findViewById<Button>(R.id.la_button_continue).visibility = View.VISIBLE
         }
         findViewById<Button>(R.id.la_button_continue).setOnClickListener {

@@ -16,29 +16,34 @@
         android:layout_gravity="center"/>
 
     <TextView
-        android:id="@+id/first_speach_tv"
+        android:id="@+id/tv_main_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
+        android:fontFamily="@font/comic_relief_bold"
         android:layout_marginStart="20dp"
         android:gravity="center"
         android:layout_gravity="center"
         android:textColor="#344748"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:text="Виконуючи завдання, ти зможеш отримувати монети, які ти можеш використати у магазині. Бажаю успіхів" />
+        android:text="Виконую чи завдання, ти зможеш отримувати монети, які ти можеш використати у магазині. Бажаю успіхів" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/speach_dialog_ok_button"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/comic_relief_bold"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="30dp"
-        android:background="@drawable/back_for_item"
+        android:background="@drawable/back_for_button"
         android:text="Продовжити"
         android:textAllCaps="false"
+        android:textColor="#344748"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:padding="10dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"

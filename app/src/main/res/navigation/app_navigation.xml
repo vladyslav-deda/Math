@@ -18,5 +18,9 @@
         android:id="@+id/multiplyFragment"
         android:name="com.example.mathwithfinik.multiply.MultiplyFragment"
         android:label="multiply_fragment"
-        tools:layout="@layout/multiply_fragment" />
+        tools:layout="@layout/exercise_fragment" >
+        <action
+            android:id="@+id/action_multiplyFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
 </navigation>
