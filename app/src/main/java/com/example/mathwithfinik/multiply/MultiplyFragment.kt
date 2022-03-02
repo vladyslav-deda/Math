@@ -1,6 +1,5 @@
 package com.example.mathwithfinik.multiply
 
-import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
@@ -20,21 +19,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.R
-import com.example.mathwithfinik.databinding.ExerciseBinding
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.util.concurrent.TimeUnit
 
 class MultiplyFragment : Fragment() {
 
     private lateinit var sharedPref: SharedPreferences
     lateinit var binding: ExerciseFragmentBinding
     private var viewModel = MultiplyViewModel()
-    private var progress = 40
     val job = Job()
-    val scope = CoroutineScope(Dispatchers.Main + job)
+    val scope = CoroutineScope(Dispatchers.IO + job)
     private var balance = 0
 
     override fun onAttach(context: Context) {
@@ -53,38 +48,35 @@ class MultiplyFragment : Fragment() {
         return binding.root
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         balance = sharedPref.getInt(Constants.BALANCE, 0)
-        binding.progressbar.progress = progress
-        object : CountDownTimer(40000, 1000) {
-            override fun onTick(p0: Long) {
-                progress--
-                binding.progressbar.max = 40
-                val i = progress * 100 / (30000 / 1000)
-                binding.progressbar.progress = progress
-                binding.tvSecondsLeft.text =
-                    activity?.getString(R.string.left_time, progress)?.let { String.format(it) }
-            }
-
-            override fun onFinish() {
-                binding.progressbar.progress = 0
-                if (viewModel.score > 0) {
-                    balance += viewModel.score
-                    sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
+        GlobalScope.launch(Dispatchers.Main) {
+            val totalSeconds = 40
+            val tickSeconds = 1
+            for (second in totalSeconds downTo tickSeconds) {
+                binding.apply {
+                    progressbar.max = 40
+                    progressbar.progress = second
+                    tvSecondsLeft.text =
+                        activity?.getString(R.string.left_time, second)?.let { String.format(it) }
                 }
-                activity?.getString(R.string.result, viewModel.score)
-                    ?.let { String.format(it) }?.let { showDialog(it) }
+                delay(1000)
             }
-
-        }.start()
+            if (viewModel.score > 0) {
+                balance += viewModel.score
+                sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
+            }
+            binding.progressbar.progress = 0
+            activity?.getString(R.string.result, viewModel.score)
+                ?.let { String.format(it) }?.let { showDialog(it) }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[MultiplyViewModel::class.java]
-        scope.launch {
-            viewModel.generateNewExercise(binding)
-        }
+        viewModel.generateNewExercise(binding)
     }
 
     override fun onDestroy() {
