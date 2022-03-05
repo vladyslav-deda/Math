@@ -1,4 +1,4 @@
-package com.example.mathwithfinik
+package com.example.mathwithfinik.divide
 
 import android.app.Dialog
 import android.content.Context
@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.mathwithfinik.Constants
+import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlinx.coroutines.*
 
@@ -25,6 +28,7 @@ class DivideFragment : Fragment() {
     lateinit var binding: ExerciseFragmentBinding
     private lateinit var viewModel: DivideViewModel
     var job = Job()
+    var counter = 40
     val scope = CoroutineScope(Dispatchers.Main + job)
 
     override fun onAttach(context: Context) {
@@ -46,15 +50,18 @@ class DivideFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var balance = sharedPref.getInt(Constants.BALANCE, 0)
-        GlobalScope.launch(Dispatchers.Main) {
+        /*GlobalScope.launch(Dispatchers.Main) {
             val totalSeconds = 40
             val tickSeconds = 1
             for (second in totalSeconds downTo tickSeconds) {
-                binding.apply {
-                    progressbar.max = 40
-                    progressbar.progress = second
-                    tvSecondsLeft.text =
-                        activity?.getString(R.string.left_time, second)?.let { String.format(it) }
+                activity?.runOnUiThread {
+                    binding.apply {
+                        progressbar.max = 40
+                        progressbar.progress = second
+                        tvSecondsLeft.text =
+                            activity?.getString(R.string.left_time, second)
+                                ?.let { String.format(it) }
+                    }
                 }
                 delay(1000)
             }
@@ -62,17 +69,44 @@ class DivideFragment : Fragment() {
                 balance += viewModel.score
                 sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
             }
-            binding.progressbar.progress = 0
-            activity?.getString(R.string.result, viewModel.score)
-                ?.let { String.format(it) }?.let { showDialog(it) }
-        }
+            activity?.runOnUiThread {
+                binding.progressbar.progress = 0
+                activity?.getString(R.string.result, viewModel.score)
+                    ?.let { String.format(it) }?.let { showDialog(it) }
+            }
+        }*/
+        object : CountDownTimer(40000, 1000) {
+            override fun onTick(p0: Long) {
+                activity?.runOnUiThread {
+                    binding.apply {
+                        progressbar.max = 40
+                        progressbar.progress = counter
+                        tvSecondsLeft.text =
+                            activity?.getString(R.string.left_time, counter)?.let { String.format(it) }
+                    }
+                }
+                counter--
+            }
+
+            override fun onFinish() {
+                if (viewModel.score > 0) {
+                    balance += viewModel.score
+                    sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
+                }
+                activity?.runOnUiThread {
+                    binding.progressbar.progress = 0
+                    activity?.getString(R.string.result, viewModel.score)
+                        ?.let { String.format(it) }?.let { showDialog(it) }
+                }
+            }
+        }.start()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[DivideViewModel::class.java]
         viewModel.generateNewExercise(binding)
-        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

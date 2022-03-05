@@ -1,4 +1,4 @@
-package com.example.mathwithfinik
+package com.example.mathwithfinik.models
 
 import android.graphics.drawable.Drawable
 

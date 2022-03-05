@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_orange"
+    tools:context=".ComplexityFragment">
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_finik"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/finik"
+        android:transitionName="image_finik"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_speak_finik"
+        android:fontFamily="@font/comic_relief_bold"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="Обери рівень складності прикладів"
+        android:textColor="#344748"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/image_finik"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_finik" />
+
+    <TextView
+        android:id="@+id/tv_hard_level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/back_complexity_hard_level"
+        android:fontFamily="@font/comic_relief_bold"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/hard"
+        android:textColor="#344748"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline3" />
+
+    <TextView
+        android:id="@+id/tv_medium_level"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/back_complexity_medium_level"
+        android:fontFamily="@font/comic_relief_bold"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/medium"
+        android:textColor="#344748"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/tv_hard_level" />
+
+    <TextView
+        android:id="@+id/tv_easy_level"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/back_complexity_easy_level"
+        android:fontFamily="@font/comic_relief_bold"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/Easy"
+        android:textColor="#344748"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/tv_medium_level" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

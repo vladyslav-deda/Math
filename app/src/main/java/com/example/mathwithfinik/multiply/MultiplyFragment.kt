@@ -30,6 +30,7 @@ class MultiplyFragment : Fragment() {
     private var viewModel = MultiplyViewModel()
     val job = Job()
     val scope = CoroutineScope(Dispatchers.IO + job)
+    var counter = 40
     private var balance = 0
 
     override fun onAttach(context: Context) {
@@ -51,15 +52,17 @@ class MultiplyFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         balance = sharedPref.getInt(Constants.BALANCE, 0)
-        GlobalScope.launch(Dispatchers.Main) {
+        /*GlobalScope.launch(Dispatchers.Main) {
             val totalSeconds = 40
             val tickSeconds = 1
             for (second in totalSeconds downTo tickSeconds) {
-                binding.apply {
-                    progressbar.max = 40
-                    progressbar.progress = second
-                    tvSecondsLeft.text =
-                        activity?.getString(R.string.left_time, second)?.let { String.format(it) }
+                activity?.runOnUiThread {
+                    binding.apply {
+                        progressbar.max = 40
+                        progressbar.progress = second
+                        tvSecondsLeft.text =
+                            activity?.getString(R.string.left_time, second)?.let { String.format(it) }
+                    }
                 }
                 delay(1000)
             }
@@ -67,10 +70,37 @@ class MultiplyFragment : Fragment() {
                 balance += viewModel.score
                 sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
             }
-            binding.progressbar.progress = 0
-            activity?.getString(R.string.result, viewModel.score)
-                ?.let { String.format(it) }?.let { showDialog(it) }
-        }
+            activity?.runOnUiThread {
+                binding.progressbar.progress = 0
+                activity?.getString(R.string.result, viewModel.score)
+                    ?.let { String.format(it) }?.let { showDialog(it) }
+            }
+        }*/
+        object : CountDownTimer(40000, 1000) {
+            override fun onTick(p0: Long) {
+                activity?.runOnUiThread {
+                    binding.apply {
+                        progressbar.max = 40
+                        progressbar.progress = counter
+                        tvSecondsLeft.text =
+                            activity?.getString(R.string.left_time, counter)?.let { String.format(it) }
+                    }
+                }
+                counter--
+            }
+
+            override fun onFinish() {
+                if (viewModel.score > 0) {
+                    balance += viewModel.score
+                    sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
+                }
+                activity?.runOnUiThread {
+                    binding.progressbar.progress = 0
+                    activity?.getString(R.string.result, viewModel.score)
+                        ?.let { String.format(it) }?.let { showDialog(it) }
+                }
+            }
+        }.start()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

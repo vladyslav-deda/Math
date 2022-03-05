@@ -8,4 +8,9 @@
     <string name="left_time">Залишилось: %d</string>
     <string name="result">Твій результат: %d\nБажаю  успіхів!</string>
     <string name="score">Твій рахунок: %d</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hard">Важкий</string>
+    <string name="medium">Середній</string>
+    <string name="Easy">Легкий</string>
 </resources>

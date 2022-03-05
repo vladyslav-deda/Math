@@ -18,14 +18,15 @@ import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
-abstract class BaseFragmentForExercise(
-    private val binding: ExerciseFragmentBinding,
-    private val viewModel: BaseViewModel
+abstract class BaseFragmentForExercise<T : BaseViewModel>(
+    val viewModel: T,
+    val binding: ExerciseFragmentBinding
 ) : Fragment() {
 
     private lateinit var sharedPref: SharedPreferences
-    private var progress = 40
+    private var counter = 40
     val job = Job()
     val scope = CoroutineScope(Dispatchers.Main + job)
     private var balance = 0
@@ -40,28 +41,35 @@ abstract class BaseFragmentForExercise(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         balance = sharedPref.getInt(Constants.BALANCE, 0)
-        binding.progressbar.progress = progress
         object : CountDownTimer(40000, 1000) {
             override fun onTick(p0: Long) {
-                progress--
-                binding.progressbar.max = 40
-                val i = progress * 100 / (30000 / 1000)
-                binding.progressbar.progress = progress
-                binding.tvSecondsLeft.text =
-                    activity?.getString(R.string.left_time, progress)?.let { String.format(it) }
+                activity?.runOnUiThread {
+                    binding.apply {
+                        progressbar.max = 40
+                        progressbar.progress = counter
+                        tvSecondsLeft.text =
+                            activity?.getString(R.string.left_time, counter)
+                                ?.let { String.format(it) }
+                    }
+                }
+                counter--
             }
 
             override fun onFinish() {
-                binding.progressbar.progress = 0
                 if (viewModel.score > 0) {
                     balance += viewModel.score
                     sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
                 }
-                activity?.getString(R.string.result, viewModel.score)
-                    ?.let { String.format(it) }?.let { showDialog(it) }
+                activity?.runOnUiThread {
+                    binding.progressbar.progress = 0
+                    activity?.getString(R.string.result, viewModel.score)
+                        ?.let { String.format(it) }?.let { showDialog(it) }
+                }
             }
-
         }.start()
+        scope.launch {
+            viewModel.generateNewExercise(binding)
+        }
     }
 
     fun showDialog(text: String) {

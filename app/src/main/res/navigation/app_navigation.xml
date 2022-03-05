@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_divideFragment"
             app:destination="@id/divideFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_complexityFragment"
+            app:destination="@id/complexityFragment" />
     </fragment>
     <fragment
         android:id="@+id/multiplyFragment"
@@ -28,11 +31,28 @@
     </fragment>
     <fragment
         android:id="@+id/divideFragment"
-        android:name="com.example.mathwithfinik.DivideFragment"
+        android:name="com.example.mathwithfinik.divide.DivideFragment"
         android:label="division_fragment"
         tools:layout="@layout/exercise_fragment" >
         <action
             android:id="@+id/action_divideFragment_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/plusMinusFragment"
+        android:name="com.example.mathwithfinik.plus_minus_screen.PlusMinusFragment"
+        android:label="PlusMinusFragment" >
+        <action
+            android:id="@+id/action_plusMinusFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/complexityFragment"
+        android:name="com.example.mathwithfinik.ComplexityFragment"
+        android:label="fragment_complexity"
+        tools:layout="@layout/fragment_complexity" >
+        <action
+            android:id="@+id/action_complexityFragment_to_plusMinusFragment"
+            app:destination="@id/plusMinusFragment" />
     </fragment>
 </navigation>

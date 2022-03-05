@@ -1,16 +1,16 @@
 package com.example.mathwithfinik.multiply
 
-import android.annotation.SuppressLint
-import android.widget.Button
-import android.widget.Toast
-import androidx.lifecycle.ViewModel
 import com.example.mathwithfinik.BaseViewModel
+import com.example.mathwithfinik.models.MathProblemModel
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlin.random.Random
 
 class MultiplyViewModel() : BaseViewModel() {
 
-    override fun makeMathProblemModel(): MathProblemModel {
+    override fun makeMathProblemModel(
+        level: Char?,
+        binding: ExerciseFragmentBinding
+    ): MathProblemModel {
         val firstValue: Int = Random.nextInt(1, 10)
         val secondValue: Int = Random.nextInt(1, 10)
         val answer = firstValue * secondValue;
@@ -23,11 +23,7 @@ class MultiplyViewModel() : BaseViewModel() {
                 wrongAnswers.add(value)
             }
         }
+        binding.exercise.symbol.text = "*"
         return MathProblemModel(firstValue, secondValue, answer, wrongAnswers)
     }
-    override fun generateNewExercise(binding: ExerciseFragmentBinding) {
-        binding.exercise.symbol.text = "*"
-        super.generateNewExercise(binding)
-    }
-
 }

@@ -1,11 +1,15 @@
-package com.example.mathwithfinik
+package com.example.mathwithfinik.divide
 
+import com.example.mathwithfinik.BaseViewModel
+import com.example.mathwithfinik.models.MathProblemModel
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
-import com.example.mathwithfinik.multiply.MathProblemModel
 import kotlin.random.Random
 
 class DivideViewModel : BaseViewModel() {
-    override fun makeMathProblemModel(): MathProblemModel {
+    override fun makeMathProblemModel(
+        level: Char?,
+        binding: ExerciseFragmentBinding
+    ): MathProblemModel {
         val answer: Int = Random.nextInt(1, 10)
         val secondValue: Int = Random.nextInt(1, 10)
         val firstValue = secondValue * answer;
@@ -18,11 +22,7 @@ class DivideViewModel : BaseViewModel() {
                 wrongAnswers.add(value)
             }
         }
+        binding.exercise.symbol.text = ":"
         return MathProblemModel(firstValue, secondValue, answer, wrongAnswers)
-    }
-
-    override fun generateNewExercise(binding: ExerciseFragmentBinding) {
-        binding.exercise.symbol.text = "x"
-        super.generateNewExercise(binding)
     }
 }

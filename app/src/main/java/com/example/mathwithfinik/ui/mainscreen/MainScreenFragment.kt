@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.MainScreenAdapter
-import com.example.mathwithfinik.MenuItem
+import com.example.mathwithfinik.models.MenuItem
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.MainScreenFragmentBinding
 
@@ -66,6 +66,10 @@ class MainScreenFragment : Fragment() {
                 context?.getString(R.string.divide) -> {
                     binding.root.findNavController().navigate(R.id.action_mainScreenFragment_to_divideFragment)
                 }
+                context?.getString(R.string.plus_minus) -> {
+                    binding.root.findNavController().navigate(R.id.action_mainScreenFragment_to_complexityFragment)
+                }
+
                 else -> {
                     Toast.makeText(
                         context,
@@ -98,9 +102,11 @@ class MainScreenFragment : Fragment() {
             MenuItem(resources.getDrawable(R.drawable.icon_zadachi), "Задачі")
         )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_shopping_cart), "Магазин"))
+            MenuItem(resources.getDrawable(R.drawable.icon_shopping_cart), "Магазин")
+        )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_world), "Налаштування"))
+            MenuItem(resources.getDrawable(R.drawable.icon_world), "Налаштування")
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

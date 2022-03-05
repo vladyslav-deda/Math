@@ -4,7 +4,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
-import com.example.mathwithfinik.multiply.MathProblemModel
+import com.example.mathwithfinik.models.MathProblemModel
 import kotlinx.coroutines.SupervisorJob
 import kotlin.random.Random
 
@@ -12,8 +12,9 @@ abstract class BaseViewModel : ViewModel() {
     var score = 0
     private val viewModelJob = SupervisorJob()
 
-    open fun generateNewExercise(binding: ExerciseFragmentBinding) {
-        val mathProblem = makeMathProblemModel()
+
+    open fun generateNewExercise(binding: ExerciseFragmentBinding, level: Char? = null) {
+        val mathProblem = makeMathProblemModel(level, binding)
         val indexOfTrueAnswer: Int = Random.nextInt(0, 3)
         val arrayOfButtons = ArrayList<Button>()
         binding.tvScore.text = "Твій рахунок: $score"
@@ -50,7 +51,7 @@ abstract class BaseViewModel : ViewModel() {
         binding.exercise.secondValue.text = mathProblem.secondValue.toString()
     }
 
-    abstract fun makeMathProblemModel(): MathProblemModel
+    abstract fun makeMathProblemModel(level: Char? = null, binding: ExerciseFragmentBinding): MathProblemModel
 
     override fun onCleared() {
         super.onCleared()
