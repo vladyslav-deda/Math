@@ -17,14 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import javax.xml.datatype.DatatypeConstants.SECONDS
 
 class PlusMinusFragment : Fragment() {
 
@@ -32,10 +30,11 @@ class PlusMinusFragment : Fragment() {
     private lateinit var binding: ExerciseFragmentBinding
     private lateinit var viewModel: PlusMinusViewModel
     var job = Job()
-    var counter = 40
+    var job2 = Job()
     val scope = CoroutineScope(Dispatchers.Main + job)
+    val scope2 = CoroutineScope(Dispatchers.Main + job2)
     private var balance = 0
-    var level : Char? = null
+    var result: Char? = null
 
 
     override fun onAttach(context: Context) {
@@ -48,72 +47,60 @@ class PlusMinusFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(Constants.LEVEL_KEY) { _, bundle ->
-            // Any type can be passed via to the bundle
-            level = bundle.getChar(Constants.LEVEL)
-            // Do something with the result...
+        setFragmentResultListener("requestKey") { _, bundle ->
+            result = bundle.getChar("bundleKey")
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = ExerciseFragmentBinding.inflate(inflater, container, false)
+        viewModel = PlusMinusViewModel(binding)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        object : CountDownTimer(40000, 1000) {
-            override fun onTick(p0: Long) {
+        balance = sharedPref.getInt(Constants.BALANCE, 0)
+        binding.progressbar.max = 40
+        scope.launch {
+            val tickSeconds = 1
+            for (second in 40 downTo tickSeconds) {
                 activity?.runOnUiThread {
                     binding.apply {
-                        progressbar.max = 40
-                        progressbar.progress = counter
+                        progressbar.progress = second
                         tvSecondsLeft.text =
-                            activity?.getString(R.string.left_time, counter)?.let { String.format(it) }
+                            activity?.getString(R.string.left_time, second)
+                                ?.let { String.format(it) }
                     }
                 }
-                counter--
+                delay(1000)
             }
-
-            override fun onFinish() {
-                if (viewModel.score > 0) {
-                    balance += viewModel.score
-                    sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
-                }
-                activity?.runOnUiThread {
-                    binding.progressbar.progress = 0
-                    activity?.getString(R.string.result, viewModel.score)
-                        ?.let { String.format(it) }?.let { showDialog(it) }
-                }
+            if (viewModel.score > 0) {
+                balance += viewModel.score
+                sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
             }
-        }.start()
-
-        scope.launch {
-            viewModel.generateNewExercise(binding, savedInstanceState?.getChar(Constants.LEVEL, Constants.MEDIUM_CHAR))
+            activity?.runOnUiThread {
+                binding.progressbar.progress = 0
+                activity?.getString(R.string.result, viewModel.score)
+                    ?.let { String.format(it) }?.let { viewModel.showDialog(context, it) }
+            }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this)[PlusMinusViewModel::class.java]
-        // TODO: Use the ViewModel
-    }
-
-    fun showDialog(text: String) {
-        val dialog = context?.let { Dialog(it) }
-        dialog?.let { dialog ->
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.dialog_layout)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.findViewById<TextView>(R.id.tv_main_text).text = text
-            dialog.findViewById<Button>(R.id.speach_dialog_ok_button).setOnClickListener {
-                dialog.dismiss()
-                binding.root.findNavController()
-                    .navigate(R.id.action_multiplyFragment_to_mainScreenFragment)
-            }
-            dialog.show()
+        scope2.launch {
+            viewModel.generateNewExercise(result)
         }
     }
 }
+/**
+ * private fun runCountDown() {
+timerJob = viewModelScope.launch {
+val tickSeconds = 1
+for (second in 10 downTo tickSeconds) {
+mCountDownValue.value = second
+delay(SECONDS.toMillis(1))
+}
+dismissEvent.call()
+}
+}
+ */

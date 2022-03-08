@@ -1,14 +1,15 @@
 package com.example.mathwithfinik.divide
 
+import androidx.navigation.findNavController
 import com.example.mathwithfinik.BaseViewModel
+import com.example.mathwithfinik.R
 import com.example.mathwithfinik.models.MathProblemModel
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlin.random.Random
 
-class DivideViewModel : BaseViewModel() {
+class DivideViewModel(override val binding: ExerciseFragmentBinding) : BaseViewModel(binding) {
     override fun makeMathProblemModel(
-        level: Char?,
-        binding: ExerciseFragmentBinding
+        level: Char?
     ): MathProblemModel {
         val answer: Int = Random.nextInt(1, 10)
         val secondValue: Int = Random.nextInt(1, 10)
@@ -24,5 +25,10 @@ class DivideViewModel : BaseViewModel() {
         }
         binding.exercise.symbol.text = ":"
         return MathProblemModel(firstValue, secondValue, answer, wrongAnswers)
+    }
+
+    override fun actionBackToMainScreean() {
+        binding.root.findNavController()
+                    .navigate(R.id.action_divideFragment_to_mainScreenFragment)
     }
 }

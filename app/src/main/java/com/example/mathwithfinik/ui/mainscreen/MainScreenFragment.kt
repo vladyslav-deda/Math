@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,8 @@ import com.example.mathwithfinik.MainScreenAdapter
 import com.example.mathwithfinik.models.MenuItem
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.MainScreenFragmentBinding
+import com.example.mathwithfinik.plus_minus_screen.PlusMinusFragment
+import kotlin.concurrent.fixedRateTimer
 
 
 class MainScreenFragment : Fragment() {
@@ -61,13 +64,13 @@ class MainScreenFragment : Fragment() {
         adapterMenu.onItemClick = { item ->
             when (item.name) {
                 context?.getString(R.string.multiply) -> {
-                    binding.root.findNavController().navigate(R.id.action_mainScreenFragment_to_multiplyFragment)
+                    Navigation.findNavController(binding.root).navigate(R.id.action_mainScreenFragment_to_multiplyFragment)
                 }
                 context?.getString(R.string.divide) -> {
-                    binding.root.findNavController().navigate(R.id.action_mainScreenFragment_to_divideFragment)
+                    Navigation.findNavController(binding.root).navigate(R.id.action_mainScreenFragment_to_divideFragment)
                 }
                 context?.getString(R.string.plus_minus) -> {
-                    binding.root.findNavController().navigate(R.id.action_mainScreenFragment_to_complexityFragment)
+                    Navigation.findNavController(binding.root).navigate(R.id.action_mainScreenFragment_to_complexityFragment)
                 }
 
                 else -> {
@@ -99,13 +102,13 @@ class MainScreenFragment : Fragment() {
             MenuItem(resources.getDrawable(R.drawable.icon_multiply), getString(R.string.multiply))
         )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_zadachi), "Задачі")
+            MenuItem(resources.getDrawable(R.drawable.icon_zadachi), "Задачі", true)
         )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_shopping_cart), "Магазин")
+            MenuItem(resources.getDrawable(R.drawable.icon_shopping_cart), "Магазин",true)
         )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_world), "Налаштування")
+            MenuItem(resources.getDrawable(R.drawable.icon_world), "Налаштування", true)
         )
     }
 

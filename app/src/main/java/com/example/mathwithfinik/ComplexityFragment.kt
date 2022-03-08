@@ -1,14 +1,13 @@
 package com.example.mathwithfinik
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import androidx.navigation.fragment.findNavController
-import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
+import androidx.navigation.Navigation
 import com.example.mathwithfinik.databinding.FragmentComplexityBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,17 +36,20 @@ class ComplexityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
             tvEasyLevel.setOnClickListener {
-//                setFragmentResult(Constants.LEVEL_KEY, bundleOf(Constants.LEVEL to Constants.EASY_CHAR))
-                bundle.putChar(Constants.LEVEL, Constants.EASY_CHAR)
-                findNavController().navigate(R.id.action_complexityFragment_to_plusMinusFragment, bundle)
+                val result = 'e'
+                setFragmentResult("requestKey", bundleOf("bundleKey" to Constants.EASY_CHAR))
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_complexityFragment_to_plusMinusFragment)
             }
             tvMediumLevel.setOnClickListener {
-                bundle.putChar(Constants.LEVEL, Constants.MEDIUM_CHAR)
-                findNavController().navigate(R.id.action_complexityFragment_to_plusMinusFragment, bundle)
+                setFragmentResult("requestKey", bundleOf("bundleKey" to Constants.MEDIUM_CHAR))
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_complexityFragment_to_plusMinusFragment, bundle)
             }
             tvHardLevel.setOnClickListener {
-                bundle.putChar(Constants.LEVEL, Constants.HARD_CHAR)
-                findNavController().navigate(R.id.action_complexityFragment_to_plusMinusFragment, bundle)
+                setFragmentResult("requestKey", bundleOf("bundleKey" to Constants.HARD_CHAR))
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_complexityFragment_to_plusMinusFragment, bundle)
             }
         }
     }

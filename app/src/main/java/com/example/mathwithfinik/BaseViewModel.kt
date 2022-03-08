@@ -1,20 +1,27 @@
 package com.example.mathwithfinik
 
+import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.Window
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
+import androidx.navigation.findNavController
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import com.example.mathwithfinik.models.MathProblemModel
 import kotlinx.coroutines.SupervisorJob
 import kotlin.random.Random
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewModel() {
     var score = 0
     private val viewModelJob = SupervisorJob()
 
 
-    open fun generateNewExercise(binding: ExerciseFragmentBinding, level: Char? = null) {
-        val mathProblem = makeMathProblemModel(level, binding)
+    open fun generateNewExercise(level: Char? = null) {
+        val mathProblem = makeMathProblemModel(level)
         val indexOfTrueAnswer: Int = Random.nextInt(0, 3)
         val arrayOfButtons = ArrayList<Button>()
         binding.tvScore.text = "Твій рахунок: $score"
@@ -26,7 +33,7 @@ abstract class BaseViewModel : ViewModel() {
             get(indexOfTrueAnswer).apply {
                 text = mathProblem.answerValue.toString()
                 setOnClickListener {
-                    generateNewExercise(binding)
+                    generateNewExercise()
                     score++
                     binding.tvScore.text = "Твій рахунок: $score"
                 }
@@ -51,7 +58,28 @@ abstract class BaseViewModel : ViewModel() {
         binding.exercise.secondValue.text = mathProblem.secondValue.toString()
     }
 
-    abstract fun makeMathProblemModel(level: Char? = null, binding: ExerciseFragmentBinding): MathProblemModel
+    abstract fun makeMathProblemModel(level: Char? = null): MathProblemModel
+
+    abstract fun actionBackToMainScreean()
+
+
+    fun showDialog(context: Context?, text: String) {
+        val dialog = context?.let { Dialog(it) }
+        dialog?.let { dlg ->
+            dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dlg.setCancelable(false)
+            dlg.setContentView(R.layout.dialog_layout)
+            dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dlg.findViewById<TextView>(R.id.tv_main_text).text = text
+            dlg.findViewById<Button>(R.id.speach_dialog_ok_button).setOnClickListener {
+                dlg.dismiss()
+                actionBackToMainScreean()
+//                binding.root.findNavController()
+//                    .navigate(R.id.action_divideFragment_to_mainScreenFragment)
+            }
+            dlg.show()
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()

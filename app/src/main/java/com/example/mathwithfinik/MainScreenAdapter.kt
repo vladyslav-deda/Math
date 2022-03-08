@@ -23,7 +23,8 @@ class MainScreenAdapter(private val menuItems: ArrayList<MenuItem>) :
         val item = menuItems[position]
         if (item.blocked == true) {
             holder.msfItemImage.setImageDrawable(item.icon)
-            holder.msfNameTv.text = "Функціонал наразі у розробці"
+            holder.msfNameTv.text = "Функціонал \"${item.name}\" наразі у розробці"
+            holder.msfNameTv.textSize = 14f
         } else {
             holder.msfItemImage.setImageDrawable(item.icon)
             holder.msfNameTv.text = item.name
@@ -34,10 +35,12 @@ class MainScreenAdapter(private val menuItems: ArrayList<MenuItem>) :
     inner class MainScreenViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val msfItemImage: ImageView = v.findViewById(R.id.msf_item_image)
         val msfNameTv: TextView = v.findViewById(R.id.msf_tv)
+
         init {
             v.setOnClickListener {
                 onItemClick?.invoke(menuItems[adapterPosition])
             }
         }
+
     }
 }
