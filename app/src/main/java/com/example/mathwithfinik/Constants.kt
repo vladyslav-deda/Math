@@ -6,7 +6,7 @@ object Constants {
     const val BALANCE = "balance"
     const val LEVEL = "level"
     const val LEVEL_KEY = "level_key"
-    const val EASY_CHAR = 'e'
-    const val MEDIUM_CHAR = 'm'
-    const val HARD_CHAR = 'h'
+    const val EASY_CHAR = "e"
+    const val MEDIUM_CHAR = "m"
+    const val HARD_CHAR = "h"
 }

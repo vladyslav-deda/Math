@@ -10,13 +10,16 @@ import kotlin.random.Random
 class MultiplyViewModel(override val binding: ExerciseFragmentBinding) : BaseViewModel(binding) {
 
     override fun makeMathProblemModel(
-        level: Char?
+        level: String?
     ): MathProblemModel {
         val firstValue: Int = Random.nextInt(1, 10)
         val secondValue: Int = Random.nextInt(1, 10)
         val answer = firstValue * secondValue;
-        val wrongAnswers = ArrayList<Int>()
-        val max = answer + answer
+        val wrongAnswers = ArrayList<Number>()
+        var max = answer + answer
+        while (max < 5) {
+            max += answer
+        }
         val min = 1
         while (wrongAnswers.size < 3) {
             val value = Random.nextInt(min, max)

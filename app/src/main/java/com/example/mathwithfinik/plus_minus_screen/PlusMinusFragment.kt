@@ -1,28 +1,18 @@
 package com.example.mathwithfinik.plus_minus_screen
 
-import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
+import com.example.mathwithfinik.ComplexityFragment
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlinx.coroutines.*
-import javax.xml.datatype.DatatypeConstants.SECONDS
 
 class PlusMinusFragment : Fragment() {
 
@@ -32,9 +22,8 @@ class PlusMinusFragment : Fragment() {
     var job = Job()
     var job2 = Job()
     val scope = CoroutineScope(Dispatchers.Main + job)
-    val scope2 = CoroutineScope(Dispatchers.Main + job2)
     private var balance = 0
-    var result: Char? = null
+    private var result: String? = ""
 
 
     override fun onAttach(context: Context) {
@@ -47,9 +36,7 @@ class PlusMinusFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener("requestKey") { _, bundle ->
-            result = bundle.getChar("bundleKey")
-        }
+
     }
 
     override fun onCreateView(
@@ -64,32 +51,31 @@ class PlusMinusFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         balance = sharedPref.getInt(Constants.BALANCE, 0)
         binding.progressbar.max = 40
+        result = arguments?.getString("level")
         scope.launch {
             val tickSeconds = 1
             for (second in 40 downTo tickSeconds) {
-                activity?.runOnUiThread {
-                    binding.apply {
-                        progressbar.progress = second
-                        tvSecondsLeft.text =
-                            activity?.getString(R.string.left_time, second)
-                                ?.let { String.format(it) }
-                    }
+                binding.apply {
+                    progressbar.progress = second
+                    tvSecondsLeft.text =
+                        activity?.getString(R.string.left_time, second)
+                            ?.let { String.format(it) }
                 }
+
                 delay(1000)
             }
             if (viewModel.score > 0) {
                 balance += viewModel.score
                 sharedPref.edit().putInt(Constants.BALANCE, balance).apply()
             }
-            activity?.runOnUiThread {
-                binding.progressbar.progress = 0
-                activity?.getString(R.string.result, viewModel.score)
-                    ?.let { String.format(it) }?.let { viewModel.showDialog(context, it) }
-            }
+            binding.progressbar.progress = 0
+            activity?.getString(R.string.result, viewModel.score)
+                ?.let { String.format(it) }?.let { viewModel.showDialog(context, it) }
+
         }
-        GlobalScope.launch {
-            viewModel.generateNewExercise(result)
-        }
+
+        viewModel.generateNewExercise(result)
+
         viewModel.scoreLiveData.observe(viewLifecycleOwner) {
             activity?.runOnUiThread {
                 binding.tvScore.text = "Твій рахунок: $it"

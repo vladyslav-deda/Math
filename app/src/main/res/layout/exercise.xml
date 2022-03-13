@@ -14,7 +14,7 @@
         android:fontFamily="@font/comic_relief"
         android:text="2"
         android:textColor="#50795d"
-        android:textSize="75sp"
+        android:textSize="65sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

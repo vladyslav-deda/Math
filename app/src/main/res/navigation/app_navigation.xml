@@ -53,6 +53,12 @@
         tools:layout="@layout/fragment_complexity" >
         <action
             android:id="@+id/action_complexityFragment_to_plusMinusFragment"
-            app:destination="@id/plusMinusFragment" />
+            app:destination="@id/plusMinusFragment">
+            <argument
+                android:name="level"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue="@null"/>
+        </action>
     </fragment>
 </navigation>

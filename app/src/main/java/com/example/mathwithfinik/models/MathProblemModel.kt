@@ -4,5 +4,5 @@ data class MathProblemModel(
     val firstValue:Int,
     val secondValue:Int,
     val answerValue: Int,
-    var wrongAnswers: List<Int>
+    var wrongAnswers: ArrayList<Number>
 )

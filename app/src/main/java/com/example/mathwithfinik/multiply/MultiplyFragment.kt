@@ -69,9 +69,9 @@ class MultiplyFragment : Fragment() {
                     ?.let { String.format(it) }?.let { viewModel.showDialog(context, it) }
             }
         }
-        GlobalScope.launch {
-            viewModel.generateNewExercise()
-        }
+
+        viewModel.generateNewExercise()
+
         viewModel.scoreLiveData.observe(viewLifecycleOwner) {
             activity?.runOnUiThread {
                 binding.tvScore.text = "Твій рахунок: $it"

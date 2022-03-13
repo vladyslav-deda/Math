@@ -3,6 +3,7 @@ package com.example.mathwithfinik.divide
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,8 @@ import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DivideFragment : Fragment() {
 
@@ -20,7 +23,7 @@ class DivideFragment : Fragment() {
     private lateinit var viewModel: DivideViewModel
     var job = Job()
     var job2 = Job()
-    val scope = CoroutineScope(Dispatchers.Main + job)
+    val scope = CoroutineScope(Dispatchers.Default)
     val scope2 = CoroutineScope(Dispatchers.Main + job2)
     private var balance = 0
 
@@ -69,9 +72,9 @@ class DivideFragment : Fragment() {
                     ?.let { String.format(it) }?.let { viewModel.showDialog(context, it) }
             }
         }
-        GlobalScope.launch {
-            viewModel.generateNewExercise()
-        }
+
+        viewModel.generateNewExercise()
+
         viewModel.scoreLiveData.observe(viewLifecycleOwner) {
             activity?.runOnUiThread {
                 binding.tvScore.text = "Твій рахунок: $it"

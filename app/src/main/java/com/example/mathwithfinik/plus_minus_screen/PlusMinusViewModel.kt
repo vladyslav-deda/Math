@@ -12,12 +12,12 @@ class PlusMinusViewModel(override val binding: ExerciseFragmentBinding) : BaseVi
     private var firstValue = 0
     private var secondValue = 0
     private var answer = 0
-    private val wrongAnswers = ArrayList<Int>()
+    private val wrongAnswers = ArrayList<Number>()
     private var max = 0
-    private var level: Char? = null
+    private var level: String? = null
 
     override fun makeMathProblemModel(
-        level: Char?
+        level: String?
     ): MathProblemModel {
         if (this.level == null) {
             this.level = level
@@ -47,6 +47,9 @@ class PlusMinusViewModel(override val binding: ExerciseFragmentBinding) : BaseVi
             }
 
             max = answer + firstValue
+            while (max < 5) {
+                max ++
+            }
             binding.exercise.symbol.text = "+"
         } else {
             if (firstValue < secondValue) {
@@ -56,9 +59,12 @@ class PlusMinusViewModel(override val binding: ExerciseFragmentBinding) : BaseVi
             }
             answer = firstValue - secondValue
             max = firstValue + secondValue
+            while (max < 5) {
+                max ++
+            }
             binding.exercise.symbol.text = "-"
         }
-        val min = 0
+        val min = 1
         while (wrongAnswers.size < 3) {
             val value = Random.nextInt(min, max)
             if (value != answer && !wrongAnswers.contains(value)) {
@@ -68,7 +74,7 @@ class PlusMinusViewModel(override val binding: ExerciseFragmentBinding) : BaseVi
         return MathProblemModel(firstValue, secondValue, answer, wrongAnswers)
     }
 
-    private fun generatePair(level: Char?): Pair<Int, Int> {
+    private fun generatePair(level: String?): Pair<Int, Int> {
         when (level) {
             Constants.EASY_CHAR -> {
                 firstValue = Random.nextInt(1, 10)

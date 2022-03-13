@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
@@ -14,6 +15,9 @@ import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import com.example.mathwithfinik.models.MathProblemModel
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewModel() {
@@ -21,8 +25,7 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
     private val viewModelJob = SupervisorJob()
     val scoreLiveData = MutableLiveData<Int>()
 
-
-    open suspend fun generateNewExercise(level: Char? = null) {
+    open fun generateNewExercise(level: String? = null) {
         val mathProblem = makeMathProblemModel(level)
         val indexOfTrueAnswer: Int = Random.nextInt(0, 3)
         val arrayOfButtons = ArrayList<Button>()
@@ -37,9 +40,7 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
                 setOnClickListener {
                     score++
                     updateScore(score)
-                    viewModelScope.launch {
-                        this@BaseViewModel.generateNewExercise(level)
-                    }
+                     this@BaseViewModel.generateNewExercise(level)
                 }
             }
             var counter = 0
@@ -57,11 +58,12 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
 
             }
         }
+
         binding.exercise.firstValue.text = mathProblem.firstValue.toString()
         binding.exercise.secondValue.text = mathProblem.secondValue.toString()
     }
 
-    abstract fun makeMathProblemModel(level: Char? = null): MathProblemModel
+    abstract fun makeMathProblemModel(level: String? = null): MathProblemModel
 
     abstract fun actionBackToMainScreen()
 
