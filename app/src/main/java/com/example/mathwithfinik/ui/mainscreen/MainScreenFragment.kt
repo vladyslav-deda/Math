@@ -1,5 +1,6 @@
 package com.example.mathwithfinik.ui.mainscreen
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,21 +8,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.MainScreenAdapter
-import com.example.mathwithfinik.models.MenuItem
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.MainScreenFragmentBinding
-import com.example.mathwithfinik.plus_minus_screen.PlusMinusFragment
-import kotlin.concurrent.fixedRateTimer
+import com.example.mathwithfinik.models.MenuItem
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainScreenFragment : Fragment() {
@@ -87,7 +89,6 @@ class MainScreenFragment : Fragment() {
 
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     fun initArray() {
         items.add(
             MenuItem(

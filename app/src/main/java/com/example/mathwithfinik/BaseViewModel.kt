@@ -7,24 +7,26 @@ import android.graphics.drawable.ColorDrawable
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.findNavController
+import androidx.lifecycle.viewModelScope
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import com.example.mathwithfinik.models.MathProblemModel
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewModel() {
     var score = 0
     private val viewModelJob = SupervisorJob()
+    val scoreLiveData = MutableLiveData<Int>()
 
 
-    open fun generateNewExercise(level: Char? = null) {
+    open suspend fun generateNewExercise(level: Char? = null) {
         val mathProblem = makeMathProblemModel(level)
         val indexOfTrueAnswer: Int = Random.nextInt(0, 3)
         val arrayOfButtons = ArrayList<Button>()
-        binding.tvScore.text = "Твій рахунок: $score"
+        updateScore(score)
         arrayOfButtons.apply {
             add(binding.setOfFourButtons.button1)
             add(binding.setOfFourButtons.button2)
@@ -33,9 +35,11 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
             get(indexOfTrueAnswer).apply {
                 text = mathProblem.answerValue.toString()
                 setOnClickListener {
-                    generateNewExercise()
                     score++
-                    binding.tvScore.text = "Твій рахунок: $score"
+                    updateScore(score)
+                    viewModelScope.launch {
+                        this@BaseViewModel.generateNewExercise(level)
+                    }
                 }
             }
             var counter = 0
@@ -44,9 +48,8 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
                     arrayOfButtons[i].apply {
                         text = mathProblem.wrongAnswers[counter].toString()
                         setOnClickListener {
-                            Toast.makeText(context, "Подумай краще", Toast.LENGTH_SHORT).show()
                             if (score > 0) score--
-                            binding.tvScore.text = "Твій рахунок: $score"
+                            updateScore(score)
                         }
                     }
                     counter++
@@ -60,8 +63,9 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
 
     abstract fun makeMathProblemModel(level: Char? = null): MathProblemModel
 
-    abstract fun actionBackToMainScreean()
+    abstract fun actionBackToMainScreen()
 
+    private fun updateScore(score: Int) = scoreLiveData.postValue(score)
 
     fun showDialog(context: Context?, text: String) {
         val dialog = context?.let { Dialog(it) }
@@ -73,9 +77,7 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
             dlg.findViewById<TextView>(R.id.tv_main_text).text = text
             dlg.findViewById<Button>(R.id.speach_dialog_ok_button).setOnClickListener {
                 dlg.dismiss()
-                actionBackToMainScreean()
-//                binding.root.findNavController()
-//                    .navigate(R.id.action_divideFragment_to_mainScreenFragment)
+                actionBackToMainScreen()
             }
             dlg.show()
         }

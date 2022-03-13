@@ -87,9 +87,20 @@ class PlusMinusFragment : Fragment() {
                     ?.let { String.format(it) }?.let { viewModel.showDialog(context, it) }
             }
         }
-        scope2.launch {
+        GlobalScope.launch {
             viewModel.generateNewExercise(result)
         }
+        viewModel.scoreLiveData.observe(viewLifecycleOwner) {
+            activity?.runOnUiThread {
+                binding.tvScore.text = "Твій рахунок: $it"
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+        job2.cancel()
     }
 }
 /**

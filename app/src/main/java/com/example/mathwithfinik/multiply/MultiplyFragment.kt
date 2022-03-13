@@ -44,6 +44,8 @@ class MultiplyFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         balance = sharedPref.getInt(Constants.BALANCE, 0)
+        binding.progressbar.max = 40
+        binding.exercise.symbol.text = "*"
         scope.launch {
             val tickSeconds = 1
             for (second in 40 downTo tickSeconds) {
@@ -67,13 +69,19 @@ class MultiplyFragment : Fragment() {
                     ?.let { String.format(it) }?.let { viewModel.showDialog(context, it) }
             }
         }
-        scope2.launch {
+        GlobalScope.launch {
             viewModel.generateNewExercise()
+        }
+        viewModel.scoreLiveData.observe(viewLifecycleOwner) {
+            activity?.runOnUiThread {
+                binding.tvScore.text = "Твій рахунок: $it"
+            }
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
+        job2.cancel()
     }
 }

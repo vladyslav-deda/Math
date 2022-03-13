@@ -90,7 +90,7 @@ class PlusMinusViewModel(override val binding: ExerciseFragmentBinding) : BaseVi
         return Pair(firstValue, secondValue)
     }
 
-    override fun actionBackToMainScreean() {
+    override fun actionBackToMainScreen() {
         binding.root.findNavController()
             .navigate(R.id.action_plusMinusFragment_to_mainScreenFragment)
     }

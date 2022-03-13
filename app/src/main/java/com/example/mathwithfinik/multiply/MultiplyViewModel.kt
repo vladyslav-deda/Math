@@ -24,11 +24,10 @@ class MultiplyViewModel(override val binding: ExerciseFragmentBinding) : BaseVie
                 wrongAnswers.add(value)
             }
         }
-        binding.exercise.symbol.text = "*"
         return MathProblemModel(firstValue, secondValue, answer, wrongAnswers)
     }
 
-    override fun actionBackToMainScreean() {
+    override fun actionBackToMainScreen() {
         binding.root.findNavController()
             .navigate(R.id.action_multiplyFragment_to_mainScreenFragment)
     }

@@ -35,7 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="35dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="10dp"
@@ -43,7 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/msp_image_finik"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/msf_item"
         />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -51,7 +49,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_margin="30dp"
-        android:src="@drawable/cat"
+        android:src="@drawable/finik"
         android:transitionName="image_finik"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
