@@ -18,7 +18,16 @@
             app:destination="@id/divideFragment" />
         <action
             android:id="@+id/action_mainScreenFragment_to_complexityFragment"
-            app:destination="@id/complexityFragment" />
+            app:destination="@id/complexityFragment">
+            <argument
+                android:name="type"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue="@null"/>
+        </action>
+        <action
+            android:id="@+id/action_mainScreenFragment_to_zadachaFragment"
+            app:destination="@id/zadachaFragment" />
     </fragment>
     <fragment
         android:id="@+id/multiplyFragment"
@@ -55,10 +64,15 @@
             android:id="@+id/action_complexityFragment_to_plusMinusFragment"
             app:destination="@id/plusMinusFragment">
             <argument
-                android:name="level"
+                android:name="level_plus_minus"
                 app:argType="string"
                 app:nullable="true"
                 android:defaultValue="@null"/>
         </action>
     </fragment>
+    <fragment
+        android:id="@+id/zadachaFragment"
+        android:name="com.example.mathwithfinik.zadacha.ZadachaFragment"
+        android:label="zadacha_fragment"
+        tools:layout="@layout/zadacha_fragment" />
 </navigation>

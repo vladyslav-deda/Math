@@ -5,6 +5,7 @@
     <string name="multiply">Множення</string>
     <string name="divide">Ділення</string>
     <string name="plus_minus">Додавання і віднімання</string>
+    <string name="zadachi">Задачі</string>
     <string name="left_time">Залишилось: %d</string>
     <string name="result">Твій результат: %d\nБажаю  успіхів!</string>
     <string name="score">Твій рахунок: %d</string>

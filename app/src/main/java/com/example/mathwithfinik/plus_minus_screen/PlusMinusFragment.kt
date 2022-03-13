@@ -34,11 +34,6 @@ class PlusMinusFragment : Fragment() {
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,7 +46,7 @@ class PlusMinusFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         balance = sharedPref.getInt(Constants.BALANCE, 0)
         binding.progressbar.max = 40
-        result = arguments?.getString("level")
+        result = arguments?.getString("level_plus_minus")
         scope.launch {
             val tickSeconds = 1
             for (second in 40 downTo tickSeconds) {
