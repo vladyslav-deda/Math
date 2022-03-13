@@ -9,6 +9,7 @@ import com.example.mathwithfinik.models.MathProblemModel
 import kotlin.random.Random
 
 class PlusMinusViewModel(override val binding: ExerciseFragmentBinding) : BaseViewModel(binding) {
+
     private var firstValue = 0
     private var secondValue = 0
     private var answer = 0
@@ -21,6 +22,13 @@ class PlusMinusViewModel(override val binding: ExerciseFragmentBinding) : BaseVi
     ): MathProblemModel {
         if (this.level == null) {
             this.level = level
+        }
+        if (level.equals(Constants.HARD_CHAR)) {
+            binding.exercise.apply {
+                firstValue.textSize = 60F
+                secondValue.textSize = 60F
+                symbol.textSize = 60F
+            }
         }
         generatePair(this.level)
         if (Random.nextBoolean()) {
@@ -48,7 +56,7 @@ class PlusMinusViewModel(override val binding: ExerciseFragmentBinding) : BaseVi
 
             max = answer + firstValue
             while (max < 5) {
-                max ++
+                max++
             }
             binding.exercise.symbol.text = "+"
         } else {
@@ -60,7 +68,7 @@ class PlusMinusViewModel(override val binding: ExerciseFragmentBinding) : BaseVi
             answer = firstValue - secondValue
             max = firstValue + secondValue
             while (max < 5) {
-                max ++
+                max++
             }
             binding.exercise.symbol.text = "-"
         }

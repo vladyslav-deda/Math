@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal">
 
 
@@ -10,11 +11,10 @@
         android:id="@+id/first_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:fontFamily="@font/comic_relief"
-        android:text="2"
+        tools:text="2"
         android:textColor="#50795d"
-        android:textSize="65sp"
+        android:textSize="90sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,11 +24,11 @@
         android:id="@+id/symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginStart="25dp"
         android:fontFamily="@font/comic_relief"
-        android:text="x"
+        tools:text="x"
         android:textColor="#50795d"
-        android:textSize="65sp"
+        android:textSize="90sp"
         android:textStyle="bold" />
 
 
@@ -36,10 +36,10 @@
         android:id="@+id/second_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginStart="25dp"
         android:fontFamily="@font/comic_relief"
-        android:text="2"
+        tools:text="2"
         android:textColor="#50795d"
-        android:textSize="75sp"
+        android:textSize="90sp"
         android:textStyle="bold" />
 </androidx.appcompat.widget.LinearLayoutCompat>

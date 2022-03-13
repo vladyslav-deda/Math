@@ -4,26 +4,29 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
+import android.view.View
 import android.view.Window
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import com.example.mathwithfinik.models.MathProblemModel
+import kotlinx.android.synthetic.main.exercise_fragment.view.*
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.random.Random
+
 
 abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewModel() {
     var score = 0
     private val viewModelJob = SupervisorJob()
     val scoreLiveData = MutableLiveData<Int>()
+    val anim by lazy {
+        AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_alpha_notification)
+    }
 
     open fun generateNewExercise(level: String? = null) {
         val mathProblem = makeMathProblemModel(level)
@@ -39,8 +42,14 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
                 text = mathProblem.answerValue.toString()
                 setOnClickListener {
                     score++
+                    binding.notification.tv_notification.apply {
+                        visibility = View.VISIBLE
+                        text = "Молодець"
+                        this.startAnimation(anim)
+                    }
+
                     updateScore(score)
-                     this@BaseViewModel.generateNewExercise(level)
+                    this@BaseViewModel.generateNewExercise(level)
                 }
             }
             var counter = 0
@@ -49,6 +58,11 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
                     arrayOfButtons[i].apply {
                         text = mathProblem.wrongAnswers[counter].toString()
                         setOnClickListener {
+                            binding.notification.tv_notification.apply {
+                                visibility = View.VISIBLE
+                                text = "Подумай краще"
+                                this.startAnimation(anim)
+                            }
                             if (score > 0) score--
                             updateScore(score)
                         }
@@ -83,6 +97,20 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
             }
             dlg.show()
         }
+    }
+
+    private fun anim(v: View) {
+        val anim: Animation = ScaleAnimation(
+            1f, 1f,  // Start and end values for the X axis scaling
+            0f, 1f,  // Start and end values for the Y axis scaling
+            Animation.RELATIVE_TO_SELF, 0f,  // Pivot point of X scaling
+            Animation.RELATIVE_TO_SELF, 1f
+        ) // Pivot point of Y scaling
+
+        anim.fillAfter = true // Needed to keep the result of the animation
+
+        anim.duration = 1000
+        v.startAnimation(anim)
     }
 
     override fun onCleared() {
