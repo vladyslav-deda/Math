@@ -88,7 +88,7 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
         dialog?.let { dlg ->
             dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dlg.setCancelable(false)
-            dlg.setContentView(R.layout.dialog_layout)
+            dlg.setContentView(R.layout.dialog_first_speach_layout)
             dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dlg.findViewById<TextView>(R.id.tv_main_text).text = text
             dlg.findViewById<Button>(R.id.speach_dialog_ok_button).setOnClickListener {

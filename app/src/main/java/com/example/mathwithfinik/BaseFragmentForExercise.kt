@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -18,7 +17,6 @@ import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 abstract class BaseFragmentForExercise<T : BaseViewModel>(
     val viewModel: T,
@@ -77,7 +75,7 @@ abstract class BaseFragmentForExercise<T : BaseViewModel>(
         dialog?.let { dialog ->
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
-            dialog.setContentView(R.layout.dialog_layout)
+            dialog.setContentView(R.layout.dialog_first_speach_layout)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.findViewById<TextView>(R.id.tv_main_text).text = text
             dialog.findViewById<Button>(R.id.speach_dialog_ok_button).setOnClickListener {

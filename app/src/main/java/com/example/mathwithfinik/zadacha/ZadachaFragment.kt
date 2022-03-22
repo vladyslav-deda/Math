@@ -1,32 +1,57 @@
 package com.example.mathwithfinik.zadacha
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mathwithfinik.R
+import androidx.fragment.app.Fragment
+import com.example.mathwithfinik.databinding.ZadachaFragmentBinding
+import com.example.mathwithfinik.models.Zadacha
+import kotlin.random.Random
+
 
 class ZadachaFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ZadachaFragment()
-    }
-
     private lateinit var viewModel: ZadachaViewModel
+    private lateinit var file: String
+    private lateinit var fileName: String
+    private var level: String? = null
+    lateinit var binding: ZadachaFragmentBinding
+    lateinit var arrayListZadach: List<Zadacha>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.zadacha_fragment, container, false)
+    ): View {
+        binding = ZadachaFragmentBinding.inflate(inflater, container, false)
+        viewModel = ZadachaViewModel()
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ZadachaViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        level = arguments?.getString("level")
+        fileName = viewModel.getFileName(level)
+        file = context?.let { context ->
+            context.assets.open(fileName).bufferedReader().use {
+                it.readText()
+            }
+        }.toString()
+        arrayListZadach = file.split("***").map {
+            it.split("|")
+        }.map {
+            Zadacha(it[0], it[1].trim().toInt())
+        }
+
+
+        var random = Random.nextInt(0, 9)
+        binding.tvZadacha.text = arrayListZadach[random].text.plus(level)
+        binding.root.setOnClickListener {
+            random = Random.nextInt(0, 9)
+            binding.tvZadacha.text = arrayListZadach[random].text.plus(level)
+        }
+
     }
+
 
 }

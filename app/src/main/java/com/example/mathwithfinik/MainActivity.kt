@@ -3,10 +3,8 @@ package com.example.mathwithfinik
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.navigation.fragment.NavHostFragment
 import com.example.mathwithfinik.databinding.ActivityMainBinding
-import com.example.mathwithfinik.databinding.ActivitySplashScreenBinding
-import com.example.mathwithfinik.ui.mainscreen.FinikFirstSpeachDialog
+import com.example.mathwithfinik.ui.mainscreen.FirstSpeachDialog
 import com.example.mathwithfinik.ui.mainscreen.MainScreenFragment
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
         if (intent.getBooleanExtra(Constants.FIRST_TIME, false)) {
-            FinikFirstSpeachDialog.showDialog(this)
+            FirstSpeachDialog.showDialog(this)
         }
     }
 }

@@ -9,4 +9,6 @@ object Constants {
     const val EASY_CHAR = "e"
     const val MEDIUM_CHAR = "m"
     const val HARD_CHAR = "h"
+    @JvmStatic
+    var isPremium: Boolean = false
 }

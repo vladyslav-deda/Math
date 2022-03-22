@@ -19,15 +19,17 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_complexityFragment"
             app:destination="@id/complexityFragment">
-            <argument
-                android:name="type"
-                app:argType="string"
-                app:nullable="true"
-                android:defaultValue="@null"/>
         </action>
         <action
             android:id="@+id/action_mainScreenFragment_to_zadachaFragment"
-            app:destination="@id/zadachaFragment" />
+            app:destination="@id/zadachaFragment" >
+            <argument
+                android:name="level"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue="@null"/>
+
+        </action>
     </fragment>
     <fragment
         android:id="@+id/multiplyFragment"

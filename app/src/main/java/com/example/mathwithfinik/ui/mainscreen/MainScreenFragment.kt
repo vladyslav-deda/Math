@@ -1,12 +1,17 @@
 package com.example.mathwithfinik.ui.mainscreen
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -72,7 +77,7 @@ class MainScreenFragment : Fragment() {
                     findNavController().navigate(R.id.action_mainScreenFragment_to_complexityFragment)
                 }
                 context?.getString(R.string.zadachi) -> {
-                    findNavController().navigate(R.id.action_mainScreenFragment_to_zadachaFragment)
+                    showDialog(context)
                 }
                 else -> {
                     Toast.makeText(
@@ -86,6 +91,42 @@ class MainScreenFragment : Fragment() {
         }
         binding.mspTvMoneyBalance.text = sharedPref.getInt(Constants.BALANCE, 0).toString()
 
+    }
+
+    fun showDialog(context: Context?) {
+        val dialog = context?.let { Dialog(it) }
+        dialog?.let { dlg ->
+            dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dlg.setCancelable(false);
+            dlg.setContentView(R.layout.dialog_level_layout)
+            dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dlg.findViewById<Button>(R.id.button_hard).setOnClickListener {
+                findNavController().navigate(
+                    MainScreenFragmentDirections.actionMainScreenFragmentToZadachaFragment(
+                        Constants.HARD_CHAR
+                    )
+                )
+                MainScreenFragmentDirections.actionMainScreenFragmentToZadachaFragment(Constants.HARD_CHAR)
+                dlg.dismiss()
+            }
+            dlg.findViewById<Button>(R.id.button_medium).setOnClickListener {
+                findNavController().navigate(
+                    MainScreenFragmentDirections.actionMainScreenFragmentToZadachaFragment(
+                        Constants.MEDIUM_CHAR
+                    )
+                )
+                dlg.dismiss()
+            }
+            dlg.findViewById<Button>(R.id.button_easy).setOnClickListener {
+                findNavController().navigate(
+                    MainScreenFragmentDirections.actionMainScreenFragmentToZadachaFragment(
+                        Constants.EASY_CHAR
+                    )
+                )
+                dlg.dismiss()
+            }
+            dlg.show()
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -115,6 +156,7 @@ class MainScreenFragment : Fragment() {
             MenuItem(resources.getDrawable(R.drawable.icon_world), "Налаштування", true)
         )
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

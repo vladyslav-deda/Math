@@ -34,7 +34,7 @@ class SplashScreenActivity : AppCompatActivity() {
         val anim = AlphaAnimation(0.0f, 1.0f)
         anim.duration = 5000
         anim.fillAfter = true
-
+        Constants.isPremium = false
         binding.ssTvMatWithFinik.startAnimation(anim)
         binding.ssImageFinik.startAnimation(anim)
         Glide
