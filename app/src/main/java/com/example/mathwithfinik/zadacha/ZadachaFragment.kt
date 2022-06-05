@@ -1,10 +1,12 @@
 package com.example.mathwithfinik.zadacha
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.ZadachaFragmentBinding
 import com.example.mathwithfinik.models.Zadacha
 import kotlin.random.Random
@@ -24,10 +26,11 @@ class ZadachaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = ZadachaFragmentBinding.inflate(inflater, container, false)
-        viewModel = ZadachaViewModel()
+        viewModel = ZadachaViewModel(binding)
         return binding.root
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         level = arguments?.getString("level")
@@ -44,14 +47,20 @@ class ZadachaFragment : Fragment() {
         }
 
 
-        var random = Random.nextInt(0, 9)
-        binding.tvZadacha.text = arrayListZadach[random].text.plus(level)
-        binding.root.setOnClickListener {
-            random = Random.nextInt(0, 9)
-            binding.tvZadacha.text = arrayListZadach[random].text.plus(level)
+        binding.apply {
+            tvZadacha.text = arrayListZadach[Random.nextInt(0, 9)].text.trim()
+            tvScore.text = activity?.getString(R.string.score, 0)
+        }
+
+        binding.buttonAnswer.setOnClickListener {
+            viewModel.generateZadacha(context, arrayListZadach)
+        }
+
+        viewModel.scoreLiveData.observe(viewLifecycleOwner) {
+            activity?.runOnUiThread {
+                binding.tvScore.text = activity?.getString(R.string.score, it)
+            }
         }
 
     }
-
-
 }

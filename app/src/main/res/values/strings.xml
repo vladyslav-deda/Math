@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MathWithFinik</string>
+    <string name="app_name">MathForKids</string>
     <string name="shared_pref">MyPref</string>
     <string name="shared_pref_user_name">user_name</string>
     <string name="multiply">Множення</string>
@@ -8,7 +8,7 @@
     <string name="zadachi">Задачі</string>
     <string name="left_time">Залишилось: %d</string>
     <string name="result">Твій результат: %d\nБажаю  успіхів!</string>
-    <string name="score">Твій рахунок: %d</string>
+    <string name="score">Рахунок: %d</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hard">Важкий</string>

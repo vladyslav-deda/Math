@@ -18,10 +18,8 @@ class MultiplyFragment : Fragment() {
     private lateinit var sharedPref: SharedPreferences
     lateinit var binding: ExerciseFragmentBinding
     lateinit var viewModel: MultiplyViewModel
-    var job = Job()
-    var job2 = Job()
+    private var job = Job()
     val scope = CoroutineScope(Dispatchers.IO + job)
-    val scope2 = CoroutineScope(Dispatchers.Main + job2)
     private var balance = 0
 
     override fun onAttach(context: Context) {
@@ -82,6 +80,5 @@ class MultiplyFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
-        job2.cancel()
     }
 }

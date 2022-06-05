@@ -58,4 +58,5 @@ dependencies {
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
+    implementation 'com.konaire.numeric-keyboard:numeric-keyboard:1.2.0'
 }

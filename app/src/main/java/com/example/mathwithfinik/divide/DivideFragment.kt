@@ -3,7 +3,6 @@ package com.example.mathwithfinik.divide
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,6 @@ import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlinx.coroutines.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DivideFragment : Fragment() {
 
@@ -22,9 +19,7 @@ class DivideFragment : Fragment() {
     lateinit var binding: ExerciseFragmentBinding
     private lateinit var viewModel: DivideViewModel
     var job = Job()
-    var job2 = Job()
     val scope = CoroutineScope(Dispatchers.Default)
-    val scope2 = CoroutineScope(Dispatchers.Main + job2)
     private var balance = 0
 
     override fun onAttach(context: Context) {
@@ -50,7 +45,7 @@ class DivideFragment : Fragment() {
         binding.progressbar.max = 40
         binding.exercise.symbol.text = ":"
         scope.launch {
-            val tickSeconds = 1
+            val tickSeconds = 0
             for (second in 40 downTo tickSeconds) {
                 activity?.runOnUiThread {
                     binding.apply {
@@ -77,7 +72,7 @@ class DivideFragment : Fragment() {
 
         viewModel.scoreLiveData.observe(viewLifecycleOwner) {
             activity?.runOnUiThread {
-                binding.tvScore.text = "Твій рахунок: $it"
+                binding.tvScore.text = activity?.getString(R.string.score, it)
             }
         }
 
@@ -86,6 +81,5 @@ class DivideFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
-        job2.cancel()
     }
 }

@@ -1,44 +1,65 @@
 package com.example.mathwithfinik.zadacha
 
-import android.app.Dialog
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.view.Window
-import android.widget.Button
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.R
+import com.example.mathwithfinik.databinding.ZadachaFragmentBinding
+import com.example.mathwithfinik.models.Zadacha
+import kotlinx.android.synthetic.main.exercise_fragment.view.*
+import kotlin.random.Random
 
-class ZadachaViewModel : ViewModel() {
+class ZadachaViewModel(val binding: ZadachaFragmentBinding) : ViewModel() {
 
-    val level = MutableLiveData<String>()
 
-    fun showDialog(context: Context?) {
-        val dialog = context?.let { Dialog(it) }
-        dialog?.let { dlg ->
-            dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dlg.setCancelable(false);
-            dlg.setContentView(R.layout.dialog_level_layout)
-            dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dlg.findViewById<Button>(R.id.button_hard).setOnClickListener {
-                level.value = Constants.HARD_CHAR
-                dlg.dismiss()
-            }
-            dlg.findViewById<Button>(R.id.button_medium).setOnClickListener {
-                level.value = Constants.MEDIUM_CHAR
-                dlg.dismiss()
-            }
-            dlg.findViewById<Button>(R.id.button_easy).setOnClickListener {
-                level.value = Constants.EASY_CHAR
-                dlg.dismiss()
-            }
-            dlg.show()
-        }
+    var score = 0
+    val scoreLiveData = MutableLiveData<Int>()
+    val anim by lazy {
+        AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_alpha_notification)
     }
 
+    private fun increaseScore() = scoreLiveData.postValue(++score)
 
+    private fun decreaseScore() {
+        if (score > 0) scoreLiveData.postValue(--score)
+    }
+
+    private fun getRandom() = Random.nextInt(0, 9)
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    fun generateZadacha(context: Context?, arrayListZadach: List<Zadacha>, isFirstly: Boolean = false) {
+        var intAnswerFromET = 0
+        if (binding.etAnswer.text.toString().isNotEmpty()) {
+            intAnswerFromET = binding.etAnswer.text.toString().toInt()
+        }
+        var random = getRandom()
+        val answer = arrayListZadach[random].answer
+
+        binding.etAnswer.text.clear()
+        if (intAnswerFromET == answer) {
+            binding.notification.background = context?.getDrawable(R.drawable.back_for_item)
+            binding.notification.tv_notification.apply {
+                visibility = View.VISIBLE
+                text = "Молодець"
+                this.startAnimation(anim)
+            }
+            increaseScore()
+            binding.tvZadacha.text = arrayListZadach[random].text.trim()
+
+        } else {
+            binding.notification.background = context?.getDrawable(R.drawable.back_red)
+            decreaseScore()
+            binding.notification.tv_notification.apply {
+                visibility = View.VISIBLE
+                text = "Подумай краще"
+                this.startAnimation(anim)
+            }
+        }
+    }
 
     fun getFileName(level: String?): String = if (Constants.isPremium) {
         when (level) {

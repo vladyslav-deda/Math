@@ -1,8 +1,8 @@
 package com.example.mathwithfinik
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mathwithfinik.databinding.ActivityMainBinding
 import com.example.mathwithfinik.ui.mainscreen.FirstSpeachDialog
 import com.example.mathwithfinik.ui.mainscreen.MainScreenFragment

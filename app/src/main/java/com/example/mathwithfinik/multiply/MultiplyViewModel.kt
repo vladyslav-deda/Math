@@ -3,15 +3,15 @@ package com.example.mathwithfinik.multiply
 import androidx.navigation.findNavController
 import com.example.mathwithfinik.BaseViewModel
 import com.example.mathwithfinik.R
-import com.example.mathwithfinik.models.MathProblemModel
+import com.example.mathwithfinik.models.MathExerciseModel
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import kotlin.random.Random
 
 class MultiplyViewModel(override val binding: ExerciseFragmentBinding) : BaseViewModel(binding) {
 
-    override fun makeMathProblemModel(
+    override fun makeMathExerciseModel(
         level: String?
-    ): MathProblemModel {
+    ): MathExerciseModel {
         val firstValue: Int = Random.nextInt(1, 10)
         val secondValue: Int = Random.nextInt(1, 10)
         val answer = firstValue * secondValue;
@@ -27,7 +27,7 @@ class MultiplyViewModel(override val binding: ExerciseFragmentBinding) : BaseVie
                 wrongAnswers.add(value)
             }
         }
-        return MathProblemModel(firstValue, secondValue, answer, wrongAnswers)
+        return MathExerciseModel(firstValue, secondValue, answer, wrongAnswers)
     }
 
     override fun actionBackToMainScreen() {

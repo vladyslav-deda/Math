@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -80,11 +79,6 @@ class MainScreenFragment : Fragment() {
                     showDialog(context)
                 }
                 else -> {
-                    Toast.makeText(
-                        context,
-                        "Повтри поки множення, нові функції вже в дорозі",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
 
@@ -153,7 +147,7 @@ class MainScreenFragment : Fragment() {
             MenuItem(resources.getDrawable(R.drawable.icon_shopping_cart), "Магазин", true)
         )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_world), "Налаштування", true)
+            MenuItem(resources.getDrawable(R.drawable.icon_world), "Табличка \n множення9", true)
         )
     }
 
@@ -161,6 +155,5 @@ class MainScreenFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[MainScreenViewModel::class.java]
-        // TODO: Use the ViewModel
     }
 }

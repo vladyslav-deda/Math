@@ -42,13 +42,15 @@ class SplashScreenActivity : AppCompatActivity() {
             .load(R.drawable.finik)
             .into(binding.ssImageFinik)
         Handler().postDelayed({
-            val intent: Intent =
-                if (sharedPref.contains(getString(R.string.shared_pref_user_name))) {
-                    Intent(this, MainActivity::class.java)
-                } else {
-                    Intent(this, LoginActivity::class.java)
-                }
-            intent.putExtra(Constants.FIRST_TIME, true)
+//            val intent: Intent =
+//                if (sharedPref.contains(getString(R.string.shared_pref_user_name))) {
+//                    Intent(this, MainActivity::class.java)
+//                } else {
+//                    Intent(this, LoginActivity::class.java)
+//                }
+            val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra(Constants.FIRST_TIME, true)
+            }
             val options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
                 binding.ssImageFinik,

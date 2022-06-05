@@ -21,7 +21,7 @@ class MainScreenAdapter(private val menuItems: ArrayList<MenuItem>) :
 
     override fun onBindViewHolder(holder: MainScreenViewHolder, position: Int) {
         val item = menuItems[position]
-        if (item.blocked == true) {
+        if (false) {
             holder.msfItemImage.setImageDrawable(item.icon)
             holder.msfNameTv.text = "Функціонал \"${item.name}\" наразі у розробці"
             holder.msfNameTv.textSize = 14f

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.mathwithfinik.ComplexityFragment
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
@@ -19,9 +18,8 @@ class PlusMinusFragment : Fragment() {
     private lateinit var sharedPref: SharedPreferences
     private lateinit var binding: ExerciseFragmentBinding
     private lateinit var viewModel: PlusMinusViewModel
-    var job = Job()
-    var job2 = Job()
-    val scope = CoroutineScope(Dispatchers.Main + job)
+    private var job = Job()
+    private val scope = CoroutineScope(Dispatchers.Main + job)
     private var balance = 0
     private var result: String? = ""
 
@@ -48,7 +46,7 @@ class PlusMinusFragment : Fragment() {
         binding.progressbar.max = 40
         result = arguments?.getString("level_plus_minus")
         scope.launch {
-            val tickSeconds = 1
+            val tickSeconds = 0
             for (second in 40 downTo tickSeconds) {
                 binding.apply {
                     progressbar.progress = second
@@ -81,18 +79,5 @@ class PlusMinusFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
-        job2.cancel()
     }
 }
-/**
- * private fun runCountDown() {
-timerJob = viewModelScope.launch {
-val tickSeconds = 1
-for (second in 10 downTo tickSeconds) {
-mCountDownValue.value = second
-delay(SECONDS.toMillis(1))
-}
-dismissEvent.call()
-}
-}
- */
