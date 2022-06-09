@@ -11,8 +11,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide
 import com.example.mathwithfinik.databinding.ExerciseFragmentBinding
 import com.example.mathwithfinik.models.MathExerciseModel
+import com.example.mathwithfinik.room_db.ShopRepository
 import kotlinx.android.synthetic.main.exercise_fragment.view.*
 import kotlin.random.Random
 
@@ -38,13 +40,18 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
                 text = mathExercise.answerValue.toString()
                 setOnClickListener {
                     score++
+                    binding.notification.visibility = View.VISIBLE
                     binding.notification.tv_notification.apply {
-                        binding.notification.background =
-                            context?.getDrawable(R.drawable.back_for_item)
                         visibility = View.VISIBLE
                         text = "Молодець"
                         this.startAnimation(anim)
                     }
+                    binding.notification.background =
+                        context?.getDrawable(R.drawable.back_for_item)
+                    Glide
+                        .with(this)
+                        .load(ShopRepository(context).getSelected().icon)
+                        .into(binding.imageNotification)
 
                     updateScore(score)
                     this@BaseViewModel.generateNewExercise(level)
@@ -56,13 +63,20 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
                     arrayOfButtons[i].apply {
                         text = mathExercise.wrongAnswers[counter].toString()
                         setOnClickListener {
-                            binding.notification.tv_notification.apply {
-                                binding.notification.background =
+                            binding.apply {
+                                notification.visibility = View.VISIBLE
+                                notification.tv_notification.apply {
+                                    visibility = View.VISIBLE
+                                    text = "Подумай краще"
+                                    this.startAnimation(anim)
+                                }
+                                notification.background =
                                     context?.getDrawable(R.drawable.back_red)
-                                visibility = View.VISIBLE
-                                text = "Подумай краще"
-                                this.startAnimation(anim)
                             }
+                            Glide
+                                .with(this)
+                                .load(ShopRepository(context).getSelected().icon)
+                                .into(binding.imageNotification)
                             if (score > 0) score--
                             updateScore(score)
                         }
@@ -92,6 +106,8 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
                 requestWindowFeature(Window.FEATURE_NO_TITLE);
                 setCancelable(false)
                 setContentView(R.layout.dialog_first_speach_layout)
+                context.let { ShopRepository(it).getSelected().icon }
+                    .let { binding.imageNotification.setImageResource(it) }
                 window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 findViewById<TextView>(R.id.tv_main_text).text = text
                 findViewById<Button>(R.id.speach_dialog_ok_button).setOnClickListener {

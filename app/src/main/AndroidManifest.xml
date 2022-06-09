@@ -9,6 +9,8 @@
         android:roundIcon="@drawable/finik"
         android:supportsRtl="true"
         android:theme="@style/Theme.MathWithFinik"
+        android:largeHeap="true"
+        android:hardwareAccelerated="false"
         >
         <activity
             android:name=".MainActivity"

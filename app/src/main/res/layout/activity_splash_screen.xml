@@ -26,7 +26,7 @@
         android:textSize="35sp"
         android:fontFamily="@font/comic_relief_bold"
         android:textColor="#344748"
-        android:text="Математика \nз Фініком"
+        android:text="Math\nfor kids"
         android:gravity="center"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="@+id/ss_image_finik"

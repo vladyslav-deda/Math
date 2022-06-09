@@ -1,6 +1,7 @@
 package com.example.mathwithfinik.room_db
 
 import androidx.room.*
+import com.example.mathwithfinik.shop.ShopItem
 import com.example.mathwithfinik.shop.ShopItemDb
 
 @Dao
@@ -22,4 +23,13 @@ interface ShopDao {
 
     @Query("Update shop set isBought = 1 where itemId = :id")
     fun updateItem(id: Int)
+
+    @Query("Select * from shop where isSelected = 1")
+    fun getSelectedItem(): ShopItemDb
+
+    @Query("Update shop set isSelected = 1 where itemId = :id")
+    fun setItemSelectedTrue(id: Int)
+
+    @Query("Update shop set isSelected = 0")
+    fun setAllItemsSelectedFalse()
 }

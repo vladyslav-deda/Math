@@ -10,8 +10,10 @@ import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.bumptech.glide.Glide
 import com.example.mathwithfinik.databinding.ActivitySplashScreenBinding
+import com.example.mathwithfinik.room_db.ShopRepository
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
@@ -37,10 +39,10 @@ class SplashScreenActivity : AppCompatActivity() {
         Constants.isPremium = false
         binding.ssTvMatWithFinik.startAnimation(anim)
         binding.ssImageFinik.startAnimation(anim)
-        Glide
-            .with(this)
-            .load(R.drawable.finik)
-            .into(binding.ssImageFinik)
+//        Glide
+//            .with(this)
+//            .load(ShopRepository(baseContext).getSelected().icon)
+//            .into(binding.ssImageFinik)
         Handler().postDelayed({
 //            val intent: Intent =
 //                if (sharedPref.contains(getString(R.string.shared_pref_user_name))) {

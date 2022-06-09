@@ -78,10 +78,13 @@
         android:layout_height="wrap_content"
         android:background="@drawable/back_for_item"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/exercise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressbar">
+        app:layout_constraintTop_toBottomOf="@+id/progressbar"
+        tools:visibility="visible"
+        >
 
         <ImageView
             android:id="@+id/image_notification"

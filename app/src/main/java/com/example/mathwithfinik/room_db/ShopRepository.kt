@@ -1,6 +1,7 @@
 package com.example.mathwithfinik.room_db
 
 import android.content.Context
+import androidx.room.Query
 import com.example.mathwithfinik.shop.ShopItemDb
 
 @Suppress("DEPRECATION")
@@ -19,4 +20,11 @@ class ShopRepository(context: Context) {
     fun deleteAllItems() = db.deleteAllItems()
 
     fun setIsBought(id: Int) = db.updateItem(id)
+
+    fun getSelected() = db.getSelectedItem()
+
+    fun setItemSelectedTrue(id: Int) {
+        db.setAllItemsSelectedFalse()
+        db.setItemSelectedTrue(id)
+    }
 }

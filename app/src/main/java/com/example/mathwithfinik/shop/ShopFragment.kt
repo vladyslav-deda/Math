@@ -56,33 +56,105 @@ class ShopFragment : Fragment() {
         val items = ArrayList<ShopItemDb>()
         items.addAll(getAll())
         var adapterMenu = context?.let { ShopAdapter(items, it) }
-
-        val item = ShopItemDb(
-            R.drawable.lion,
-            "Lion",
-            400
-        )
         val item2 = ShopItemDb(
-            R.drawable.frog,
+            R.drawable.crab,
             "Frog",
             625
         )
-        val item3 = ShopItemDb(
+        val item4 = ShopItemDb(
+            R.drawable.elephant,
+            "Frog",
+            450
+        )
+        val item5 = ShopItemDb(
             R.drawable.finik,
             "Frog",
-            450,
-            isBought = true
+            450
         )
-        deleteAllItems()
-        lifecycleScope.launch {
-            ShopRepository(requireContext()).insertShopItem(item3)
-            ShopRepository(requireContext()).insertShopItem(item2)
-            ShopRepository(requireContext()).insertShopItem(item)
-            ShopRepository(requireContext()).insertShopItem(item2)
-            ShopRepository(requireContext()).insertShopItem(item)
-            ShopRepository(requireContext()).insertShopItem(item2)
-            adapterMenu?.updateList(getAll())
-        }
+        val item6 = ShopItemDb(
+            R.drawable.giraffe,
+            "Frog",
+            450
+        )
+        val item7 = ShopItemDb(
+            R.drawable.gybka_bob,
+            "Frog",
+            450
+        )
+        val item8 = ShopItemDb(
+            R.drawable.hero,
+            "Frog",
+            450
+        )
+        val item9 = ShopItemDb(
+            R.drawable.lion,
+            "Frog",
+            450
+        )
+        val item10 = ShopItemDb(
+            R.drawable.lion2,
+            "Frog",
+            450
+        )
+        val item11 = ShopItemDb(
+            R.drawable.lion3,
+            "Frog",
+            450
+        )
+        val item12 = ShopItemDb(
+            R.drawable.monkey,
+            "Frog",
+            450
+        )
+        val item13 = ShopItemDb(
+            R.drawable.patrick,
+            "Frog",
+            450
+        )
+        val item14 = ShopItemDb(
+            R.drawable.pig,
+            "Frog",
+            450
+        )
+        val item15 = ShopItemDb(
+            R.drawable.rhinocerous,
+            "Frog",
+            450
+        )
+        val item16 = ShopItemDb(
+            R.drawable.snail,
+            "Frog",
+            450
+        )
+        val item17 = ShopItemDb(
+            R.drawable.svunka_pepa,
+            "Frog",
+            450
+        )
+        val item18 = ShopItemDb(
+            R.drawable.zebra,
+            "Frog",
+            450
+        )
+//        deleteAllItems()
+//        lifecycleScope.launch {
+//            ShopRepository(requireContext()).insertShopItem(item2)
+//            ShopRepository(requireContext()).insertShopItem(item4)
+//            ShopRepository(requireContext()).insertShopItem(item5)
+//            ShopRepository(requireContext()).insertShopItem(item6)
+//            ShopRepository(requireContext()).insertShopItem(item8)
+//            ShopRepository(requireContext()).insertShopItem(item9)
+//            ShopRepository(requireContext()).insertShopItem(item10)
+//            ShopRepository(requireContext()).insertShopItem(item11)
+//            ShopRepository(requireContext()).insertShopItem(item12)
+//            ShopRepository(requireContext()).insertShopItem(item13)
+//            ShopRepository(requireContext()).insertShopItem(item14)
+//            ShopRepository(requireContext()).insertShopItem(item15)
+//            ShopRepository(requireContext()).insertShopItem(item16)
+//            ShopRepository(requireContext()).insertShopItem(item17)
+//            ShopRepository(requireContext()).insertShopItem(item18)
+//            adapterMenu?.updateList(getAll())
+//        }
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(activity, 2, LinearLayoutManager.HORIZONTAL, false)
             adapter = adapterMenu
@@ -90,9 +162,22 @@ class ShopFragment : Fragment() {
 
         binding.moneyBalance.text = balance.toString()
 
-        adapterMenu?.onItemClick = { item ->
-            item.itemId?.let { getDB().setIsBought(it) }
-            adapterMenu?.updateList(getAll())
+        adapterMenu?.onItemClick = { shopItem ->
+            when {
+                shopItem.isBought -> {
+                    shopItem.itemId?.let { getDB().setItemSelectedTrue(it) }
+                    adapterMenu?.updateList(getAll())
+                }
+                shopItem.isSelected -> {
+                    //nothing to do
+                }
+                else -> {
+                    shopItem.itemId?.let { getDB().setIsBought(it) }
+                    adapterMenu?.updateList(getAll())
+                }
+            }
+            val l = getAll()
+            val o = 0
         }
     }
 

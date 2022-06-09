@@ -6,10 +6,12 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.ZadachaFragmentBinding
 import com.example.mathwithfinik.models.Zadacha
+import com.example.mathwithfinik.room_db.ShopRepository
 import kotlinx.android.synthetic.main.exercise_fragment.view.*
 import kotlin.random.Random
 
@@ -47,10 +49,14 @@ class ZadachaViewModel(val binding: ZadachaFragmentBinding) : ViewModel() {
                 text = "Молодець"
                 this.startAnimation(anim)
             }
+            context?.let { ShopRepository(it).getSelected().icon }
+                ?.let { binding.imageNotification.setImageResource(it) }
             increaseScore()
             binding.tvZadacha.text = arrayListZadach[random].text.trim()
 
         } else {
+            context?.let { ShopRepository(it).getSelected().icon }
+                ?.let { binding.imageNotification.setImageResource(it) }
             binding.notification.background = context?.getDrawable(R.drawable.back_red)
             decreaseScore()
             binding.notification.tv_notification.apply {

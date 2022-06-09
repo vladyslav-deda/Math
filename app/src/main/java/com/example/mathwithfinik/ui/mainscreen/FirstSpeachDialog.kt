@@ -6,7 +6,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Window
 import android.widget.Button
+import androidx.appcompat.widget.AppCompatImageView
+import com.bumptech.glide.Glide
 import com.example.mathwithfinik.R
+import com.example.mathwithfinik.room_db.ShopRepository
 
 object FirstSpeachDialog {
 
@@ -20,6 +23,9 @@ object FirstSpeachDialog {
             dialog.findViewById<Button>(R.id.speach_dialog_ok_button).setOnClickListener {
                 dialog.dismiss()
             }
+//            dialog.findViewById<AppCompatImageView>(R.id.first_speach_image_finik).setImageResource(
+//                ShopRepository(context).getSelected().icon
+//            )
             dialog.show()
         }
     }

@@ -13,16 +13,19 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.mathwithfinik.Constants
 import com.example.mathwithfinik.MainScreenAdapter
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.MainScreenFragmentBinding
 import com.example.mathwithfinik.models.MenuItem
+import com.example.mathwithfinik.room_db.ShopRepository
 
 
 class MainScreenFragment : Fragment() {
@@ -63,7 +66,10 @@ class MainScreenFragment : Fragment() {
             layoutManager = GridLayoutManager(activity, 2, LinearLayoutManager.HORIZONTAL, false)
             adapter = adapterMenu
         }
-
+//        Glide
+//            .with(this)
+//            .load(ShopRepository(requireContext()).getSelected().icon)
+//            .into(binding.mspImageFinik)
         adapterMenu.onItemClick = { item ->
             when (item.name) {
                 context?.getString(R.string.multiply) -> {
@@ -87,11 +93,6 @@ class MainScreenFragment : Fragment() {
 
         }
         binding.mspTvMoneyBalance.text = sharedPref.getInt(Constants.BALANCE, 0).toString()
-        if (sharedPref.getString(Constants.IMAGE, "")?.isNotEmpty() == true) {
-            val image = sharedPref.getString(Constants.IMAGE, "").toString().toInt()
-            binding.mspImageFinik.setImageResource(image)
-        }
-
     }
 
     fun showDialog(context: Context?) {
@@ -101,6 +102,9 @@ class MainScreenFragment : Fragment() {
             dlg.setCancelable(false);
             dlg.setContentView(R.layout.dialog_level_layout)
             dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.findViewById<AppCompatImageView>(R.id.first_speach_image_finik).setImageResource(
+                ShopRepository(context).getSelected().icon
+            )
             dlg.findViewById<Button>(R.id.button_hard).setOnClickListener {
                 findNavController().navigate(
                     MainScreenFragmentDirections.actionMainScreenFragmentToZadachaFragment(
