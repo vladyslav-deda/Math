@@ -78,12 +78,19 @@ class MainScreenFragment : Fragment() {
                 context?.getString(R.string.zadachi) -> {
                     showDialog(context)
                 }
+                context?.getString(R.string.shop) -> {
+                    findNavController().navigate(R.id.action_mainScreenFragment_to_shopFragment)
+                }
                 else -> {
                 }
             }
 
         }
         binding.mspTvMoneyBalance.text = sharedPref.getInt(Constants.BALANCE, 0).toString()
+        if (sharedPref.getString(Constants.IMAGE, "")?.isNotEmpty() == true) {
+            val image = sharedPref.getString(Constants.IMAGE, "").toString().toInt()
+            binding.mspImageFinik.setImageResource(image)
+        }
 
     }
 
@@ -144,10 +151,14 @@ class MainScreenFragment : Fragment() {
             )
         )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_shopping_cart), "Магазин", true)
+            MenuItem(
+                resources.getDrawable(R.drawable.icon_shopping_cart),
+                getString(R.string.shop),
+                true
+            )
         )
         items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_world), "Табличка \n множення9", true)
+            MenuItem(resources.getDrawable(R.drawable.icon_world), "Табличка множення", true)
         )
     }
 

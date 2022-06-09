@@ -1,8 +1,10 @@
 package com.example.mathwithfinik
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.example.mathwithfinik.databinding.ActivityMainBinding
 import com.example.mathwithfinik.ui.mainscreen.FirstSpeachDialog
 import com.example.mathwithfinik.ui.mainscreen.MainScreenFragment
