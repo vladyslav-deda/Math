@@ -79,7 +79,11 @@
         android:id="@+id/zadachaFragment"
         android:name="com.example.mathwithfinik.zadacha.ZadachaFragment"
         android:label="zadacha_fragment"
-        tools:layout="@layout/zadacha_fragment" />
+        tools:layout="@layout/zadacha_fragment" >
+        <action
+            android:id="@+id/action_zadachaFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
     <fragment
         android:id="@+id/shopFragment"
         android:name="com.example.mathwithfinik.shop.ShopFragment"

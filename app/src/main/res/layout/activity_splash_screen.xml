@@ -30,7 +30,6 @@
         android:gravity="center"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="@+id/ss_image_finik"
-        app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toStartOf="@+id/ss_image_finik"
         app:layout_constraintTop_toBottomOf="@id/ss_image_finik" />
 

@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Window
 import android.widget.Button
+import androidx.appcompat.widget.AppCompatImageView
+import com.example.mathwithfinik.room_db.ShopRepository
 
 object LevelDialog {
 
@@ -17,6 +19,9 @@ object LevelDialog {
             dlg.setCancelable(false);
             dlg.setContentView(R.layout.dialog_level_layout)
             dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dlg.findViewById<AppCompatImageView>(R.id.first_speach_image_finik).setImageResource(
+                ShopRepository(context).getSelected().icon
+            )
             dlg.findViewById<Button>(R.id.button_hard).setOnClickListener {
                 level = Constants.HARD_CHAR
                 dlg.dismiss()

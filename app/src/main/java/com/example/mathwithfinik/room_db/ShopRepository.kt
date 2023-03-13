@@ -11,7 +11,7 @@ class ShopRepository(context: Context) {
 
     suspend fun insertShopItem(shopItemDb: ShopItemDb) = db.insertShopItem(shopItemDb)
 
-    fun getAllShopItems(): List<ShopItemDb> = db.getAllShopItems()
+    suspend fun getAllShopItems(): List<ShopItemDb> = db.getAllShopItems()
 
     fun updateShopItem(shopItemDb: ShopItemDb) = db.updateShopItem(shopItemDb)
 

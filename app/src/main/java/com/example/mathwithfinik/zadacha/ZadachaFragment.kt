@@ -5,10 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.mathwithfinik.R
 import com.example.mathwithfinik.databinding.ZadachaFragmentBinding
 import com.example.mathwithfinik.models.Zadacha
+import com.example.mathwithfinik.room_db.ShopRepository
+import kotlinx.android.synthetic.main.exercise_fragment.view.*
 import kotlin.random.Random
 
 
@@ -21,6 +25,9 @@ class ZadachaFragment : Fragment() {
     lateinit var binding: ZadachaFragmentBinding
     lateinit var arrayListZadach: List<Zadacha>
 
+    val anim by lazy {
+        AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_alpha_notification)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,17 +55,61 @@ class ZadachaFragment : Fragment() {
 
 
         binding.apply {
-            tvZadacha.text = arrayListZadach[Random.nextInt(0, 9)].text.trim()
+
             tvScore.text = activity?.getString(R.string.score, 0)
         }
 
+        var random = viewModel.getRandom()
+        var zadacha = arrayListZadach[random]
+        binding.tvZadacha.text = zadacha.text
         binding.buttonAnswer.setOnClickListener {
-            viewModel.generateZadacha(context, arrayListZadach)
+            binding.notification.apply {
+                visibility = View.VISIBLE
+                background = context?.getDrawable(R.drawable.back_for_item)
+            }
+
+            if (binding.etAnswer.text.toString().toInt() == zadacha.answer) {
+                viewModel.increaseScore()
+                var newRandom = viewModel.getRandom()
+                while (newRandom == random) newRandom = viewModel.getRandom()
+                random = newRandom
+                zadacha = arrayListZadach[random]
+                binding.tvZadacha.text = zadacha.text
+
+
+                binding.notification.tv_notification.apply {
+                    visibility = View.VISIBLE
+                    text = "Молодець"
+                    this.startAnimation(anim)
+                    Glide
+                        .with(this)
+                        .load(context?.let { ShopRepository(it).getSelected().icon })
+                        .into(binding.imageNotification)
+                }
+            } else {
+                viewModel.decreaseScore()
+                binding.notification.tv_notification.apply {
+                    visibility = View.VISIBLE
+                    text = "Подумай краще"
+                    this.startAnimation(anim)
+                    Glide
+                        .with(this)
+                        .load(context?.let { ShopRepository(it).getSelected().icon })
+                        .into(binding.imageNotification)
+                }
+            }
+            binding.etAnswer.text.clear()
         }
 
         viewModel.scoreLiveData.observe(viewLifecycleOwner) {
             activity?.runOnUiThread {
                 binding.tvScore.text = activity?.getString(R.string.score, it)
+            }
+        }
+        viewModel.scoreLiveData.observe(viewLifecycleOwner) { score ->
+            if (score == 10) {
+                activity?.getString(R.string.result, viewModel.score)
+                    ?.let { String.format(it) }?.let { viewModel.showDialog(context, it) }
             }
         }
 

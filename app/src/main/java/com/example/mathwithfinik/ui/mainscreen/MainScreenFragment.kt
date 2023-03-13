@@ -66,10 +66,10 @@ class MainScreenFragment : Fragment() {
             layoutManager = GridLayoutManager(activity, 2, LinearLayoutManager.HORIZONTAL, false)
             adapter = adapterMenu
         }
-//        Glide
-//            .with(this)
-//            .load(ShopRepository(requireContext()).getSelected().icon)
-//            .into(binding.mspImageFinik)
+        Glide
+            .with(this)
+            .load(ShopRepository(requireContext()).getSelected().icon)
+            .into(binding.mspImageFinik)
         adapterMenu.onItemClick = { item ->
             when (item.name) {
                 context?.getString(R.string.multiply) -> {
@@ -160,9 +160,6 @@ class MainScreenFragment : Fragment() {
                 getString(R.string.shop),
                 true
             )
-        )
-        items.add(
-            MenuItem(resources.getDrawable(R.drawable.icon_world), "Табличка множення", true)
         )
     }
 

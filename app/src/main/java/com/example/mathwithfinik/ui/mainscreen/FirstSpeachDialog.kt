@@ -23,9 +23,9 @@ object FirstSpeachDialog {
             dialog.findViewById<Button>(R.id.speach_dialog_ok_button).setOnClickListener {
                 dialog.dismiss()
             }
-//            dialog.findViewById<AppCompatImageView>(R.id.first_speach_image_finik).setImageResource(
-//                ShopRepository(context).getSelected().icon
-//            )
+            dialog.findViewById<AppCompatImageView>(R.id.first_speach_image_finik).setImageResource(
+                ShopRepository(context).getSelected().icon
+            )
             dialog.show()
         }
     }

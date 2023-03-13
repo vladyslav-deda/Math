@@ -9,6 +9,7 @@ import android.view.Window
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
@@ -106,8 +107,9 @@ abstract class BaseViewModel(open val binding: ExerciseFragmentBinding) : ViewMo
                 requestWindowFeature(Window.FEATURE_NO_TITLE);
                 setCancelable(false)
                 setContentView(R.layout.dialog_first_speach_layout)
-                context.let { ShopRepository(it).getSelected().icon }
-                    .let { binding.imageNotification.setImageResource(it) }
+                findViewById<AppCompatImageView>(R.id.first_speach_image_finik).setImageResource(
+                    ShopRepository(context).getSelected().icon
+                )
                 window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 findViewById<TextView>(R.id.tv_main_text).text = text
                 findViewById<Button>(R.id.speach_dialog_ok_button).setOnClickListener {

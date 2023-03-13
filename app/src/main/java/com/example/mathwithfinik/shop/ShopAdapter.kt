@@ -30,7 +30,7 @@ class ShopAdapter(private val shopItemDbs: ArrayList<ShopItemDb>, val context: C
             image.setImageDrawable(context.getDrawable(item.icon))
             name.text = item.name
             price.text = when {
-                item.isSelected -> "Обрано"
+                item.isSelected -> "ОБРАНО"
                 item.isBought -> "КУПЛЕНО"
                 else -> item.price.toString()
             }
