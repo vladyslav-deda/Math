@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mathwithfinik">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
+        android:name=".MathApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/finik"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/finik"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MathWithFinik"
-        android:largeHeap="true"
-        android:hardwareAccelerated="false"
-        >
+        android:theme="@style/Theme.MathWithFinik">
         <activity
-            android:name=".MainActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".SplashScreenActivity"
+            android:name="com.example.presentation.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

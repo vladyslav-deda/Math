@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shared_pref">MyPref</string>
+    <string name="shared_pref_user_name">user_name</string>
+    <string name="math_for_kids">Math\nfor kids</string>
+    <string name="multiply">Множення</string>
+    <string name="divide">Ділення</string>
+    <string name="plus_minus">Додавання і віднімання</string>
+    <string name="zadachi">Задачі</string>
+    <string name="shop">Магазин</string>
+    <string name="left_time">Залишилось: %d</string>
+    <string name="result">Твій результат: %d\nБажаю  успіхів!</string>
+    <string name="score">Рахунок: %d</string>
+    <string name="hard">Важкий</string>
+    <string name="medium">Середній</string>
+    <string name="Easy">Легкий</string>
+</resources>

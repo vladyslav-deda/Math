@@ -8,3 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MathWithFinik"
 include ':app'
+include ':data'
+include ':domain'
+include ':presentation'
