@@ -13,5 +13,6 @@
     <string name="score">Рахунок: %d</string>
     <string name="hard">Важкий</string>
     <string name="medium">Середній</string>
-    <string name="Easy">Легкий</string>
+    <string name="easy">Легкий</string>
+    <string name="continue_study">Продовжити</string>
 </resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/first_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comic_relief"
+        android:textColor="#50795d"
+        android:textSize="90sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:fontFamily="@font/comic_relief"
+        android:textColor="#50795d"
+        android:textSize="90sp"
+        android:textStyle="bold"
+        tools:text="x" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/second_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:fontFamily="@font/comic_relief"
+        android:textColor="#50795d"
+        android:textSize="90sp"
+        android:textStyle="bold"
+        tools:text="2" />
+</androidx.appcompat.widget.LinearLayoutCompat>

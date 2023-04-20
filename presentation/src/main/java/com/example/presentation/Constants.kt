@@ -5,9 +5,9 @@ object Constants {
     const val SHARED_PREFS_NAME = "shared_pref"
     const val BALANCE = "balance"
     const val LEVEL = "level"
-    const val LEVEL_KEY = "level_key"
-    const val EASY_CHAR = "e"
-    const val MEDIUM_CHAR = "m"
-    const val HARD_CHAR = "h"
+    const val EASY_LEVEL = "easy"
+    const val MEDIUM_LEVEL = "medium"
+    const val HARD_LEVEL = "hard"
     const val IMAGE = "image"
+    const val DB_NAME = "shop.db"
 }

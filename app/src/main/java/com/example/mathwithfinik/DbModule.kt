@@ -3,7 +3,7 @@ package com.example.mathwithfinik
 import android.content.Context
 import androidx.room.Room
 import com.example.data.shop.data.ShopDao
-import com.example.data.shop.repository.ShopDatabase
+import com.example.data.shop.database.ShopDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

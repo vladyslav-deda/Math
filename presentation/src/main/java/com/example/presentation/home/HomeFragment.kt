@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.Constants
 import com.example.presentation.R
+import com.example.presentation.base.DialogExtensions.showLevelSelectionDialog
 import com.example.presentation.databinding.FragmentHomeBinding
 import com.example.presentation.home.adapter.HomeAdapter
 import com.example.presentation.home.model.MenuItem
@@ -53,10 +55,7 @@ class HomeFragment : Fragment() {
 
     private fun initViews() {
         binding.apply {
-//            Glide
-//                .with(requireContext())
-//                .load(viewModel.getSelectedItem().icon)
-//                .into(logoImage)
+            logoImage.setImageResource(viewModel.getSelectedItem().icon)
             moneyBalance.text = sharedPref.getInt(Constants.BALANCE, 0).toString()
         }
     }
@@ -71,7 +70,12 @@ class HomeFragment : Fragment() {
 //                    findNavController().navigate(R.id.action_mainScreenFragment_to_divideFragment)
                 }
                 resources.getString(R.string.plus_minus) -> {
-//                    findNavController().navigate(R.id.action_mainScreenFragment_to_complexityFragment)
+                    requireContext().showLevelSelectionDialog(
+                        text = "Обери рівень складності прикладів",
+                        imageRes = viewModel.getSelectedItem().icon
+                    ) { level ->
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPlusMinusFragment(level))
+                    }
                 }
                 resources.getString(R.string.zadachi) -> {
 //                    showDialog(context)
