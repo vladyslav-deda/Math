@@ -32,7 +32,7 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
 
     abstract fun actionBackToMainScreen()
 
-    abstract fun getLevel(): String
+    open fun getLevel(): String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

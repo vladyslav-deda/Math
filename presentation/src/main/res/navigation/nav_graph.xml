@@ -26,6 +26,12 @@
                 app:argType="string"
                 app:nullable="true" />
         </action>
+        <action
+            android:id="@+id/action_homeFragment_to_multiplyFragment"
+            app:destination="@id/multiplyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_divideFragment"
+            app:destination="@id/divideFragment" />
     </fragment>
 
     <fragment
@@ -39,6 +45,22 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_plusMinusFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/multiplyFragment"
+        android:name="com.example.presentation.multiply.MultiplyFragment"
+        android:label="MultiplyFragment" >
+        <action
+            android:id="@+id/action_multiplyFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/divideFragment"
+        android:name="com.example.presentation.divide.DivideFragment"
+        android:label="DivideFragment" >
+        <action
+            android:id="@+id/action_divideFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

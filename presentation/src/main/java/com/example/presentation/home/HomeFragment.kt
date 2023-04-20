@@ -64,10 +64,10 @@ class HomeFragment : Fragment() {
         homeAdapter = HomeAdapter { item ->
             when (item.name) {
                 resources.getString(R.string.multiply) -> {
-//                    findNavController().navigate(R.id.action_mainScreenFragment_to_multiplyFragment)
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMultiplyFragment())
                 }
                 resources.getString(R.string.divide) -> {
-//                    findNavController().navigate(R.id.action_mainScreenFragment_to_divideFragment)
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDivideFragment())
                 }
                 resources.getString(R.string.plus_minus) -> {
                     requireContext().showLevelSelectionDialog(

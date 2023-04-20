@@ -18,9 +18,12 @@ abstract class BaseViewModel(
 
     protected lateinit var pairOfNumbers: Pair<Int, Int>
     protected var result: Int = 0
-    protected lateinit var equationSign: String
+    protected abstract var equationSign: String
+    protected var wrongAnswersList = ArrayList<Int>()
 
-    abstract fun generateMathematicalEquation(level: String): MathematicalEquation
+    abstract fun generateMathematicalEquation(level: String? = null): MathematicalEquation
+
+    abstract fun generatePair(level: String? = null): Pair<Int, Int>
 
     fun increaseScore() {
         val newScore = _currentScore.value?.plus(1)
@@ -37,4 +40,13 @@ abstract class BaseViewModel(
     fun getBalance() = balanceRepository.getBalance()
 
     fun getSelectedItem(): ShopItem = shopRepository.getSelectedItem()
+
+    companion object {
+        const val MIN_VALUE = 1
+        const val SIZE_OF_WRONG_ANSWERS_LIST = 3
+        const val PLUS_SIGN = "+"
+        const val MINUS_SIGN = "-"
+        const val MULTIPLY_SIGN = "×"
+        const val DIVIDE_SIGN = ":"
+    }
 }

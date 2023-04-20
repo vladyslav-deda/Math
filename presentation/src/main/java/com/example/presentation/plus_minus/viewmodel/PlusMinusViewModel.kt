@@ -16,12 +16,13 @@ class PlusMinusViewModel @Inject constructor(
 ) : BaseViewModel(repository, balanceRepository) {
 
     private var isPlusSign = false
+    override var equationSign = if (isPlusSign) PLUS_SIGN else MINUS_SIGN
 
-    override fun generateMathematicalEquation(level: String): MathematicalEquation {
+    override fun generateMathematicalEquation(level: String?): MathematicalEquation {
+        wrongAnswersList.clear()
         isPlusSign = Random.nextBoolean()
-        equationSign = if (isPlusSign) "+" else "-"
+        equationSign = if (isPlusSign) PLUS_SIGN else MINUS_SIGN
         pairOfNumbers = generatePair(level)
-        val wrongAnswersList = ArrayList<Int>()
         if (isPlusSign) {
             result = pairOfNumbers.first + pairOfNumbers.second
             val maxResultValue = genMaxNumberOfLevel(level)
@@ -34,7 +35,6 @@ class PlusMinusViewModel @Inject constructor(
                 pairOfNumbers = generatePair(level)
             }
             result = pairOfNumbers.first - pairOfNumbers.second
-
         }
 
         var maxValueOfWrongAnswer = if (isPlusSign) {
@@ -47,8 +47,8 @@ class PlusMinusViewModel @Inject constructor(
             maxValueOfWrongAnswer = 5
         }
 
-        while (wrongAnswersList.size < 3) {
-            val value = Random.nextInt(1, maxValueOfWrongAnswer)
+        while (wrongAnswersList.size < SIZE_OF_WRONG_ANSWERS_LIST) {
+            val value = Random.nextInt(MIN_VALUE, maxValueOfWrongAnswer)
             if (value != result && !wrongAnswersList.contains(value)) {
                 wrongAnswersList.add(value)
             }
@@ -62,14 +62,14 @@ class PlusMinusViewModel @Inject constructor(
         )
     }
 
-    private fun generatePair(level: String): Pair<Int, Int> {
+    override fun generatePair(level: String?): Pair<Int, Int> {
         val maxValue = genMaxNumberOfLevel(level)
-        val firstValue: Int = Random.nextInt(1, maxValue)
-        val secondValue: Int = Random.nextInt(1, maxValue)
+        val firstValue = Random.nextInt(MIN_VALUE, maxValue)
+        val secondValue = Random.nextInt(MIN_VALUE, maxValue)
         return Pair(firstValue, secondValue)
     }
 
-    private fun genMaxNumberOfLevel(level: String) = when (level) {
+    private fun genMaxNumberOfLevel(level: String?) = when (level) {
         Constants.EASY_LEVEL -> 10
         Constants.MEDIUM_LEVEL -> 100
         else -> 500
