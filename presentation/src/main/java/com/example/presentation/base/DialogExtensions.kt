@@ -43,7 +43,6 @@ object DialogExtensions {
     ) {
         Dialog(this).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
-            setCancelable(false)
             setContentView(R.layout.level_dialog_layout)
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             findViewById<AppCompatImageView>(R.id.image_logo).setImageResource(imageRes)

@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/back_for_item"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/exercise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

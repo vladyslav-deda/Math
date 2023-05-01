@@ -71,7 +71,6 @@
         android:background="@drawable/back_for_button_level_easy"
         android:fontFamily="@font/comic_relief_bold"
         android:gravity="center"
-        android:padding="10dp"
         android:text="@string/easy"
         android:textAllCaps="false"
         android:textColor="#344748"

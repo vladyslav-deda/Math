@@ -1,17 +1,13 @@
 package com.example.presentation.home
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.presentation.Constants
 import com.example.presentation.R
 import com.example.presentation.base.DialogExtensions.showLevelSelectionDialog
 import com.example.presentation.databinding.FragmentHomeBinding
@@ -27,17 +23,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel by viewModels<HomeViewModel>()
 
-    private lateinit var sharedPref: SharedPreferences
-
     private var homeAdapter: HomeAdapter? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        sharedPref = context.getSharedPreferences(
-            Constants.SHARED_PREFS_NAME,
-            AppCompatActivity.MODE_PRIVATE
-        )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +42,7 @@ class HomeFragment : Fragment() {
     private fun initViews() {
         binding.apply {
             logoImage.setImageResource(viewModel.getSelectedItem().icon)
-            moneyBalance.text = sharedPref.getInt(Constants.BALANCE, 0).toString()
+            moneyBalance.text = viewModel.getBalance().toString()
         }
     }
 
