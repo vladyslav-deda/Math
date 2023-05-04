@@ -19,9 +19,7 @@ class PlusMinusFragment : BaseExerciseFragment<PlusMinusViewModel>() {
 
     private val args: PlusMinusFragmentArgs by navArgs()
 
-    override fun getLevel(): String {
-        return args.level ?: ""
-    }
+    override fun getLevel()= args.level ?: ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

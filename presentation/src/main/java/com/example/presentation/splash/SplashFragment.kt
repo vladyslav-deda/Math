@@ -49,7 +49,7 @@ class SplashFragment : Fragment() {
         }
         lifecycleScope.launch {
             delay(3000)
-            findNavController().navigate(SplashFragmentDirections.splashFragmentToHomeFragment())
+            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToAuthFragment())
         }
     }
 }
