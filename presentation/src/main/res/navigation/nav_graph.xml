@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_homeFragment_to_divideFragment"
             app:destination="@id/divideFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
     </fragment>
 
     <fragment
@@ -80,6 +83,14 @@
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.example.presentation.add_task.AddTaskFragment"
+        android:label="AddTaskFragment" >
+        <action
+            android:id="@+id/action_addTaskFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

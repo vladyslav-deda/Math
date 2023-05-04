@@ -16,4 +16,6 @@
     <string name="easy">Легкий</string>
     <string name="continue_study">Продовжити</string>
     <string name="add_task">Додати задачу</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

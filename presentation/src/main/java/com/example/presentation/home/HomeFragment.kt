@@ -76,6 +76,10 @@ class HomeFragment : Fragment() {
 //                    findNavController().navigate(R.id.action_mainScreenFragment_to_shopFragment)
                 }
 
+                getString(R.string.add_task) -> {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddTaskFragment())
+                }
+
                 else -> {
                 }
             }

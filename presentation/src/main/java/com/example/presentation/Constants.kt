@@ -14,5 +14,6 @@ object Constants {
     const val ADMIN_ACCESS_LEVEL = "admin"
     const val PUPIL_ACCESS_LEVEL = "pupil"
     const val USERS_DB_NAME = "Users"
+    const val TASKS_DB_NAME = "Tasks"
     const val MONEY_BALANCE = "moneyBalance"
 }
