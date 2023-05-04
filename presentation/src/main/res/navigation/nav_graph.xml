@@ -77,5 +77,9 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.presentation.register.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

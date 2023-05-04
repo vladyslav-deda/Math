@@ -8,8 +8,12 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.domain.holder.SessionHolder
 import com.example.presentation.databinding.RegisterFragmentBinding
-import com.example.presentation.register.model.User
+import com.example.domain.holder.model.User
+import com.example.presentation.Constants
+import com.example.presentation.Constants.USERS_DB_NAME
 import com.example.presentation.register.viewmodel.RegisterViewModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -29,22 +33,23 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = RegisterFragmentBinding.inflate(inflater, container, false)
+        databaseReference = FirebaseDatabase.getInstance().getReference(USERS_DB_NAME)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         binding.registerButton.setOnClickListener {
             if (viewModel.email.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
                 return@setOnClickListener
             }
-            val newUser = User(viewModel.email.value, viewModel.password.value, 20)
+            val newUser = User(viewModel.email.value, viewModel.password.value, 0, Constants.PUPIL_ACCESS_LEVEL)
             databaseReference.child(viewModel.email.value.toString()).setValue(newUser).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Toast.makeText(requireContext(), "Account created", Toast.LENGTH_SHORT).show()
+                    SessionHolder.currentUser = newUser
+                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToHomeFragment())
                 } else {
-                    Toast.makeText(requireContext(), "Account was not created", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Під час реєстрації виникла помилка, спробуйте знову", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -9,11 +9,13 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.domain.holder.SessionHolder
+import com.example.domain.holder.model.User
+import com.example.presentation.Constants
 import com.example.presentation.auth.viewmodel.AuthViewModel
 import com.example.presentation.databinding.AuthFragmentBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.getValue
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,12 +32,12 @@ class AuthFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = AuthFragmentBinding.inflate(inflater, container, false)
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.USERS_DB_NAME)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         binding.loginButton.setOnClickListener {
             if (viewModel.email.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), "empty fields", Toast.LENGTH_SHORT).show()
@@ -44,9 +46,10 @@ class AuthFragment : Fragment() {
             databaseReference.child(viewModel.email.value.toString()).get().addOnCompleteListener {
                 if (it.isSuccessful) {
                     if (it.result.exists()) {
-                        val password = it.result.child("password").getValue<String>()
-                        if (password.equals(viewModel.password.value)) {
-                            Toast.makeText(requireContext(), "User was found and pass is correct", Toast.LENGTH_SHORT).show()
+                        val user = it.result.getValue(User::class.java) as User
+                        if (user.password.equals(viewModel.password.value)) {
+                            SessionHolder.currentUser = user
+                            findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
                         } else {
                             Toast.makeText(requireContext(), "User was found and pass is NOTcorrect", Toast.LENGTH_SHORT).show()
                         }

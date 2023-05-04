@@ -7,13 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.domain.holder.SessionHolder
+import com.example.presentation.Constants
+import com.example.presentation.Constants.MONEY_BALANCE
 import com.example.presentation.R
 import com.example.presentation.base.DialogExtensions.showInfoDialog
 import com.example.presentation.base.viewmodel.BaseViewModel
 import com.example.presentation.databinding.BaseFragmentForExerciseBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlin.random.Random
 
 abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
@@ -34,12 +40,15 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
 
     open fun getLevel(): String = ""
 
+    private lateinit var databaseReference: DatabaseReference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = BaseFragmentForExerciseBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[getViewModelClass()]
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.USERS_DB_NAME)
         return binding.root
     }
 
@@ -57,9 +66,9 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
             override fun onFinish() {
                 viewModel.currentScore.value?.let { currentScore ->
                     if (currentScore > 0) {
-                        val currentBalance = viewModel.getBalance()
+                        val currentBalance = SessionHolder.currentUser?.moneyBalance ?: 0
                         val newBalance = currentBalance + currentScore
-                        viewModel.updateBalance(newBalance)
+                        updateBalance(newBalance)
                     }
 
                 }
@@ -74,6 +83,19 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
 
         observeStates()
         generateNewEquation(getLevel())
+    }
+
+    private fun updateBalance(newBalance: Int) {
+        SessionHolder.currentUser?.userName?.let {
+            databaseReference.child(it).child(MONEY_BALANCE).setValue(newBalance).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(requireContext(), "Баланс $newBalance оновлено успішно", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Баланс не оновлено", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        SessionHolder.currentUser?.moneyBalance = newBalance
     }
 
     private fun observeStates() {

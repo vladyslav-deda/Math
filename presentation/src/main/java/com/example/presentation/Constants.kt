@@ -10,4 +10,9 @@ object Constants {
     const val HARD_LEVEL = "hard"
     const val IMAGE = "image"
     const val DB_NAME = "shop.db"
+
+    const val ADMIN_ACCESS_LEVEL = "admin"
+    const val PUPIL_ACCESS_LEVEL = "pupil"
+    const val USERS_DB_NAME = "Users"
+    const val MONEY_BALANCE = "moneyBalance"
 }
