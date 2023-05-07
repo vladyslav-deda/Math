@@ -37,7 +37,7 @@ class AddTaskFragment : Fragment() {
         binding.apply {
             addTask.setOnClickListener {
                 if (taskEdittext.text.isNullOrEmpty() || answerEdittext.text.isNullOrEmpty()) {
-                    Toast.makeText(requireContext(), "Задачу було введено не коректно", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Не всі поля було заповнено", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 databaseReference.push()

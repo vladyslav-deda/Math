@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
     private fun initViews() {
         binding.apply {
             logoImage.setImageResource(viewModel.getSelectedItem().icon)
-            moneyBalance.text = SessionHolder.currentUser?.moneyBalance.toString()
+            moneyBalance.text = (SessionHolder.currentUser?.moneyBalance ?: 0).toString()
         }
     }
 
@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
                 }
 
                 getString(R.string.zadachi) -> {
-//                    showDialog(context)
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMathTaskFragment())
                 }
 
                 getString(R.string.shop) -> {

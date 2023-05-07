@@ -31,8 +31,12 @@ abstract class BaseViewModel(
     }
 
     fun decreaseScore() {
-        val newScore = _currentScore.value?.minus(1)
-        _currentScore.postValue(newScore)
+        _currentScore.value?.let { currentScore ->
+            if (currentScore > 0) {
+                val newScore = currentScore - 1
+                _currentScore.postValue(newScore)
+            }
+        }
     }
 
     fun updateBalance(balance: Int) = balanceRepository.updateBalance(balance)

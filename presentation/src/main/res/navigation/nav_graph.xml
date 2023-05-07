@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mathTaskFragment"
+            app:destination="@id/mathTaskFragment" />
     </fragment>
 
     <fragment
@@ -91,6 +94,14 @@
         android:label="AddTaskFragment" >
         <action
             android:id="@+id/action_addTaskFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mathTaskFragment"
+        android:name="com.example.presentation.math_task.MathTaskFragment"
+        android:label="MathTaskFragment" >
+        <action
+            android:id="@+id/action_mathTaskFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
