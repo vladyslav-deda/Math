@@ -117,13 +117,14 @@ class MathTaskFragment : Fragment() {
                 findNavController().popBackStack()
             }
         )
-        viewModel.currentScore.value?.let { currentScore ->
-            if (currentScore > 0) {
-                val currentBalance = SessionHolder.currentUser?.moneyBalance ?: 0
-                val newBalance = currentBalance + currentScore
-                updateBalance(newBalance)
+        if (SessionHolder.isUserAuthorized) {
+            viewModel.currentScore.value?.let { currentScore ->
+                if (currentScore > 0) {
+                    val currentBalance = SessionHolder.currentUser?.moneyBalance ?: 0
+                    val newBalance = currentBalance + currentScore
+                    updateBalance(newBalance)
+                }
             }
-
         }
     }
 

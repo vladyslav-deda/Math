@@ -49,6 +49,7 @@ class AuthFragment : Fragment() {
                         val user = it.result.getValue(User::class.java) as User
                         if (user.password.equals(viewModel.password.value)) {
                             SessionHolder.currentUser = user
+                            SessionHolder.isUserAuthorized = true
                             findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
                         } else {
                             Toast.makeText(requireContext(), "User was found and pass is NOTcorrect", Toast.LENGTH_SHORT).show()
@@ -70,6 +71,10 @@ class AuthFragment : Fragment() {
             }
             registerButton.setOnClickListener {
                 findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToRegisterFragment())
+            }
+            continueWithoutAuth.setOnClickListener {
+                SessionHolder.isUserAuthorized = false
+                findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
             }
         }
 

@@ -64,19 +64,20 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
             }
 
             override fun onFinish() {
-                viewModel.currentScore.value?.let { currentScore ->
-                    if (currentScore > 0) {
-                        val currentBalance = SessionHolder.currentUser?.moneyBalance ?: 0
-                        val newBalance = currentBalance + currentScore
-                        updateBalance(newBalance)
-                    }
-
-                }
                 requireContext().showInfoDialog(
                     text = resources.getString(R.string.result, viewModel.currentScore.value),
                     imageRes = viewModel.getSelectedItem().icon,
                     okButtonAction = { actionBackToMainScreen() }
                 )
+                if (SessionHolder.isUserAuthorized) {
+                    viewModel.currentScore.value?.let { currentScore ->
+                        if (currentScore > 0) {
+                            val currentBalance = SessionHolder.currentUser?.moneyBalance ?: 0
+                            val newBalance = currentBalance + currentScore
+                            updateBalance(newBalance)
+                        }
+                    }
+                }
             }
         }
         timer.start()

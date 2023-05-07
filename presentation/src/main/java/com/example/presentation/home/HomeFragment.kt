@@ -44,6 +44,13 @@ class HomeFragment : Fragment() {
     private fun initViews() {
         binding.apply {
             logoImage.setImageResource(viewModel.getSelectedItem().icon)
+            if (SessionHolder.isUserAuthorized) {
+                moneyBalance.apply {
+                    visibility = View.VISIBLE
+                    text = (SessionHolder.currentUser?.moneyBalance ?: 0).toString()
+                }
+                moneyImage.visibility = View.VISIBLE
+            }
             moneyBalance.text = (SessionHolder.currentUser?.moneyBalance ?: 0).toString()
         }
     }
@@ -115,13 +122,17 @@ class HomeFragment : Fragment() {
                 MenuItem(
                     icon = ContextCompat.getDrawable(requireContext(), R.drawable.icon_zadachi),
                     name = getString(R.string.zadachi)
-                ),
+                )
+            )
+        )
+        if (SessionHolder.isUserAuthorized) {
+            list.add(
                 MenuItem(
                     icon = ContextCompat.getDrawable(requireContext(), R.drawable.icon_shopping_cart),
                     name = getString(R.string.shop)
                 )
             )
-        )
+        }
         return list
     }
 }

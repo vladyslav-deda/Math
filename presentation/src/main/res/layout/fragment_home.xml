@@ -23,9 +23,11 @@
         android:layout_height="50dp"
         android:layout_margin="30dp"
         android:src="@drawable/icon_coin"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/logo_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logo_image" />
+        app:layout_constraintTop_toTopOf="@+id/logo_image"
+        tools:visibility="visible" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/money_balance"
@@ -35,17 +37,19 @@
         android:fontFamily="cursive"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/money_image"
         app:layout_constraintEnd_toStartOf="@+id/money_image"
         app:layout_constraintTop_toTopOf="@+id/money_image"
-        tools:text="299" />
+        tools:text="299"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/menu_items"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="10dp"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:transitionGroup="true"
