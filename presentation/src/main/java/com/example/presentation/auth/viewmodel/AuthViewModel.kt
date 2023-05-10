@@ -12,6 +12,9 @@ class AuthViewModel : ViewModel() {
     private val _password = MutableLiveData<String>()
     val password: LiveData<String> = _password
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun updateEmail(email: String) {
         _email.postValue(email)
     }
@@ -19,4 +22,6 @@ class AuthViewModel : ViewModel() {
     fun updatePassword(password: String) {
         _password.postValue(password)
     }
+
+    fun setIsLoading(isLoading: Boolean) = _isLoading.postValue(isLoading)
 }

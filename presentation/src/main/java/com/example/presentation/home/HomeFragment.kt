@@ -44,9 +44,7 @@ class HomeFragment : Fragment() {
 
     private fun initViews() {
         binding.apply {
-            SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon?.let {
-                logoImage.setImageResource(it)
-            }
+            logoImage.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat)
             if (SessionHolder.isUserAuthorized) {
                 moneyBalance.apply {
                     visibility = View.VISIBLE

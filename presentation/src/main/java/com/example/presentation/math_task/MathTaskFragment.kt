@@ -17,6 +17,7 @@ import com.example.domain.holder.model.Task
 import com.example.presentation.Constants
 import com.example.presentation.R
 import com.example.presentation.base.DialogExtensions.showInfoDialog
+import com.example.presentation.base.getSelectedItem
 import com.example.presentation.databinding.MathTaskFragmentBinding
 import com.example.presentation.math_task.viewmodel.MathTaskViewModel
 import com.google.firebase.database.DatabaseReference
@@ -83,8 +84,7 @@ class MathTaskFragment : Fragment() {
                         visibility = VISIBLE
                         background = ContextCompat.getDrawable(requireContext(), R.drawable.back_for_item)
                     }
-                    // TODO(Update Image res)
-                    imageNotification.setImageResource(R.drawable.logo_cat)
+                    imageNotification.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat)
                     viewModel.currentScore.value?.let { currentScore ->
                         if (currentScore < 10) {
                             generateTask()
@@ -103,8 +103,7 @@ class MathTaskFragment : Fragment() {
                         visibility = VISIBLE
                         background = ContextCompat.getDrawable(requireContext(), R.drawable.back_red)
                     }
-                    // TODO(Update Image res)
-                    imageNotification.setImageResource(R.drawable.logo_cat)
+                    imageNotification.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat)
                     answer.text.clear()
                 }
             }
@@ -114,8 +113,7 @@ class MathTaskFragment : Fragment() {
     private fun endOfRound() {
         requireContext().showInfoDialog(
             text = resources.getString(R.string.result, viewModel.currentScore.value),
-            // TODO(Update Image res)
-            imageRes = R.drawable.logo_cat,
+            imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat,
             okButtonAction = {
                 findNavController().popBackStack()
             }

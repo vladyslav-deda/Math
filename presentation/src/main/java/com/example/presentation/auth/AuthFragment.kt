@@ -38,31 +38,44 @@ class AuthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.loginButton.setOnClickListener {
-            if (viewModel.email.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), "empty fields", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            databaseReference.child(viewModel.email.value.toString()).get().addOnCompleteListener {
-                if (it.isSuccessful) {
-                    if (it.result.exists()) {
-                        val user = it.result.getValue(User::class.java) as User
-                        if (user.password.equals(viewModel.password.value)) {
-                            SessionHolder.currentUser = user
-                            SessionHolder.isUserAuthorized = true
-                            findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
+        initViews()
+        observeState()
+    }
+
+    private fun observeState() {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            updateUI(it)
+        }
+    }
+
+    private fun initViews() {
+        binding.apply {
+            loginButton.setOnClickListener {
+                if (viewModel.email.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), "Не всі поля є заповненими!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                databaseReference.child(viewModel.email.value.toString()).get().addOnCompleteListener {
+                    viewModel.setIsLoading(true)
+                    if (it.isSuccessful) {
+                        if (it.result.exists()) {
+                            val user = it.result.getValue(User::class.java) as User
+                            if (user.password.equals(viewModel.password.value)) {
+                                SessionHolder.currentUser = user
+                                SessionHolder.isUserAuthorized = true
+                                findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
+                            } else {
+                                Toast.makeText(requireContext(), "Неправильно введений пароль", Toast.LENGTH_SHORT).show()
+                            }
                         } else {
-                            Toast.makeText(requireContext(), "User was found and pass is NOTcorrect", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Користувача з таким нікнеймом не було знайдено", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(requireContext(), "User was not found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Сталася помилка під час авторизації, спробуйте ще раз", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    Toast.makeText(requireContext(), "Error during login", Toast.LENGTH_SHORT).show()
+                    viewModel.setIsLoading(false)
                 }
             }
-        }
-        binding.apply {
             emailEdittext.doOnTextChanged { text, _, _, _ ->
                 viewModel.updateEmail(text.toString())
             }
@@ -77,6 +90,17 @@ class AuthFragment : Fragment() {
                 findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
             }
         }
+    }
 
+    private fun updateUI(isLoading: Boolean) {
+        binding.apply {
+            if (isLoading) {
+                mainLayout.visibility = View.GONE
+                progressbar.visibility = View.VISIBLE
+            } else {
+                mainLayout.visibility = View.VISIBLE
+                progressbar.visibility = View.GONE
+            }
+        }
     }
 }

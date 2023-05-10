@@ -66,8 +66,7 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
             override fun onFinish() {
                 requireContext().showInfoDialog(
                     text = resources.getString(R.string.result, viewModel.currentScore.value),
-                    // TODO(Update Image res)
-                    imageRes = R.drawable.logo_cat,
+                    imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat,
                     okButtonAction = { actionBackToMainScreen() }
                 )
                 if (SessionHolder.isUserAuthorized) {
@@ -132,8 +131,9 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
                             visibility = View.VISIBLE
                             background = ContextCompat.getDrawable(requireContext(), R.drawable.back_for_item)
                         }
-                        // TODO(Update Image res)
-                        imageNotification.setImageResource(R.drawable.logo_cat)
+                        imageNotification.setImageResource(
+                            SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat
+                        )
                         generateNewEquation(level)
                     }
                 }
@@ -152,8 +152,9 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
                                     visibility = View.VISIBLE
                                     background = ContextCompat.getDrawable(requireContext(), R.drawable.back_red)
                                 }
-                                // TODO(Update Image res)
-                                imageNotification.setImageResource(R.drawable.logo_cat)
+                                imageNotification.setImageResource(
+                                    SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat
+                                )
                                 viewModel.currentScore.value?.let { currentScore ->
                                     if (currentScore > 0) {
                                         viewModel.decreaseScore()
