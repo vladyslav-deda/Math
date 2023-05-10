@@ -12,7 +12,7 @@ import kotlin.random.Random
 class DivideViewModel @Inject constructor(
     repository: ShopRepository,
     balanceRepository: BalanceRepository
-) : BaseViewModel(repository, balanceRepository) {
+) : BaseViewModel() {
 
     override var equationSign = DIVIDE_SIGN
 

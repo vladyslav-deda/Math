@@ -1,22 +1,22 @@
 package com.example.domain.shop
 
-import com.example.domain.shop.model.ShopItem
+import com.example.domain.shop.model.ShopDataTest
 
 interface ShopRepository {
 
-    fun insertShopItem(shopItem: ShopItem)
+    fun insertShopItem(shopItem: ShopDataTest)
 
-    fun getAllShopItems(): List<ShopItem>
+    fun getAllShopItems(): List<ShopDataTest>
 
-    fun updateShopItem(shopItem: ShopItem)
+    fun updateShopItem(shopItem: ShopDataTest)
 
-    fun deleteShopItem(shopItem: ShopItem)
+    fun deleteShopItem(shopItem: ShopDataTest)
 
     fun deleteAllItems()
 
     fun setIsBought(id: Int)
 
-    fun getSelectedItem(): ShopItem
+    fun getSelectedItem(): ShopDataTest
 
     fun setItemSelectedTrue(id: Int)
 }

@@ -12,6 +12,7 @@ import com.example.domain.holder.SessionHolder
 import com.example.presentation.Constants
 import com.example.presentation.R
 import com.example.presentation.base.DialogExtensions.showLevelSelectionDialog
+import com.example.presentation.base.getSelectedItem
 import com.example.presentation.databinding.FragmentHomeBinding
 import com.example.presentation.home.adapter.HomeAdapter
 import com.example.presentation.home.model.MenuItem
@@ -43,7 +44,9 @@ class HomeFragment : Fragment() {
 
     private fun initViews() {
         binding.apply {
-            logoImage.setImageResource(viewModel.getSelectedItem().icon)
+            SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon?.let {
+                logoImage.setImageResource(it)
+            }
             if (SessionHolder.isUserAuthorized) {
                 moneyBalance.apply {
                     visibility = View.VISIBLE
@@ -51,7 +54,6 @@ class HomeFragment : Fragment() {
                 }
                 moneyImage.visibility = View.VISIBLE
             }
-            moneyBalance.text = (SessionHolder.currentUser?.moneyBalance ?: 0).toString()
         }
     }
 
@@ -69,7 +71,7 @@ class HomeFragment : Fragment() {
                 getString(R.string.plus_minus) -> {
                     requireContext().showLevelSelectionDialog(
                         text = "Обери рівень складності прикладів",
-                        imageRes = viewModel.getSelectedItem().icon
+                        imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat
                     ) { level ->
                         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPlusMinusFragment(level))
                     }
@@ -80,7 +82,7 @@ class HomeFragment : Fragment() {
                 }
 
                 getString(R.string.shop) -> {
-//                    findNavController().navigate(R.id.action_mainScreenFragment_to_shopFragment)
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToShopFragment())
                 }
 
                 getString(R.string.add_task) -> {

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.holder.model.Task
 import com.example.domain.shop.ShopRepository
-import com.example.domain.shop.model.ShopItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,9 +26,6 @@ class MathTaskViewModel @Inject constructor(
     fun addTask(task: Task) = listOfTasks.add(task)
 
     fun getListOfTasks() = listOfTasks
-
-
-    fun getSelectedItem(): ShopItem = shopRepository.getSelectedItem()
 
     fun increaseScore() {
         val newScore = _currentScore.value?.plus(1)

@@ -1,24 +1,27 @@
 package com.example.data.shop
 
 import com.example.data.shop.data.ShopDao
+import com.example.domain.shop.model.ShopDataTest
 import com.example.domain.shop.ShopRepository
-import com.example.domain.shop.model.ShopItem
+import javax.inject.Inject
 
-class ShopRepositoryImpl (
+class ShopRepositoryImpl @Inject constructor(
     private val shopDao: ShopDao
 ) : ShopRepository {
 
-    override fun insertShopItem(shopItem: ShopItem) = shopDao.insertShopItem(shopItem)
+    override fun insertShopItem(shopItem: ShopDataTest) = shopDao.insertShopItem(shopItem)
 
-    override fun getAllShopItems(): List<ShopItem> = shopDao.getAllShopItems()
+    override fun getAllShopItems(): List<ShopDataTest> = shopDao.getAllShopItems()
 
-    override fun updateShopItem(shopItem: ShopItem) = shopDao.updateShopItem(shopItem)
+    override fun updateShopItem(shopItem: ShopDataTest) = shopDao.updateShopItem(shopItem)
 
-    override fun deleteShopItem(shopItem: ShopItem) = shopDao.deleteShopItem(shopItem)
+    override fun deleteShopItem(shopItem: ShopDataTest) = shopDao.deleteShopItem(shopItem)
 
     override fun deleteAllItems() = shopDao.deleteAllItems()
 
-    override fun setIsBought(id: Int) = shopDao.updateItem(id)
+    override fun setIsBought(id: Int) {
+        shopDao.setIsBought(id)
+    }
 
     override fun getSelectedItem() = shopDao.getSelectedItem()
 

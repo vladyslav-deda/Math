@@ -90,7 +90,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_margin="15dp"
-            android:src="@drawable/finik" />
+            android:src="@drawable/logo_cat" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_notification"

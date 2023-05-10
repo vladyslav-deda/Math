@@ -9,7 +9,7 @@ import android.view.animation.AlphaAnimation
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+import com.example.presentation.R
 import com.example.presentation.databinding.FragmentSplashBinding
 import com.example.presentation.splash.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,12 +39,9 @@ class SplashFragment : Fragment() {
         }
         binding.apply {
             name.startAnimation(anim)
-            imageFinik.apply {
-                Glide
-                    .with(requireContext())
-                    .load(viewModel.getSelectedItem().icon)
-                    .into(this)
-                this.startAnimation(anim)
+            imageLogo.apply {
+                setImageResource(R.drawable.logo_cat)
+                startAnimation(anim)
             }
         }
         lifecycleScope.launch {

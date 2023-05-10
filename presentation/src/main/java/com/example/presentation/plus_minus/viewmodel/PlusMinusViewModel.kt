@@ -13,7 +13,7 @@ import kotlin.random.Random
 class PlusMinusViewModel @Inject constructor(
     repository: ShopRepository,
     balanceRepository: BalanceRepository
-) : BaseViewModel(repository, balanceRepository) {
+) : BaseViewModel() {
 
     private var isPlusSign = false
     override var equationSign = if (isPlusSign) PLUS_SIGN else MINUS_SIGN

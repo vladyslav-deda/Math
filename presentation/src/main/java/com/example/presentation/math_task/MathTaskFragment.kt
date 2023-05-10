@@ -83,7 +83,8 @@ class MathTaskFragment : Fragment() {
                         visibility = VISIBLE
                         background = ContextCompat.getDrawable(requireContext(), R.drawable.back_for_item)
                     }
-                    imageNotification.setImageResource(viewModel.getSelectedItem().icon)
+                    // TODO(Update Image res)
+                    imageNotification.setImageResource(R.drawable.logo_cat)
                     viewModel.currentScore.value?.let { currentScore ->
                         if (currentScore < 10) {
                             generateTask()
@@ -102,7 +103,8 @@ class MathTaskFragment : Fragment() {
                         visibility = VISIBLE
                         background = ContextCompat.getDrawable(requireContext(), R.drawable.back_red)
                     }
-                    imageNotification.setImageResource(viewModel.getSelectedItem().icon)
+                    // TODO(Update Image res)
+                    imageNotification.setImageResource(R.drawable.logo_cat)
                     answer.text.clear()
                 }
             }
@@ -112,7 +114,8 @@ class MathTaskFragment : Fragment() {
     private fun endOfRound() {
         requireContext().showInfoDialog(
             text = resources.getString(R.string.result, viewModel.currentScore.value),
-            imageRes = viewModel.getSelectedItem().icon,
+            // TODO(Update Image res)
+            imageRes = R.drawable.logo_cat,
             okButtonAction = {
                 findNavController().popBackStack()
             }

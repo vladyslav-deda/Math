@@ -7,7 +7,7 @@
     android:background="@color/main_orange">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_finik"
+        android:id="@+id/image_logo"
         android:layout_width="260dp"
         android:layout_height="260dp"
         android:transitionName="image_finik"
@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/finik"
+        tools:src="@drawable/logo_cat"
         />
 
     <com.google.android.material.textview.MaterialTextView
@@ -28,8 +28,8 @@
         android:text="@string/math_for_kids"
         android:textColor="#344748"
         android:textSize="35sp"
-        app:layout_constraintEnd_toEndOf="@+id/image_finik"
-        app:layout_constraintStart_toStartOf="@+id/image_finik"
-        app:layout_constraintTop_toBottomOf="@id/image_finik"
+        app:layout_constraintEnd_toEndOf="@+id/image_logo"
+        app:layout_constraintStart_toStartOf="@+id/image_logo"
+        app:layout_constraintTop_toBottomOf="@id/image_logo"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,10 +12,9 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_margin="30dp"
-        android:src="@drawable/finik"
-        android:transitionName="image_finik"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/logo_cat" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/money_image"

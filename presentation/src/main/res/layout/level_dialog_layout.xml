@@ -13,7 +13,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        tools:src="@drawable/finik" />
+        tools:src="@drawable/logo_cat" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/description"

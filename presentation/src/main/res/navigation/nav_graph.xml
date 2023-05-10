@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
@@ -38,6 +39,9 @@
         <action
             android:id="@+id/action_homeFragment_to_mathTaskFragment"
             app:destination="@id/mathTaskFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_shopFragment"
+            app:destination="@id/shopFragment" />
     </fragment>
 
     <fragment
@@ -102,6 +106,15 @@
         android:label="MathTaskFragment" >
         <action
             android:id="@+id/action_mathTaskFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.example.presentation.shop.ShopFragment"
+        android:label="shop_fragment"
+        tools:layout="@layout/shop_fragment" >
+        <action
+            android:id="@+id/action_shopFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
