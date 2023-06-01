@@ -4,6 +4,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.shop.model.ShopItem
+import com.example.presentation.base.getImageRes
 import com.example.presentation.databinding.ShopItemBinding
 
 class ShopViewHolder(
@@ -15,9 +16,8 @@ class ShopViewHolder(
 
     fun bind(shopItem: ShopItem) {
         binding.apply {
-            shopItem.icon?.let {
-                image.setImageDrawable(ContextCompat.getDrawable(itemView.context, it))
-            }
+            image.setImageDrawable(ContextCompat.getDrawable(itemView.context, shopItem.getImageRes()))
+
             price.text = when {
                 shopItem.isSelected == true -> "ОБРАНО"
                 shopItem.isBought == true -> "КУПЛЕНО"

@@ -82,7 +82,7 @@ class AuthFragment : Fragment() {
             passwordEdittext.doOnTextChanged { text, _, _, _ ->
                 viewModel.updatePassword(text.toString())
             }
-            registerButton.setOnClickListener {
+            register.setOnClickListener {
                 findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToRegisterFragment())
             }
             continueWithoutAuth.setOnClickListener {

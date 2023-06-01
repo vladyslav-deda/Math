@@ -12,6 +12,7 @@ import com.example.domain.holder.SessionHolder
 import com.example.presentation.Constants
 import com.example.presentation.R
 import com.example.presentation.base.DialogExtensions.showLevelSelectionDialog
+import com.example.presentation.base.getImageRes
 import com.example.presentation.base.getSelectedItem
 import com.example.presentation.databinding.FragmentHomeBinding
 import com.example.presentation.home.adapter.HomeAdapter
@@ -44,7 +45,7 @@ class HomeFragment : Fragment() {
 
     private fun initViews() {
         binding.apply {
-            logoImage.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat)
+            logoImage.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat)
             if (SessionHolder.isUserAuthorized) {
                 moneyBalance.apply {
                     visibility = View.VISIBLE
@@ -69,7 +70,7 @@ class HomeFragment : Fragment() {
                 getString(R.string.plus_minus) -> {
                     requireContext().showLevelSelectionDialog(
                         text = "Обери рівень складності прикладів",
-                        imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat
+                        imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat
                     ) { level ->
                         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPlusMinusFragment(level))
                     }

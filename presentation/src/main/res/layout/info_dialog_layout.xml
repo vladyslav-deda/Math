@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="30dp"
-        android:background="@drawable/back_for_button"
+        android:background="@drawable/back_for_item"
         android:fontFamily="@font/comic_relief_bold"
         android:padding="10dp"
         android:paddingStart="20dp"

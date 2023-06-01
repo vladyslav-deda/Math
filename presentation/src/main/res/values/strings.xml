@@ -9,7 +9,7 @@
     <string name="zadachi">Задачі</string>
     <string name="shop">Магазин</string>
     <string name="left_time">Залишилось: %d</string>
-    <string name="result">Твій результат: %d\nБажаю  успіхів!</string>
+    <string name="result">Твій результат: %d\nБажаю     успіхів!</string>
     <string name="score">Рахунок: %d</string>
     <string name="hard">Важкий</string>
     <string name="medium">Середній</string>
@@ -17,4 +17,11 @@
     <string name="continue_study">Продовжити</string>
     <string name="add_task">Додати задачу</string>
     <string name="continue_without_auth"><u>Продовжити без авторизації</u></string>
+    <string name="register_message">Досі немаєш акаунта? <u>Зареєструватись</u></string>
+    <string name="auth">Авторизація</string>
+    <string name="nickname">Нікнейм</string>
+    <string name="password">Пароль</string>
+    <string name="sign_up">Зареєструватися</string>
+    <string name="registration">Реєстрація</string>
+    <string name="log_in">Авторизуватися</string>
 </resources>

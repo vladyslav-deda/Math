@@ -24,7 +24,7 @@ class ShopAdapter(
 
 private class ShopDiffUtil : DiffUtil.ItemCallback<ShopItem>() {
     override fun areItemsTheSame(oldItem: ShopItem, newItem: ShopItem): Boolean {
-        return oldItem.icon == newItem.icon
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: ShopItem, newItem: ShopItem): Boolean {

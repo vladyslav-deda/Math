@@ -17,6 +17,7 @@ import com.example.domain.holder.model.Task
 import com.example.presentation.Constants
 import com.example.presentation.R
 import com.example.presentation.base.DialogExtensions.showInfoDialog
+import com.example.presentation.base.getImageRes
 import com.example.presentation.base.getSelectedItem
 import com.example.presentation.databinding.MathTaskFragmentBinding
 import com.example.presentation.math_task.viewmodel.MathTaskViewModel
@@ -73,6 +74,7 @@ class MathTaskFragment : Fragment() {
             answer.text.clear()
             task.text = mathTask.text
             buttonAnswer.setOnClickListener {
+                if (answer.text.isEmpty()) return@setOnClickListener
                 if (answer.text.toString().toInt() == mathTask.answer) {
                     viewModel.increaseScore()
                     textNotification.apply {
@@ -84,7 +86,7 @@ class MathTaskFragment : Fragment() {
                         visibility = VISIBLE
                         background = ContextCompat.getDrawable(requireContext(), R.drawable.back_for_item)
                     }
-                    imageNotification.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat)
+                    imageNotification.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat)
                     viewModel.currentScore.value?.let { currentScore ->
                         if (currentScore < 10) {
                             generateTask()
@@ -103,7 +105,7 @@ class MathTaskFragment : Fragment() {
                         visibility = VISIBLE
                         background = ContextCompat.getDrawable(requireContext(), R.drawable.back_red)
                     }
-                    imageNotification.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat)
+                    imageNotification.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat)
                     answer.text.clear()
                 }
             }
@@ -113,7 +115,7 @@ class MathTaskFragment : Fragment() {
     private fun endOfRound() {
         requireContext().showInfoDialog(
             text = resources.getString(R.string.result, viewModel.currentScore.value),
-            imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.icon ?: R.drawable.logo_cat,
+            imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat,
             okButtonAction = {
                 findNavController().popBackStack()
             }

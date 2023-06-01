@@ -12,4 +12,21 @@ object Constants {
     const val TASKS_DB_NAME = "Tasks"
     const val MONEY_BALANCE = "moneyBalance"
     const val SHOP_ITEMS = "shopItems"
+
+    val shopImagesList = listOf(
+        R.drawable.logo_cat,
+        R.drawable.crab,
+        R.drawable.elephant,
+        R.drawable.giraffe,
+        R.drawable.gybka_bob,
+        R.drawable.hero,
+        R.drawable.lion2,
+        R.drawable.lion3,
+        R.drawable.monkey,
+        R.drawable.patrick,
+        R.drawable.pig,
+        R.drawable.rhinocerous,
+        R.drawable.snail,
+        R.drawable.svunka_pepa
+    )
 }

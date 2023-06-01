@@ -23,7 +23,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
@@ -137,77 +136,62 @@ class RegisterFragment : Fragment() {
     private fun initialListOfShopItems() =
         listOf(
             ShopItem(
-                1,
-                R.drawable.logo_cat,
-                0,
+                id = 0,
+                price = 0,
                 isBought = true,
                 isSelected = true
-
             ),
             ShopItem(
-                2,
-                R.drawable.crab,
-                20
+                id = 1,
+                price = 20
             ),
             ShopItem(
-                3,
-                R.drawable.elephant,
-                40
+                id = 2,
+                price = 40
             ),
             ShopItem(
-                4,
-                R.drawable.giraffe,
-                60
+                id = 3,
+                price = 60
             ),
             ShopItem(
-                5,
-                R.drawable.gybka_bob,
-                80
+                id = 4,
+                price = 80
             ),
             ShopItem(
-                6,
-                R.drawable.hero,
-                100
+                id = 5,
+                price = 100
             ),
             ShopItem(
-                7,
-                R.drawable.lion2,
-                120
+                id = 6,
+                price = 120
             ),
             ShopItem(
-                8,
-                R.drawable.lion3,
-                140
+                id = 7,
+                price = 140
             ),
             ShopItem(
-                9,
-                R.drawable.monkey,
-                160
+                id = 8,
+                price = 160
             ),
             ShopItem(
-                10,
-                R.drawable.patrick,
-                180
+                id = 9,
+                price = 180
             ),
             ShopItem(
-                11,
-                R.drawable.pig,
-                200
+                id = 10,
+                price = 200
             ),
             ShopItem(
-                12,
-                R.drawable.rhinocerous,
-                220
+                id = 11,
+                price = 220
             ),
             ShopItem(
-                13,
-                R.drawable.snail,
-                240
+                id = 12,
+                price = 240
             ),
             ShopItem(
-                14,
-                R.drawable.svunka_pepa,
-                260
+                id = 13,
+                price = 260
             )
         )
 

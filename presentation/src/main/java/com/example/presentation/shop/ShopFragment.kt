@@ -105,7 +105,6 @@ class ShopFragment : Fragment() {
         if (setItemStatusAsBought) {
             newShopItem = ShopItem(
                 id = shopItems[indexOfNewSelectedItem].id,
-                icon = shopItems[indexOfNewSelectedItem].icon,
                 price = shopItems[indexOfNewSelectedItem].price,
                 isBought = true,
                 isSelected = false
@@ -113,14 +112,12 @@ class ShopFragment : Fragment() {
         } else if (setItemStatusAsSelected) {
             newShopItemForOldPlace = ShopItem(
                 id = shopItems[indexOfOldSelectedItem].id,
-                icon = shopItems[indexOfOldSelectedItem].icon,
                 price = shopItems[indexOfOldSelectedItem].price,
                 isBought = true,
                 isSelected = false
             )
             newShopItem = ShopItem(
                 id = shopItems[indexOfNewSelectedItem].id,
-                icon = shopItems[indexOfNewSelectedItem].icon,
                 price = shopItems[indexOfNewSelectedItem].price,
                 isBought = true,
                 isSelected = true

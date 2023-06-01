@@ -30,8 +30,9 @@
             android:id="@+id/registration_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/comic_relief_bold"
             android:gravity="center"
-            android:text="Реєстрація"
+            android:text="@string/registration"
             android:textColor="@color/cream"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -53,10 +54,12 @@
                 android:background="@null"
                 android:drawableStart="@drawable/person_icon"
                 android:drawablePadding="16dp"
-                android:hint="Нікнейм"
+                android:fontFamily="@font/comic_relief_bold"
+                android:hint="@string/nickname"
                 android:inputType="text"
                 android:maxLines="1"
                 android:padding="0dp"
+                android:textColor="@color/dark_gray"
                 android:textColorHint="@color/light_gray" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -78,10 +81,12 @@
                 android:background="@null"
                 android:drawableStart="@drawable/key_icon"
                 android:drawablePadding="16dp"
-                android:hint="Пароль"
+                android:fontFamily="@font/comic_relief_bold"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="0dp"
+                android:textColor="@color/dark_gray"
                 android:textColorHint="@color/light_gray" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,15 +95,16 @@
             android:id="@+id/register_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="12dp"
             android:background="@drawable/back_for_item"
-            android:paddingVertical="10dp"
+            android:fontFamily="@font/comic_relief_bold"
             android:paddingHorizontal="20dp"
-            android:layout_gravity="center"
-            android:text="Зареєструватися"
+            android:paddingVertical="10dp"
+            android:text="@string/sign_up"
             android:textAllCaps="false"
             android:textColor="@color/cream"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:backgroundTint="@null" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
