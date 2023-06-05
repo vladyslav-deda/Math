@@ -1,7 +1,6 @@
 package com.example.presentation.multiply.viewmodel
 
-import com.example.domain.moneybalance.BalanceRepository
-import com.example.domain.shop.ShopRepository
+import com.example.domain.firebase_users_db.usecase.UpdateMoneyBalanceUseCase
 import com.example.presentation.base.model.MathematicalEquation
 import com.example.presentation.base.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,9 +9,8 @@ import kotlin.random.Random
 
 @HiltViewModel
 class MultiplyViewModel @Inject constructor(
-    repository: ShopRepository,
-    balanceRepository: BalanceRepository
-) : BaseViewModel() {
+    updateMoneyBalanceUseCase: UpdateMoneyBalanceUseCase
+) : BaseViewModel(updateMoneyBalanceUseCase) {
 
     override var equationSign = MULTIPLY_SIGN
 

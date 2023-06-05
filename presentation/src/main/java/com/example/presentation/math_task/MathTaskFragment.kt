@@ -7,22 +7,20 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.domain.holder.SessionHolder
 import com.example.domain.holder.model.Task
-import com.example.presentation.Constants
 import com.example.presentation.R
 import com.example.presentation.base.DialogExtensions.showInfoDialog
 import com.example.presentation.base.getImageRes
 import com.example.presentation.base.getSelectedItem
 import com.example.presentation.databinding.MathTaskFragmentBinding
+import com.example.presentation.base.RequestState
 import com.example.presentation.math_task.viewmodel.MathTaskViewModel
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
 
@@ -33,8 +31,6 @@ class MathTaskFragment : Fragment() {
 
     private val viewModel by viewModels<MathTaskViewModel>()
 
-    private lateinit var databaseReference: DatabaseReference
-
     private val anim by lazy {
         AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_alpha_notification)
     }
@@ -44,26 +40,11 @@ class MathTaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = MathTaskFragmentBinding.inflate(inflater, container, false)
-        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.TASKS_DB_NAME)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        databaseReference.get().addOnCompleteListener {
-            if (it.isSuccessful) {
-                for (ds in it.result.children) {
-                    ds.getValue(Task::class.java)?.let { data ->
-                        viewModel.addTask(data)
-                    }
-                }
-                viewModel.setIsLoading(false)
-                generateTask()
-            } else {
-                Toast.makeText(requireContext(), "Сталася помилка при завантажені задач, спробуйте знову", Toast.LENGTH_SHORT).show()
-                findNavController().popBackStack()
-            }
-        }
         observeStates()
     }
 
@@ -84,9 +65,13 @@ class MathTaskFragment : Fragment() {
                     }
                     notification.apply {
                         visibility = VISIBLE
-                        background = ContextCompat.getDrawable(requireContext(), R.drawable.back_for_item)
+                        background =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.back_for_item)
                     }
-                    imageNotification.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat)
+                    imageNotification.setImageResource(
+                        SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes()
+                            ?: R.drawable.logo_cat
+                    )
                     viewModel.currentScore.value?.let { currentScore ->
                         if (currentScore < 10) {
                             generateTask()
@@ -103,9 +88,13 @@ class MathTaskFragment : Fragment() {
                     }
                     notification.apply {
                         visibility = VISIBLE
-                        background = ContextCompat.getDrawable(requireContext(), R.drawable.back_red)
+                        background =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.back_red)
                     }
-                    imageNotification.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat)
+                    imageNotification.setImageResource(
+                        SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes()
+                            ?: R.drawable.logo_cat
+                    )
                     answer.text.clear()
                 }
             }
@@ -115,7 +104,8 @@ class MathTaskFragment : Fragment() {
     private fun endOfRound() {
         requireContext().showInfoDialog(
             text = resources.getString(R.string.result, viewModel.currentScore.value),
-            imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat,
+            imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes()
+                ?: R.drawable.logo_cat,
             okButtonAction = {
                 findNavController().popBackStack()
             }
@@ -125,31 +115,37 @@ class MathTaskFragment : Fragment() {
                 if (currentScore > 0) {
                     val currentBalance = SessionHolder.currentUser?.moneyBalance ?: 0
                     val newBalance = currentBalance + currentScore
-                    updateBalance(newBalance)
+                    viewModel.updateMoneyBalance(newBalance)
                 }
             }
         }
-    }
-
-    private fun updateBalance(newBalance: Int) {
-        SessionHolder.currentUser?.userName?.let {
-            databaseReference.child(it).child(Constants.MONEY_BALANCE).setValue(newBalance).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(requireContext(), "Баланс $newBalance оновлено успішно", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Баланс не оновлено", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        SessionHolder.currentUser?.moneyBalance = newBalance
     }
 
     private fun observeStates() {
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            updateUI(it)
-        }
         viewModel.currentScore.observe(viewLifecycleOwner) {
             binding.score.text = resources.getString(R.string.score, it)
+        }
+        viewModel.requestState.observe(viewLifecycleOwner) {
+            when (it) {
+                RequestState.Error -> {
+                    Snackbar.make(
+                        binding.root,
+                        "Сталася помилка при завантажені задач, спробуйте знову",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    findNavController().popBackStack()
+                }
+
+                is RequestState.Loading -> updateUI(it.isLoading)
+                is RequestState.Successful -> {
+                    it.data?.children?.forEach { data ->
+                        data.getValue(Task::class.java)?.let { data ->
+                            viewModel.addTask(data)
+                        }
+                    }
+                    generateTask()
+                }
+            }
         }
     }
 

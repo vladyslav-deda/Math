@@ -1,7 +1,6 @@
 package com.example.presentation.plus_minus.viewmodel
 
-import com.example.domain.moneybalance.BalanceRepository
-import com.example.domain.shop.ShopRepository
+import com.example.domain.firebase_users_db.usecase.UpdateMoneyBalanceUseCase
 import com.example.presentation.Constants
 import com.example.presentation.base.model.MathematicalEquation
 import com.example.presentation.base.viewmodel.BaseViewModel
@@ -11,9 +10,8 @@ import kotlin.random.Random
 
 @HiltViewModel
 class PlusMinusViewModel @Inject constructor(
-    repository: ShopRepository,
-    balanceRepository: BalanceRepository
-) : BaseViewModel() {
+    updateMoneyBalanceUseCase: UpdateMoneyBalanceUseCase
+) : BaseViewModel(updateMoneyBalanceUseCase) {
 
     private var isPlusSign = false
     override var equationSign = if (isPlusSign) PLUS_SIGN else MINUS_SIGN

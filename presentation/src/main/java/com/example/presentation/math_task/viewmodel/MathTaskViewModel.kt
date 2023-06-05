@@ -3,25 +3,33 @@ package com.example.presentation.math_task.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.domain.firebase_tasks_db.usecase.LoadTasksUseCase
+import com.example.domain.firebase_users_db.usecase.UpdateMoneyBalanceUseCase
+import com.example.domain.holder.SessionHolder
 import com.example.domain.holder.model.Task
-import com.example.domain.shop.ShopRepository
+import com.example.presentation.base.RequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MathTaskViewModel @Inject constructor(
-    private val shopRepository: ShopRepository
+    private val updateMoneyBalanceUseCase: UpdateMoneyBalanceUseCase,
+    private val loadTasksUseCase: LoadTasksUseCase
 ) : ViewModel() {
 
     private val _currentScore = MutableLiveData(0)
     val currentScore: LiveData<Int> = _currentScore
 
-    private val _isLoading = MutableLiveData(true)
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _requestState = MutableLiveData<RequestState>()
+    val requestState: LiveData<RequestState> = _requestState
 
     private val listOfTasks = ArrayList<Task>()
 
-    fun setIsLoading(isLoading: Boolean) = _isLoading.postValue(isLoading)
+    init {
+        loadTasks()
+    }
 
     fun addTask(task: Task) = listOfTasks.add(task)
 
@@ -38,6 +46,32 @@ class MathTaskViewModel @Inject constructor(
                 val newScore = currentScore - 1
                 _currentScore.postValue(newScore)
             }
+        }
+    }
+
+    fun updateMoneyBalance(
+        newBalance: Int,
+    ) {
+        SessionHolder.currentUser?.userName?.let {
+            viewModelScope.launch {
+                updateMoneyBalanceUseCase.invoke(it, newBalance)
+            }
+        }
+        SessionHolder.currentUser?.moneyBalance = newBalance
+    }
+
+    private fun loadTasks() {
+        viewModelScope.launch {
+            _requestState.postValue(RequestState.Loading(true))
+            loadTasksUseCase.invoke(
+                onSuccess = {
+                    _requestState.postValue(RequestState.Successful(it))
+                },
+                onError = {
+                    _requestState.postValue(RequestState.Error)
+                }
+            )
+            _requestState.postValue(RequestState.Loading(false))
         }
     }
 }

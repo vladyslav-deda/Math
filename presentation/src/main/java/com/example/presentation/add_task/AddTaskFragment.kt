@@ -9,7 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.domain.holder.model.Task
 import com.example.presentation.Constants
+import com.example.presentation.R
+import com.example.presentation.base.RequestState
 import com.example.presentation.databinding.AddTaskFragmentBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,44 +24,54 @@ class AddTaskFragment : Fragment() {
 
     private val viewModel by viewModels<AddTaskViewModel>()
 
-    private lateinit var databaseReference: DatabaseReference
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = AddTaskFragmentBinding.inflate(inflater, container, false)
-        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.TASKS_DB_NAME)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeStates()
         binding.apply {
             addTask.setOnClickListener {
                 if (taskEdittext.text.isNullOrEmpty() || answerEdittext.text.isNullOrEmpty()) {
-                    Toast.makeText(requireContext(), "Не всі поля було заповнено", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.empty_input_fields),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@setOnClickListener
                 }
-                databaseReference.push()
-                    .setValue(Task(text = taskEdittext.text.toString(), answer = answerEdittext.text.toString().toInt()))
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            Toast.makeText(
-                                requireContext(),
-                                "Задачу додано успішно",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "Під час додавання задачі виникла помилка, спробуйте знову",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
+                viewModel.addTask(
+                    textOfTask = taskEdittext.text.toString(),
+                    answerOfTask = answerEdittext.text.toString().toInt()
+                )
             }
         }
     }
 
+    private fun observeStates() {
+        viewModel.requestState.observe(viewLifecycleOwner) {
+            when (it) {
+                is RequestState.Successful -> {
+                    Snackbar.make(
+                        binding.root,
+                        "Задачу додано успішно",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+
+                else -> {
+                    Snackbar.make(
+                        binding.root,
+                        "Під час додавання задачі виникла помилка, спробуйте знову",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
 }

@@ -3,9 +3,15 @@ package com.example.presentation.base.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.domain.firebase_users_db.usecase.UpdateMoneyBalanceUseCase
+import com.example.domain.holder.SessionHolder
 import com.example.presentation.base.model.MathematicalEquation
+import kotlinx.coroutines.launch
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(
+    private val updateMoneyBalanceUseCase: UpdateMoneyBalanceUseCase
+) : ViewModel() {
 
     private val _currentScore = MutableLiveData(0)
     val currentScore: LiveData<Int> = _currentScore
@@ -31,6 +37,17 @@ abstract class BaseViewModel : ViewModel() {
                 _currentScore.postValue(newScore)
             }
         }
+    }
+
+    fun updateMoneyBalance(
+        newBalance: Int,
+    ) {
+        SessionHolder.currentUser?.userName?.let {
+            viewModelScope.launch {
+                updateMoneyBalanceUseCase.invoke(it, newBalance)
+            }
+        }
+        SessionHolder.currentUser?.moneyBalance = newBalance
     }
 
     companion object {

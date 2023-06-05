@@ -12,9 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.holder.SessionHolder
 import com.example.domain.holder.model.User
 import com.example.presentation.Constants
+import com.example.presentation.R
+import com.example.presentation.auth.viewmodel.AuthRequestState
 import com.example.presentation.auth.viewmodel.AuthViewModel
 import com.example.presentation.databinding.AuthFragmentBinding
-import com.google.firebase.database.DatabaseReference
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,14 +27,12 @@ class AuthFragment : Fragment() {
 
     private val viewModel by viewModels<AuthViewModel>()
 
-    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = AuthFragmentBinding.inflate(inflater, container, false)
-        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.USERS_DB_NAME)
         return binding.root
     }
 
@@ -46,35 +46,54 @@ class AuthFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) {
             updateUI(it)
         }
+        viewModel.requestState.observe(viewLifecycleOwner) {
+            when (it) {
+                AuthRequestState.AuthError -> {
+                    Snackbar.make(
+                        binding.root,
+                        "Сталася помилка під час авторизації, спробуйте ще раз",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+
+                AuthRequestState.InvalidPassword -> {
+                    Snackbar.make(
+                        binding.root,
+                        "Неправильно введений пароль",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+
+                is AuthRequestState.Loading -> viewModel.setIsLoading(it.isLoading)
+                is AuthRequestState.Successful -> {
+                    SessionHolder.currentUser = it.user
+                    SessionHolder.isUserAuthorized = true
+                    findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
+                }
+
+                AuthRequestState.UserWasNotFound -> {
+                    Snackbar.make(
+                        binding.root,
+                        "Користувача з таким нікнеймом не було знайдено",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 
     private fun initViews() {
         binding.apply {
             loginButton.setOnClickListener {
-                if (viewModel.email.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
-                    Toast.makeText(requireContext(), "Не всі поля є заповненими!", Toast.LENGTH_SHORT).show()
+                if (viewModel.nickname.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.empty_input_fields,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                     return@setOnClickListener
                 }
-                databaseReference.child(viewModel.email.value.toString()).get().addOnCompleteListener {
-                    viewModel.setIsLoading(true)
-                    if (it.isSuccessful) {
-                        if (it.result.exists()) {
-                            val user = it.result.getValue(User::class.java) as User
-                            if (user.password.equals(viewModel.password.value)) {
-                                SessionHolder.currentUser = user
-                                SessionHolder.isUserAuthorized = true
-                                findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
-                            } else {
-                                Toast.makeText(requireContext(), "Неправильно введений пароль", Toast.LENGTH_SHORT).show()
-                            }
-                        } else {
-                            Toast.makeText(requireContext(), "Користувача з таким нікнеймом не було знайдено", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(requireContext(), "Сталася помилка під час авторизації, спробуйте ще раз", Toast.LENGTH_SHORT).show()
-                    }
-                    viewModel.setIsLoading(false)
-                }
+                viewModel.authUser()
             }
             emailEdittext.doOnTextChanged { text, _, _, _ ->
                 viewModel.updateEmail(text.toString())

@@ -15,11 +15,11 @@ class PlusMinusFragment : BaseExerciseFragment<PlusMinusViewModel>() {
     override fun getViewModelClass() = PlusMinusViewModel::class.java
 
     override fun actionBackToMainScreen() =
-        findNavController().navigate(PlusMinusFragmentDirections.actionPlusMinusFragmentToHomeFragment())
+            findNavController().navigate(PlusMinusFragmentDirections.actionPlusMinusFragmentToHomeFragment())
 
     private val args: PlusMinusFragmentArgs by navArgs()
 
-    override fun getLevel()= args.level ?: ""
+    override fun getLevel() = args.level ?: ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

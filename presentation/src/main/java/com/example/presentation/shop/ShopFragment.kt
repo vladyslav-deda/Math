@@ -28,14 +28,11 @@ class ShopFragment : Fragment() {
 
     private var shopAdapter: ShopAdapter? = null
 
-    private lateinit var databaseReference: DatabaseReference
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = ShopFragmentBinding.inflate(inflater, container, false)
-        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.USERS_DB_NAME)
         return binding.root
     }
 
@@ -52,7 +49,7 @@ class ShopFragment : Fragment() {
         shopAdapter = ShopAdapter {
             when {
                 it.isBought == true && it.isSelected == false -> {
-                    updateStatusOfShopItem(it, setItemStatusAsSelected = true)
+                    viewModel.updateStatusOfShopItem(it, setItemStatusAsSelected = true)
                 }
 
                 it.isSelected == true -> {
@@ -66,9 +63,9 @@ class ShopFragment : Fragment() {
                 else -> {
                     if ((SessionHolder.currentUser?.moneyBalance ?: 0) >= (it.price ?: 0)) {
                         val newBalance = SessionHolder.currentUser?.moneyBalance?.minus(it.price ?: 0) ?: 0
-                        updateBalance(newBalance)
+                        viewModel.updateMoneyBalance(newBalance)
                         updateMoneyBalanceOnUI()
-                        updateStatusOfShopItem(it, setItemStatusAsBought = true)
+                        viewModel.updateStatusOfShopItem(it, setItemStatusAsBought = true)
                     } else {
                         Toast.makeText(
                             context,
@@ -88,58 +85,7 @@ class ShopFragment : Fragment() {
         }
     }
 
-    private fun updateStatusOfShopItem(
-        shopItem: ShopItem,
-        setItemStatusAsBought: Boolean = false,
-        setItemStatusAsSelected: Boolean = false
-    ) {
-        val shopItems = ArrayList(SessionHolder.currentUser?.shopItems ?: emptyList())
-
-        val indexOfNewSelectedItem = shopItems.indexOf(shopItem)
-        var newShopItem = ShopItem()
-        val newShopItemForOldPlace: ShopItem
-        val oldSelectedItem = shopItems.firstOrNull { item ->
-            item.isSelected == true
-        }
-        val indexOfOldSelectedItem = shopItems.indexOf(oldSelectedItem)
-        if (setItemStatusAsBought) {
-            newShopItem = ShopItem(
-                id = shopItems[indexOfNewSelectedItem].id,
-                price = shopItems[indexOfNewSelectedItem].price,
-                isBought = true,
-                isSelected = false
-            )
-        } else if (setItemStatusAsSelected) {
-            newShopItemForOldPlace = ShopItem(
-                id = shopItems[indexOfOldSelectedItem].id,
-                price = shopItems[indexOfOldSelectedItem].price,
-                isBought = true,
-                isSelected = false
-            )
-            newShopItem = ShopItem(
-                id = shopItems[indexOfNewSelectedItem].id,
-                price = shopItems[indexOfNewSelectedItem].price,
-                isBought = true,
-                isSelected = true
-            )
-            shopItems[indexOfOldSelectedItem] = newShopItemForOldPlace
-        }
-        shopItems[indexOfNewSelectedItem] = newShopItem
-        SessionHolder.currentUser?.shopItems = shopItems
-        SessionHolder.currentUser?.userName?.let { userName ->
-            databaseReference.child(userName).child(Constants.SHOP_ITEMS).setValue(shopItems)
-        }
-        viewModel.updateItems()
-    }
-
     private fun updateMoneyBalanceOnUI() {
         binding.moneyBalance.text = (SessionHolder.currentUser?.moneyBalance ?: 0).toString()
-    }
-
-    private fun updateBalance(newBalance: Int) {
-        SessionHolder.currentUser?.userName?.let {
-            databaseReference.child(it).child(Constants.MONEY_BALANCE).setValue(newBalance)
-        }
-        SessionHolder.currentUser?.moneyBalance = newBalance
     }
 }
