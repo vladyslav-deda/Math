@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -13,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.databinding.RegisterFragmentBinding
 import com.example.presentation.register.viewmodel.RegisterViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,19 +36,19 @@ class RegisterFragment : Fragment() {
         binding.apply {
             registerButton.setOnClickListener {
                 if (viewModel.nickname.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
-                    Toast.makeText(
-                        requireContext(),
+                    Snackbar.make(
+                        binding.root,
                         getString(R.string.empty_input_fields),
-                        Toast.LENGTH_SHORT
+                        Snackbar.LENGTH_SHORT
                     ).show()
                     return@setOnClickListener
                 }
                 val isUserRegistered = viewModel.checkingIsUserRegistered()
                 if (isUserRegistered){
-                    Toast.makeText(
-                        requireContext(),
-                        "Спробуйте використати інший нікнейм, цей нікнейм вже зайнятий",
-                        Toast.LENGTH_SHORT
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.try_to_use_another_nickname),
+                        Snackbar.LENGTH_SHORT
                     ).show()
                     clearInputFields()
                 } else {
@@ -95,10 +95,10 @@ class RegisterFragment : Fragment() {
             if (it) {
                 findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToHomeFragment())
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Під час реєстрації виникла помилка, спробуйте знову",
-                    Toast.LENGTH_SHORT
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.registration_error),
+                    Snackbar.LENGTH_SHORT
                 ).show()
                 clearInputFields()
             }

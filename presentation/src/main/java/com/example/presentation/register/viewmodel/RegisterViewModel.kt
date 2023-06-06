@@ -61,7 +61,7 @@ class RegisterViewModel @Inject constructor(
             password = _password.value,
             moneyBalance = 0,
             level = level,
-            shopItems = initialListOfShopItems
+            shopItems = getInitialShopItemsList()
         )
         viewModelScope.launch {
             registerNewUserUseCase.invoke(
@@ -96,68 +96,21 @@ class RegisterViewModel @Inject constructor(
         return isUserRegistered
     }
 
+    private fun getInitialShopItemsList(): List<ShopItem> {
+        val list = Constants.shopImagesList.map {
+            ShopItem(
+                id = it,
+                price = it * 20
+            )
+        }
+        list[0].apply {
+            isSelected = true
+            isBought = true
+        }
+        return list
+    }
+
     companion object {
         private const val ROTATE_DEGREES = 36f
-        private val initialListOfShopItems =
-            listOf(
-                ShopItem(
-                    id = 0,
-                    price = 0,
-                    isBought = true,
-                    isSelected = true
-                ),
-                ShopItem(
-                    id = 1,
-                    price = 20
-                ),
-                ShopItem(
-                    id = 2,
-                    price = 40
-                ),
-                ShopItem(
-                    id = 3,
-                    price = 60
-                ),
-                ShopItem(
-                    id = 4,
-                    price = 80
-                ),
-                ShopItem(
-                    id = 5,
-                    price = 100
-                ),
-                ShopItem(
-                    id = 6,
-                    price = 120
-                ),
-                ShopItem(
-                    id = 7,
-                    price = 140
-                ),
-                ShopItem(
-                    id = 8,
-                    price = 160
-                ),
-                ShopItem(
-                    id = 9,
-                    price = 180
-                ),
-                ShopItem(
-                    id = 10,
-                    price = 200
-                ),
-                ShopItem(
-                    id = 11,
-                    price = 220
-                ),
-                ShopItem(
-                    id = 12,
-                    price = 240
-                ),
-                ShopItem(
-                    id = 13,
-                    price = 260
-                )
-            )
     }
 }

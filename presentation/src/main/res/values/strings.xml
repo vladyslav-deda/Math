@@ -25,4 +25,6 @@
     <string name="registration">Реєстрація</string>
     <string name="log_in">Авторизуватися</string>
     <string name="empty_input_fields">Не всі поля було заповнено</string>
+    <string name="try_to_use_another_nickname">Спробуйте використати інший нікнейм, цей нікнейм вже зайнятий</string>
+    <string name="registration_error">Під час реєстрації виникла помилка, спробуйте знову</string>
 </resources>
