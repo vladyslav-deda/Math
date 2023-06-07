@@ -14,7 +14,6 @@ import com.example.presentation.base.RequestState
 import com.example.presentation.base.extension.showSnackBar
 import com.example.presentation.databinding.RegisterFragmentBinding
 import com.example.presentation.register.viewmodel.RegisterViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -83,6 +82,7 @@ class RegisterFragment : Fragment() {
                     )
                     registrationLabel.text = getString(R.string.administrator_registration)
                 }
+                clearInputFields()
             }
         }
         viewModel.requestState.observe(viewLifecycleOwner) {

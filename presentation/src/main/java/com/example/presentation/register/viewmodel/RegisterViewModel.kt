@@ -93,7 +93,7 @@ class RegisterViewModel @Inject constructor(
 
     private fun getInitialShopItemsList(): List<ShopItem> {
         val itemsList = ArrayList<ShopItem>()
-        Constants.shopImagesList.forEachIndexed { index, i ->
+        Constants.shopImagesList.forEachIndexed { index, _ ->
             itemsList.add(
                 ShopItem(
                     index,
