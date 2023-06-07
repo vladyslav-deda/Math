@@ -15,7 +15,6 @@ object Constants {
         R.drawable.giraffe,
         R.drawable.gybka_bob,
         R.drawable.hero,
-        R.drawable.lion2,
         R.drawable.lion3,
         R.drawable.monkey,
         R.drawable.patrick,
