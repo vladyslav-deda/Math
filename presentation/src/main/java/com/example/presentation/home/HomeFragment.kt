@@ -49,6 +49,8 @@ class HomeFragment : Fragment() {
             if (SessionHolder.isUserAuthorized) {
                 moneyBalance.apply {
                     visibility = View.VISIBLE
+                    val test = SessionHolder.currentUser
+                    val t =5
                     text = (SessionHolder.currentUser?.moneyBalance ?: 0).toString()
                 }
                 moneyImage.visibility = View.VISIBLE
