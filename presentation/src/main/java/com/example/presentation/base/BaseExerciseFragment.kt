@@ -60,8 +60,6 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
             override fun onFinish() {
                 requireContext().showInfoDialog(
                     text = resources.getString(R.string.result, viewModel.currentScore.value),
-                    imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()
-                        ?.getImageRes() ?: R.drawable.logo_cat,
                     okButtonAction = { actionBackToMainScreen() }
                 )
                 if (SessionHolder.isUserAuthorized) {

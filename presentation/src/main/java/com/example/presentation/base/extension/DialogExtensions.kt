@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Window
 import android.widget.Button
-import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.domain.holder.SessionHolder
 import com.example.presentation.Constants.EASY_LEVEL
@@ -42,7 +41,7 @@ fun Context.showLevelSelectionDialog(
 ) {
     val imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()
         ?.getImageRes() ?: R.drawable.logo_cat
-    Dialog(this).apply {
+    Dialog(this, R.style.ThemeOverlay_Material3_Dialog).apply {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.level_dialog_layout)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
