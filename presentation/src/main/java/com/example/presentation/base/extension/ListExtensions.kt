@@ -6,13 +6,13 @@ import com.example.presentation.R
 
 fun List<ShopItem>.getSelectedItem(): ShopItem? {
     return this.firstOrNull {
-        it.isSelected == true
+        it.isSelected
     }
 }
 
 fun ShopItem.getImageRes(): Int {
     return try {
-        this.id?.let { Constants.shopImagesList[it] } ?: R.drawable.logo_cat
+        this.id.let { Constants.shopImagesList[it] }
     } catch (e: Exception) {
         R.drawable.logo_cat
     }

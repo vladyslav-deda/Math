@@ -32,7 +32,7 @@ class FirebaseTasksDbRepositoryImpl @Inject constructor(
         onError: () -> Unit
     ) {
         tasksDbReference.push()
-            .setValue(Task(text = textOfTask, answer = answerOfTask))
+            .setValue(Task(textOfTask, answerOfTask))
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     onSuccess()

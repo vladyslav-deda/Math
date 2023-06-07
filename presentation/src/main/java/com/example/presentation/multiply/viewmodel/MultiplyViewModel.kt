@@ -29,11 +29,11 @@ class MultiplyViewModel @Inject constructor(
             }
         }
         return MathematicalEquation(
-            firstValue = pairOfNumbers.first,
-            secondValue = pairOfNumbers.second,
-            answerValue = result,
-            wrongAnswers = wrongAnswersList,
-            equationSign = equationSign
+            pairOfNumbers.first,
+            pairOfNumbers.second,
+            result,
+            wrongAnswersList,
+            equationSign
         )
     }
 
