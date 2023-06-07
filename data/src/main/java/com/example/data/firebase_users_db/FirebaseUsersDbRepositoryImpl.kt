@@ -6,6 +6,7 @@ import com.example.domain.firebase_users_db.model.User
 import com.example.domain.shop.model.ShopItem
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -54,6 +55,7 @@ class FirebaseUsersDbRepositoryImpl @Inject constructor(
         onSuccess: (dataSnapshot: DataSnapshot) -> Unit,
         onError: () -> Unit
     ) {
+        delay(2000)
         usersDbReference.child(nickname).get().addOnCompleteListener {
             if (it.isSuccessful) {
                 onSuccess(it.result)
