@@ -92,14 +92,10 @@ class AuthFragment : Fragment() {
     }
 
     private fun updateUI(isLoading: Boolean) {
-        binding.apply {
-            if (isLoading) {
-                mainLayout.visibility = View.GONE
-                progressbar.visibility = View.VISIBLE
-            } else {
-                mainLayout.visibility = View.VISIBLE
-                progressbar.visibility = View.GONE
-            }
+        binding.progressbar.visibility = if (isLoading) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 }
