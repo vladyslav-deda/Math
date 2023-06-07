@@ -27,4 +27,20 @@
     <string name="empty_input_fields">Не всі поля було заповнено</string>
     <string name="try_to_use_another_nickname">Спробуйте використати інший нікнейм, цей нікнейм вже зайнятий</string>
     <string name="registration_error">Під час реєстрації виникла помилка, спробуйте знову</string>
+    <string name="task">Задача</string>
+    <string name="answer">Відповідь</string>
+    <string name="task_was_added_successfully">Задачу додано успішно</string>
+    <string name="task_was_not_added">Під час додавання задачі виникла помилка, спробуйте знову</string>
+    <string name="auth_error">Сталася помилка під час авторизації, спробуйте ще раз</string>
+    <string name="invalid_password">Неправильно введений пароль</string>
+    <string name="invalid_nickname">Користувача з таким нікнеймом не було знайдено</string>
+    <string name="well_done">Молодець</string>
+    <string name="think_better">Подумай краще</string>
+    <string name="choose_level_of_task">Обери рівень складності прикладів</string>
+    <string name="error_during_loading_tasks">Сталася помилка при завантажені задач, спробуйте знову</string>
+    <string name="administrator_registration">Реєстрація адміністратора</string>
+    <string name="bought">КУПЛЕНО</string>
+    <string name="selected">ОБРАНО</string>
+    <string name="hero_has_been_selected">Цей герой вже обраний</string>
+    <string name="you_dont_have_enough_coins">На твоєму балансі недостатньо монеток для покупки</string>
 </resources>

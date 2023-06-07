@@ -11,9 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.holder.SessionHolder
 import com.example.presentation.Constants
 import com.example.presentation.R
-import com.example.presentation.base.DialogExtensions.showLevelSelectionDialog
-import com.example.presentation.base.getImageRes
-import com.example.presentation.base.getSelectedItem
+import com.example.presentation.base.extension.getImageRes
+import com.example.presentation.base.extension.getSelectedItem
+import com.example.presentation.base.extension.showLevelSelectionDialog
 import com.example.presentation.databinding.FragmentHomeBinding
 import com.example.presentation.home.adapter.HomeAdapter
 import com.example.presentation.home.model.MenuItem
@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
 
     private fun initViews() {
         binding.apply {
-            logoImage.setImageResource(SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat)
+            logoImage.setImageResource(viewModel.getSelectedItemIcon())
             if (SessionHolder.isUserAuthorized) {
                 moneyBalance.apply {
                     visibility = View.VISIBLE
@@ -69,10 +69,13 @@ class HomeFragment : Fragment() {
 
                 getString(R.string.plus_minus) -> {
                     requireContext().showLevelSelectionDialog(
-                        text = "Обери рівень складності прикладів",
-                        imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat
+                        text = getString(R.string.choose_level_of_task)
                     ) { level ->
-                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPlusMinusFragment(level))
+                        findNavController().navigate(
+                            HomeFragmentDirections.actionHomeFragmentToPlusMinusFragment(
+                                level
+                            )
+                        )
                     }
                 }
 
@@ -129,7 +132,10 @@ class HomeFragment : Fragment() {
         if (SessionHolder.isUserAuthorized) {
             list.add(
                 MenuItem(
-                    icon = ContextCompat.getDrawable(requireContext(), R.drawable.icon_shopping_cart),
+                    icon = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.icon_shopping_cart
+                    ),
                     name = getString(R.string.shop)
                 )
             )

@@ -10,5 +10,6 @@ class MultiplyFragment : BaseExerciseFragment<MultiplyViewModel>() {
 
     override fun getViewModelClass() = MultiplyViewModel::class.java
 
-    override fun actionBackToMainScreen() = findNavController().navigate(MultiplyFragmentDirections.actionMultiplyFragmentToHomeFragment())
+    override fun actionBackToMainScreen() =
+        findNavController().navigate(MultiplyFragmentDirections.actionMultiplyFragmentToHomeFragment())
 }

@@ -1,4 +1,4 @@
-package com.example.presentation.base
+package com.example.presentation.base.extension
 
 import com.example.domain.shop.model.ShopItem
 import com.example.presentation.Constants

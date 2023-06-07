@@ -1,8 +1,8 @@
-package com.example.data.firebase
+package com.example.data.firebase_users_db
 
-import com.example.data.firebase.di.USERS_DB_NAME
+import com.example.data.firebase_users_db.di.USERS_DB_NAME
 import com.example.domain.firebase_users_db.FirebaseUsersDbRepository
-import com.example.domain.holder.model.User
+import com.example.domain.firebase_users_db.model.User
 import com.example.domain.shop.model.ShopItem
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
@@ -37,18 +37,16 @@ class FirebaseUsersDbRepositoryImpl @Inject constructor(
     }
 
     override suspend fun checkingIsUserRegistered(
-        nickname: String,
-        onSuccess: (isUserHasBeenRegistered: Boolean) -> Unit,
-        onError: () -> Unit
-    ) {
+        nickname: String
+    ): Boolean {
+        var isUserHasBeenRegistered = false
         usersDbReference.child(nickname).get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    onSuccess(it.result.exists())
-                } else {
-                    onError()
+                    isUserHasBeenRegistered = it.result.exists()
                 }
             }
+        return isUserHasBeenRegistered
     }
 
     override suspend fun authUser(

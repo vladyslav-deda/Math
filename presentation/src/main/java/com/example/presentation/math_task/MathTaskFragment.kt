@@ -12,15 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.domain.holder.SessionHolder
-import com.example.domain.holder.model.Task
+import com.example.domain.firebase_tasks_db.model.Task
 import com.example.presentation.R
-import com.example.presentation.base.DialogExtensions.showInfoDialog
-import com.example.presentation.base.getImageRes
-import com.example.presentation.base.getSelectedItem
 import com.example.presentation.databinding.MathTaskFragmentBinding
 import com.example.presentation.base.RequestState
+import com.example.presentation.base.extension.showInfoDialog
+import com.example.presentation.base.extension.showSnackBar
 import com.example.presentation.math_task.viewmodel.MathTaskViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
 
@@ -60,7 +58,7 @@ class MathTaskFragment : Fragment() {
                     viewModel.increaseScore()
                     textNotification.apply {
                         visibility = VISIBLE
-                        text = "Молодець"
+                        text = context.getString(R.string.well_done)
                         startAnimation(anim)
                     }
                     notification.apply {
@@ -68,10 +66,7 @@ class MathTaskFragment : Fragment() {
                         background =
                             ContextCompat.getDrawable(requireContext(), R.drawable.back_for_item)
                     }
-                    imageNotification.setImageResource(
-                        SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes()
-                            ?: R.drawable.logo_cat
-                    )
+                    imageNotification.setImageResource(viewModel.getSelectedItemIcon())
                     viewModel.currentScore.value?.let { currentScore ->
                         if (currentScore < 10) {
                             generateTask()
@@ -83,7 +78,7 @@ class MathTaskFragment : Fragment() {
                     viewModel.decreaseScore()
                     textNotification.apply {
                         visibility = VISIBLE
-                        text = "Подумай краще"
+                        text = context.getString(R.string.think_better)
                         startAnimation(anim)
                     }
                     notification.apply {
@@ -91,10 +86,7 @@ class MathTaskFragment : Fragment() {
                         background =
                             ContextCompat.getDrawable(requireContext(), R.drawable.back_red)
                     }
-                    imageNotification.setImageResource(
-                        SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes()
-                            ?: R.drawable.logo_cat
-                    )
+                    imageNotification.setImageResource(viewModel.getSelectedItemIcon())
                     answer.text.clear()
                 }
             }
@@ -104,8 +96,6 @@ class MathTaskFragment : Fragment() {
     private fun endOfRound() {
         requireContext().showInfoDialog(
             text = resources.getString(R.string.result, viewModel.currentScore.value),
-            imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes()
-                ?: R.drawable.logo_cat,
             okButtonAction = {
                 findNavController().popBackStack()
             }
@@ -128,19 +118,15 @@ class MathTaskFragment : Fragment() {
         viewModel.requestState.observe(viewLifecycleOwner) {
             when (it) {
                 RequestState.Error -> {
-                    Snackbar.make(
-                        binding.root,
-                        "Сталася помилка при завантажені задач, спробуйте знову",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    binding.root.showSnackBar(getString(R.string.error_during_loading_tasks))
                     findNavController().popBackStack()
                 }
 
                 is RequestState.Loading -> updateUI(it.isLoading)
                 is RequestState.Successful -> {
                     it.data?.children?.forEach { data ->
-                        data.getValue(Task::class.java)?.let { data ->
-                            viewModel.addTask(data)
+                        data.getValue(Task::class.java)?.let { task ->
+                            viewModel.addTask(task)
                         }
                     }
                     generateTask()

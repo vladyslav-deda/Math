@@ -7,8 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.firebase_tasks_db.usecase.LoadTasksUseCase
 import com.example.domain.firebase_users_db.usecase.UpdateMoneyBalanceUseCase
 import com.example.domain.holder.SessionHolder
-import com.example.domain.holder.model.Task
+import com.example.domain.firebase_tasks_db.model.Task
+import com.example.presentation.R
 import com.example.presentation.base.RequestState
+import com.example.presentation.base.extension.getImageRes
+import com.example.presentation.base.extension.getSelectedItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -74,4 +77,8 @@ class MathTaskViewModel @Inject constructor(
             _requestState.postValue(RequestState.Loading(false))
         }
     }
+
+    fun getSelectedItemIcon() =
+        SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes()
+            ?: R.drawable.logo_cat
 }

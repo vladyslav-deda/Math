@@ -14,7 +14,7 @@ class PlusMinusViewModel @Inject constructor(
 ) : BaseViewModel(updateMoneyBalanceUseCase) {
 
     private var isPlusSign = false
-    override var equationSign = if (isPlusSign) PLUS_SIGN else MINUS_SIGN
+    override var equationSign = MINUS_SIGN
 
     override fun generateMathematicalEquation(level: String?): MathematicalEquation {
         wrongAnswersList.clear()

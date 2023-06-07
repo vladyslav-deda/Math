@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentSplashBinding
-import com.example.presentation.splash.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -20,8 +19,6 @@ import kotlinx.coroutines.launch
 class SplashFragment : Fragment() {
 
     private lateinit var binding: FragmentSplashBinding
-
-    private val viewModel by viewModels<SplashViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

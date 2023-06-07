@@ -1,7 +1,6 @@
-package com.example.data.firebase.di
+package com.example.data.firebase_users_db.di
 
-import com.example.data.firebase.FirebaseUsersDbRepositoryImpl
-import com.example.domain.firebase_tasks_db.FirebaseTasksDbRepository
+import com.example.data.firebase_users_db.FirebaseUsersDbRepositoryImpl
 import com.example.domain.firebase_users_db.FirebaseUsersDbRepository
 import com.example.domain.firebase_users_db.usecase.AuthUserUseCase
 import com.example.domain.firebase_users_db.usecase.CheckingIsUserRegisteredUseCase

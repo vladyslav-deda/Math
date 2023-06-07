@@ -74,7 +74,7 @@ class ShopViewModel @Inject constructor(
     fun updateMoneyBalance(
         newBalance: Int,
     ) {
-        SessionHolder.currentUser?.let{
+        SessionHolder.currentUser?.let {
             it.userName?.let {
                 viewModelScope.launch {
                     updateMoneyBalanceUseCase.invoke(it, newBalance)

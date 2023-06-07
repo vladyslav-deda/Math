@@ -1,4 +1,4 @@
-package com.example.domain.holder.model
+package com.example.domain.firebase_users_db.model
 
 import com.example.domain.shop.model.ShopItem
 

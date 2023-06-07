@@ -1,6 +1,6 @@
 package com.example.domain.firebase_users_db
 
-import com.example.domain.holder.model.User
+import com.example.domain.firebase_users_db.model.User
 import com.example.domain.shop.model.ShopItem
 import com.google.firebase.database.DataSnapshot
 
@@ -18,10 +18,8 @@ interface FirebaseUsersDbRepository {
     )
 
     suspend fun checkingIsUserRegistered(
-        nickname: String,
-        onSuccess: (isUserHasBeenRegistered: Boolean) -> Unit,
-        onError: () -> Unit
-    )
+        nickname: String
+    ) : Boolean
 
     suspend fun authUser(
         nickname: String,

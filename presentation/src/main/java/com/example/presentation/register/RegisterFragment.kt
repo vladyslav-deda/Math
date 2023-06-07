@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
+import com.example.presentation.base.RequestState
+import com.example.presentation.base.extension.showSnackBar
 import com.example.presentation.databinding.RegisterFragmentBinding
 import com.example.presentation.register.viewmodel.RegisterViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -36,20 +38,12 @@ class RegisterFragment : Fragment() {
         binding.apply {
             registerButton.setOnClickListener {
                 if (viewModel.nickname.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.empty_input_fields),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    binding.root.showSnackBar(getString(R.string.empty_input_fields))
                     return@setOnClickListener
                 }
                 val isUserRegistered = viewModel.checkingIsUserRegistered()
-                if (isUserRegistered){
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.try_to_use_another_nickname),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                if (isUserRegistered) {
+                    binding.root.showSnackBar(getString(R.string.try_to_use_another_nickname))
                     clearInputFields()
                 } else {
                     viewModel.registerNewUser()
@@ -87,20 +81,20 @@ class RegisterFragment : Fragment() {
                             R.color.amber_yellow
                         )
                     )
-                    registrationLabel.text = "Реєстрація адміністратора"
+                    registrationLabel.text = getString(R.string.administrator_registration)
                 }
             }
         }
-        viewModel.isRegistrationSuccessful.observe(viewLifecycleOwner) {
-            if (it) {
-                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToHomeFragment())
-            } else {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.registration_error),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-                clearInputFields()
+        viewModel.requestState.observe(viewLifecycleOwner) {
+            when (it) {
+                is RequestState.Successful -> findNavController().navigate(
+                    RegisterFragmentDirections.actionRegisterFragmentToHomeFragment()
+                )
+
+                else -> {
+                    binding.root.showSnackBar(getString(R.string.registration_error))
+                    clearInputFields()
+                }
             }
         }
     }

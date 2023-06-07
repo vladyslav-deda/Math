@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_orange">
+    android:background="@color/main_blue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,10 +13,12 @@
             android:id="@+id/task_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/back_for_item"
-            app:errorEnabled="true"
-            app:errorTextAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/back_rounded_cream_background"
+            android:padding="0dp"
+            app:boxBackgroundMode="none"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -25,42 +27,59 @@
                 android:id="@+id/task_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:background="@null"
-                android:hint="Задача"
+                android:fontFamily="@font/comic_relief_bold"
+                android:hint="@string/task"
                 android:inputType="textMultiLine"
-                android:maxLines="1"
-                android:padding="16dp" />
+                android:textColor="@color/dark_gray"
+                android:textColorHint="@color/light_gray" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/answer_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/back_for_item"
-            android:padding="16dp"
-            app:errorEnabled="true"
-            app:errorTextAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/back_rounded_cream_background"
+            android:padding="0dp"
+            app:boxBackgroundMode="none"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/task_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/answer_edittext"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:background="@null"
-                android:hint="Відповідь"
+                android:fontFamily="@font/comic_relief_bold"
+                android:hint="@string/answer"
                 android:inputType="number"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textColor="@color/dark_gray"
+                android:textColorHint="@color/light_gray" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Добавити задачу"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/back_for_item"
+            android:fontFamily="@font/comic_relief_bold"
+            android:paddingHorizontal="20dp"
+            android:text="@string/add_task"
+            android:textAllCaps="false"
+            android:textColor="@color/cream"
+            android:textSize="18sp"
+            app:backgroundTint="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/answer_layout" />

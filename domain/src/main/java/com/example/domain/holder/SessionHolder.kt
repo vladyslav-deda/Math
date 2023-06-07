@@ -1,6 +1,6 @@
 package com.example.domain.holder
 
-import com.example.domain.holder.model.User
+import com.example.domain.firebase_users_db.model.User
 
 object SessionHolder {
 

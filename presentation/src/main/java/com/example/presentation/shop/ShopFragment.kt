@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.holder.SessionHolder
 import com.example.domain.shop.model.ShopItem
 import com.example.presentation.Constants
+import com.example.presentation.R
+import com.example.presentation.base.extension.showSnackBar
 import com.example.presentation.databinding.ShopFragmentBinding
 import com.example.presentation.shop.adapter.ShopAdapter
 import com.example.presentation.shop.viewmodel.ShopViewModel
@@ -53,11 +55,7 @@ class ShopFragment : Fragment() {
                 }
 
                 it.isSelected == true -> {
-                    Toast.makeText(
-                        context,
-                        "Цей герой вже обраний",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    binding.root.showSnackBar(getString(R.string.hero_has_been_selected))
                 }
 
                 else -> {
@@ -67,11 +65,7 @@ class ShopFragment : Fragment() {
                         updateMoneyBalanceOnUI()
                         viewModel.updateStatusOfShopItem(it, setItemStatusAsBought = true)
                     } else {
-                        Toast.makeText(
-                            context,
-                            "На твоєму балансі недостатньо монеток для покупки",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        binding.root.showSnackBar(getString(R.string.you_dont_have_enough_coins))
                     }
                 }
             }

@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.domain.holder.SessionHolder
 import com.example.presentation.R
-import com.example.presentation.base.DialogExtensions.showInfoDialog
+import com.example.presentation.base.extension.getImageRes
+import com.example.presentation.base.extension.getSelectedItem
+import com.example.presentation.base.extension.showInfoDialog
 import com.example.presentation.base.viewmodel.BaseViewModel
 import com.example.presentation.databinding.BaseFragmentForExerciseBinding
 import kotlin.random.Random
@@ -58,7 +60,8 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
             override fun onFinish() {
                 requireContext().showInfoDialog(
                     text = resources.getString(R.string.result, viewModel.currentScore.value),
-                    imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat,
+                    imageRes = SessionHolder.currentUser?.shopItems?.getSelectedItem()
+                        ?.getImageRes() ?: R.drawable.logo_cat,
                     okButtonAction = { actionBackToMainScreen() }
                 )
                 if (SessionHolder.isUserAuthorized) {
@@ -103,15 +106,19 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
                         viewModel.increaseScore()
                         textNotification.apply {
                             visibility = View.VISIBLE
-                            text = "Молодець"
+                            text = context.getString(R.string.well_done)
                             startAnimation(anim)
                         }
                         notification.apply {
                             visibility = View.VISIBLE
-                            background = ContextCompat.getDrawable(requireContext(), R.drawable.back_for_item)
+                            background = ContextCompat.getDrawable(
+                                requireContext(),
+                                R.drawable.back_for_item
+                            )
                         }
                         imageNotification.setImageResource(
-                            SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat
+                            SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes()
+                                ?: R.drawable.logo_cat
                         )
                         generateNewEquation(level)
                     }
@@ -124,15 +131,19 @@ abstract class BaseExerciseFragment<VM : BaseViewModel> : Fragment() {
                             setOnClickListener {
                                 textNotification.apply {
                                     visibility = View.VISIBLE
-                                    text = "Подумай краще"
+                                    text = context.getString(R.string.think_better)
                                     startAnimation(anim)
                                 }
                                 notification.apply {
                                     visibility = View.VISIBLE
-                                    background = ContextCompat.getDrawable(requireContext(), R.drawable.back_red)
+                                    background = ContextCompat.getDrawable(
+                                        requireContext(),
+                                        R.drawable.back_red
+                                    )
                                 }
                                 imageNotification.setImageResource(
-                                    SessionHolder.currentUser?.shopItems?.getSelectedItem()?.getImageRes() ?: R.drawable.logo_cat
+                                    SessionHolder.currentUser?.shopItems?.getSelectedItem()
+                                        ?.getImageRes() ?: R.drawable.logo_cat
                                 )
                                 viewModel.currentScore.value?.let { currentScore ->
                                     if (currentScore > 0) {

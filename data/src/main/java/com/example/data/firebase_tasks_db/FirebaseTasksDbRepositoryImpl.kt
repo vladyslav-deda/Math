@@ -1,9 +1,8 @@
 package com.example.data.firebase_tasks_db
 
-import android.widget.Toast
 import com.example.data.firebase_tasks_db.di.TASKS_DB_NAME
 import com.example.domain.firebase_tasks_db.FirebaseTasksDbRepository
-import com.example.domain.holder.model.Task
+import com.example.domain.firebase_tasks_db.model.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import javax.inject.Inject
@@ -24,7 +23,6 @@ class FirebaseTasksDbRepositoryImpl @Inject constructor(
                 onError()
             }
         }
-
     }
 
     override suspend fun addTask(

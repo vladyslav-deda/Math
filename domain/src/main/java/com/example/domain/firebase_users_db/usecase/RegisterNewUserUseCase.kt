@@ -1,7 +1,7 @@
 package com.example.domain.firebase_users_db.usecase
 
 import com.example.domain.firebase_users_db.FirebaseUsersDbRepository
-import com.example.domain.holder.model.User
+import com.example.domain.firebase_users_db.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

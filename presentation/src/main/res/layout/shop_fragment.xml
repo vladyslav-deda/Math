@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_orange"
+    android:background="@color/main_blue"
     tools:context=".shop.ShopFragment">
 
     <com.google.android.material.textview.MaterialTextView
@@ -44,7 +44,7 @@
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/comic_relief"
         android:textColor="@color/main_green"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
         app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
         app:layout_constraintTop_toTopOf="@+id/appCompatImageView"

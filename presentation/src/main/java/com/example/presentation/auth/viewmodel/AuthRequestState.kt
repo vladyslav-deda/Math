@@ -1,6 +1,6 @@
 package com.example.presentation.auth.viewmodel
 
-import com.example.domain.holder.model.User
+import com.example.domain.firebase_users_db.model.User
 
 sealed class AuthRequestState(val user: User? = null, val isLoading: Boolean = false) {
 

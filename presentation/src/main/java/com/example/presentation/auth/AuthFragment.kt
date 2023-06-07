@@ -4,20 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.domain.holder.SessionHolder
-import com.example.domain.holder.model.User
-import com.example.presentation.Constants
 import com.example.presentation.R
 import com.example.presentation.auth.viewmodel.AuthRequestState
 import com.example.presentation.auth.viewmodel.AuthViewModel
+import com.example.presentation.base.extension.showSnackBar
 import com.example.presentation.databinding.AuthFragmentBinding
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,19 +45,11 @@ class AuthFragment : Fragment() {
         viewModel.requestState.observe(viewLifecycleOwner) {
             when (it) {
                 AuthRequestState.AuthError -> {
-                    Snackbar.make(
-                        binding.root,
-                        "Сталася помилка під час авторизації, спробуйте ще раз",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    binding.root.showSnackBar(getString(R.string.auth_error))
                 }
 
                 AuthRequestState.InvalidPassword -> {
-                    Snackbar.make(
-                        binding.root,
-                        "Неправильно введений пароль",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    binding.root.showSnackBar(getString(R.string.invalid_password))
                 }
 
                 is AuthRequestState.Loading -> viewModel.setIsLoading(it.isLoading)
@@ -72,11 +60,7 @@ class AuthFragment : Fragment() {
                 }
 
                 AuthRequestState.UserWasNotFound -> {
-                    Snackbar.make(
-                        binding.root,
-                        "Користувача з таким нікнеймом не було знайдено",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    binding.root.showSnackBar(getString(R.string.invalid_nickname))
                 }
             }
         }
@@ -86,11 +70,7 @@ class AuthFragment : Fragment() {
         binding.apply {
             loginButton.setOnClickListener {
                 if (viewModel.nickname.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
-                    Snackbar.make(
-                        binding.root,
-                        R.string.empty_input_fields,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    binding.root.showSnackBar(getString(R.string.empty_input_fields))
                     return@setOnClickListener
                 }
                 viewModel.authUser()

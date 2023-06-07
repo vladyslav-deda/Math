@@ -7,9 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.firebase_users_db.usecase.CheckingIsUserRegisteredUseCase
 import com.example.domain.firebase_users_db.usecase.RegisterNewUserUseCase
 import com.example.domain.holder.SessionHolder
-import com.example.domain.holder.model.User
+import com.example.domain.firebase_users_db.model.User
 import com.example.domain.shop.model.ShopItem
 import com.example.presentation.Constants
+import com.example.presentation.base.RequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,8 +33,8 @@ class RegisterViewModel @Inject constructor(
     private val _isAdmin = MutableLiveData<Boolean>()
     val isAdmin: LiveData<Boolean> = _isAdmin
 
-    private val _isRegistrationSuccessful = MutableLiveData<Boolean>()
-    val isRegistrationSuccessful: LiveData<Boolean> = _isRegistrationSuccessful
+    private val _requestState = MutableLiveData<RequestState>()
+    val requestState: LiveData<RequestState> = _requestState
 
     fun updateEmail(email: String) {
         _nickname.postValue(email)
@@ -71,10 +72,10 @@ class RegisterViewModel @Inject constructor(
                         currentUser = newUser
                         isUserAuthorized = true
                     }
-                    _isRegistrationSuccessful.postValue(true)
+                    _requestState.postValue(RequestState.Successful())
                 },
                 onError = {
-                    _isRegistrationSuccessful.postValue(false)
+                    _requestState.postValue(RequestState.Error)
                 }
             )
         }
@@ -84,13 +85,7 @@ class RegisterViewModel @Inject constructor(
         var isUserRegistered = false
         _nickname.value?.let {
             viewModelScope.launch {
-                isUserRegisteredUseCase.invoke(it,
-                    onSuccess = {
-                        isUserRegistered = it
-                    },
-                    onError = {
-
-                    })
+                isUserRegistered = isUserRegisteredUseCase.invoke(it)
             }
         }
         return isUserRegistered

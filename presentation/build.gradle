@@ -77,4 +77,5 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
+    implementation 'com.github.Redman1037:TSnackBar:V2.0.0'
 }

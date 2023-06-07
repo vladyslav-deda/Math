@@ -6,11 +6,9 @@ import kotlinx.coroutines.withContext
 
 class CheckingIsUserRegisteredUseCase(private val repository: FirebaseUsersDbRepository) {
 
-    suspend operator fun invoke(
-        nickname: String, onSuccess: (isUserHasBeenRegistered: Boolean) -> Unit, onError: () -> Unit
-    ) {
-        withContext(Dispatchers.IO) {
-            repository.checkingIsUserRegistered(nickname, onSuccess, onError)
+    suspend operator fun invoke(nickname: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            repository.checkingIsUserRegistered(nickname)
         }
     }
 }

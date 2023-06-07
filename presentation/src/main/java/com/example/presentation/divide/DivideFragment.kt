@@ -10,5 +10,6 @@ class DivideFragment : BaseExerciseFragment<DivideViewModel>() {
 
     override fun getViewModelClass() = DivideViewModel::class.java
 
-    override fun actionBackToMainScreen() = findNavController().navigate(DivideFragmentDirections.actionDivideFragmentToHomeFragment())
+    override fun actionBackToMainScreen() =
+        findNavController().navigate(DivideFragmentDirections.actionDivideFragmentToHomeFragment())
 }
