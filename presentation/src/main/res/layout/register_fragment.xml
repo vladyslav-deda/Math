@@ -33,7 +33,7 @@
             android:fontFamily="@font/comic_relief_bold"
             android:gravity="center"
             android:lineSpacingMultiplier="0.7"
-            android:text="@string/administrator_registration"
+            android:text="@string/registration"
             android:textColor="@color/cream"
             android:textSize="40sp"
             android:textStyle="bold" />
