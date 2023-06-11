@@ -23,7 +23,6 @@ class AuthFragment : Fragment() {
 
     private val viewModel by viewModels<AuthViewModel>()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -86,6 +85,7 @@ class AuthFragment : Fragment() {
             }
             continueWithoutAuth.setOnClickListener {
                 SessionHolder.isUserAuthorized = false
+                SessionHolder.currentUser = null
                 findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
             }
         }

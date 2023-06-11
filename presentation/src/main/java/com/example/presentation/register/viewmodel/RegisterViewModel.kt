@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.firebase_users_db.model.User
 import com.example.domain.firebase_users_db.usecase.CheckingIsUserRegisteredUseCase
 import com.example.domain.firebase_users_db.usecase.RegisterNewUserUseCase
 import com.example.domain.holder.SessionHolder
-import com.example.domain.firebase_users_db.model.User
 import com.example.domain.shop.model.ShopItem
 import com.example.presentation.Constants
 import com.example.presentation.base.RequestState
@@ -58,11 +58,11 @@ class RegisterViewModel @Inject constructor(
             Constants.PUPIL_ACCESS_LEVEL
         }
         val newUser = User(
-            userName = _nickname.value,
-            password = _password.value,
-            moneyBalance = 0,
-            level = level,
-            shopItems = getInitialShopItemsList()
+            _nickname.value,
+            _password.value,
+            0,
+            level,
+            getInitialShopItemsList()
         )
         viewModelScope.launch {
             registerNewUserUseCase.invoke(
@@ -92,17 +92,22 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun getInitialShopItemsList(): List<ShopItem> {
-        val list = Constants.shopImagesList.map {
-            ShopItem(
-                id = it,
-                price = it * 20
+        val itemsList = ArrayList<ShopItem>()
+        Constants.shopImagesList.forEachIndexed { index, _ ->
+            itemsList.add(
+                ShopItem(
+                    index,
+                    index * 20,
+                    false,
+                    false
+                )
             )
         }
-        list[0].apply {
+        itemsList[0].apply {
             isSelected = true
             isBought = true
         }
-        return list
+        return itemsList
     }
 
     companion object {

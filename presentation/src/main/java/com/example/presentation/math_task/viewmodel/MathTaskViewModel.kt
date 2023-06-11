@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.firebase_tasks_db.model.Task
 import com.example.domain.firebase_tasks_db.usecase.LoadTasksUseCase
 import com.example.domain.firebase_users_db.usecase.UpdateMoneyBalanceUseCase
 import com.example.domain.holder.SessionHolder
-import com.example.domain.firebase_tasks_db.model.Task
 import com.example.presentation.R
 import com.example.presentation.base.RequestState
 import com.example.presentation.base.extension.getImageRes

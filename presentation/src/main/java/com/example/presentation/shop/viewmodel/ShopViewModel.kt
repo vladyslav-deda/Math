@@ -32,28 +32,28 @@ class ShopViewModel @Inject constructor(
         var newShopItem = ShopItem()
         val newShopItemForOldPlace: ShopItem
         val oldSelectedItem = shopItems.firstOrNull { item ->
-            item.isSelected == true
+            item.isSelected
         }
         val indexOfOldSelectedItem = shopItems.indexOf(oldSelectedItem)
         if (setItemStatusAsBought) {
             newShopItem = ShopItem(
-                id = shopItems[indexOfNewSelectedItem].id,
-                price = shopItems[indexOfNewSelectedItem].price,
-                isBought = true,
-                isSelected = false
+                shopItems[indexOfNewSelectedItem].id,
+                shopItems[indexOfNewSelectedItem].price,
+                true,
+                false
             )
         } else if (setItemStatusAsSelected) {
             newShopItemForOldPlace = ShopItem(
-                id = shopItems[indexOfOldSelectedItem].id,
-                price = shopItems[indexOfOldSelectedItem].price,
-                isBought = true,
-                isSelected = false
+                shopItems[indexOfOldSelectedItem].id,
+                shopItems[indexOfOldSelectedItem].price,
+                true,
+                false
             )
             newShopItem = ShopItem(
-                id = shopItems[indexOfNewSelectedItem].id,
-                price = shopItems[indexOfNewSelectedItem].price,
-                isBought = true,
-                isSelected = true
+                shopItems[indexOfNewSelectedItem].id,
+                shopItems[indexOfNewSelectedItem].price,
+                true,
+                true
             )
             shopItems[indexOfOldSelectedItem] = newShopItemForOldPlace
         }

@@ -4,21 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.holder.SessionHolder
-import com.example.domain.shop.model.ShopItem
-import com.example.presentation.Constants
 import com.example.presentation.R
 import com.example.presentation.base.extension.showSnackBar
 import com.example.presentation.databinding.ShopFragmentBinding
 import com.example.presentation.shop.adapter.ShopAdapter
 import com.example.presentation.shop.viewmodel.ShopViewModel
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +37,10 @@ class ShopFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         updateMoneyBalanceOnUI()
+        observeStates()
+    }
+
+    private fun observeStates() {
         viewModel.shopItems.observe(viewLifecycleOwner) {
             shopAdapter?.submitList(it)
         }
@@ -50,11 +49,11 @@ class ShopFragment : Fragment() {
     private fun initRecyclerView() {
         shopAdapter = ShopAdapter {
             when {
-                it.isBought == true && it.isSelected == false -> {
+                it.isBought && !it.isSelected -> {
                     viewModel.updateStatusOfShopItem(it, setItemStatusAsSelected = true)
                 }
 
-                it.isSelected == true -> {
+                it.isSelected -> {
                     binding.root.showSnackBar(getString(R.string.hero_has_been_selected))
                 }
 
